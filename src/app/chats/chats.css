@@ -1,0 +1,298 @@
+::-webkit-scrollbar {
+  width: 0.1rem;
+  background-color: #1890ff;
+}
+
+.shadow {
+  box-shadow: 0 0.125rem 1rem rgb(0 0 0 / 68%);
+}
+
+/* Chat List */
+.ce-wrapper {
+  background-color: #1890ff;
+  height: 100vh;
+}
+
+.ce-chat-list {
+  height: 100vh;
+}
+
+.ce-chats-container {
+  background-color: #1890ff;
+  border-radius: 0rem;
+}
+
+.ce-chat-form-container {
+  background-color: #1890ff;
+  color: white;
+}
+
+.ce-chat-card {
+  margin: 0px 0.5rem;
+}
+
+.ce-chat-card-loading-bar {
+  background-color: #535a6d;
+}
+
+.ce-active-chat-card {
+  background-color: #726dfe;
+}
+
+.ce-chat-title-text {
+  color: white;
+}
+
+.ce-chat-subtitle-text {
+  color: #e8e8e8;
+}
+
+.ce-chat-unread-dot {
+  background-color: white;
+}
+
+/* Chat Feed */
+
+.ce-chat-title-container {
+  background-color: #1890ff;
+  border-radius: 0px;
+}
+
+.ce-chat-feed-container {
+  background-color: #1890ff;
+}
+
+.ce-primary-button {
+  background-color: #9a97fc;
+}
+
+.ce-message-date-text {
+  color: #e8e8e8;
+}
+
+.ce-my-message-bubble {
+  background-color: #726dfe;
+}
+
+.ce-my-message-sinding-bubble {
+  background-color: #938ffe;
+}
+
+.ce-my-message-timestamp {
+  color: #9a97fc;
+}
+
+.ce-their-message-timestamp {
+  color: #e8e8e8;
+}
+
+#ce-send-message-button {
+  background-color: #9a97fc;
+}
+
+#ce-ice-breaker-gif {
+  max-width: 115px;
+  margin-top: 30px;
+}
+
+.ce-social-message-form {
+  background-color: #1890ff;
+}
+
+.ce-message-input-form {
+  padding-bottom: 1rem;
+  outline: none;
+}
+
+#msg-textarea {
+  width: 80%;
+  position: relative;
+  outline: 0;
+  background-color: #fafafa;
+  color: white;
+  border: 0.1rem solid #e8e8e8;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+#msg-textarea::placeholder {
+  color: #37474f;
+}
+
+#ce-upload-document-icon svg{
+  color: white;
+}
+
+.ce-feed-container-bottom {
+  height: 0rem;
+}
+
+.ce-message-images-row {
+  background-color: #1890ff;
+}
+
+.ce-their-message-sender {
+  color: #e8e8e8;
+}
+
+.ce-their-message-bubble {
+  background-color: #535a6d;
+  color: rgba(255, 255, 255, 0.705);
+}
+
+/* Chat Settings */
+
+.ce-settings {
+  width: 25vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-block: 0.5rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.ce-chat-settings-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  padding: 0.5rem;
+  gap: 1rem;
+}
+
+input.ce-input.ce-text-input {
+  border-radius: 0.5rem !important;
+}
+
+.ce-avatar {
+  background-color: #ffaa1d !important;
+}
+
+.ce-chat-avatars-row > div {
+  padding-top: 0rem;
+}
+
+.ce-settings-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 25vw;
+}
+
+.ce-settings-container div:nth-child(2) {
+  border-top: none !important;
+}
+
+.ce-settings-container div:nth-child(2) div {
+  border-top: none !important;
+}
+
+.ce-photo-section {
+  border-top: none !important;
+}
+
+.ce-section-title-container {
+  background-color: #1890ff !important;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  width: 13rem;
+}
+
+.ce-section-title-container div {
+  width: auto;
+  height: auto;
+  background-color: transparent !important;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-color: transparent;
+  padding: 0.5rem !important;
+}
+
+.ce-photo-section > div {
+  border-top-color: transparent !important;
+}
+
+.anticon-left {
+  float: none !important;
+  background-color: #1890ff;
+  color: #fff;
+  border-radius: 100%;
+  padding: 1rem 0.5rem;
+  position: static !important;
+
+}
+
+.ce-chat-title-form .ce-text-input {
+  background-color: #1890ff;
+  color: white;
+}
+
+.ce-section-title-container {
+  background-color: #1890ff;
+  color: white;
+}
+
+.ce-settings-container div:nth-child(4) > div {
+  border-top-color: transparent !important;
+}
+
+.ce-settings-container div:nth-child(4) > div > div{
+  border-top-color: transparent !important;
+}
+
+#ce-options-drop-down {
+  height: auto;
+  background-color: #1890ff !important;
+  color: white;
+  width: 13rem !important;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-color: transparent;
+  padding: 0rem !important; 
+}
+
+.ce-person-text {
+  color: #e8e8e8;
+}
+
+.ce-danger-button {
+  background-color: #1890ff;
+  border: 1px solid #9a97fc;
+  color: #9a97fc;
+}
+
+.ce-autocomplete-close {
+  background-color: white;
+  border-radius: 0px;
+}
+
+.ce-avatar-dot {
+  background-color: #ffaa1d !important;
+}
+
+.ce-avatar-status {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+}
+
+.ce-person-text {
+  color: #37474f !important;
+}

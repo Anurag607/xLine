@@ -1,8 +1,9 @@
 "use client"
 
-import '../styles/globals.css'
+import '../../styles/globals.css'
+import './chats.css'
 
-import { ContextProvider } from '../context/index'
+import { ContextProvider } from '../../context/index'
 
 export default function RootLayout({
   children,

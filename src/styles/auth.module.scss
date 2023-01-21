@@ -1,0 +1,61 @@
+@mixin flex($dir: row, $gap: 0rem) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}
+
+.authWrapper {
+  @include flex;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(150deg, #d9dbe2, #808aac 100%, #282d39 0);
+  position: relative;
+  .auth-container {
+    @include flex;
+    width: 25rem;
+    height: 15rem;
+    position: relative;
+    background-color: #4a5162;
+    border-radius: 1rem;
+    box-shadow: 0 0.15rem 1rem rgb(0 0 0 / 68%);
+    .auth-form {
+      @include flex(column, 1.75rem);
+      width: 100%;
+      height: auto;
+      position: relative;
+      .input-container {
+        @include flex;
+        width: 55%;
+        position: relative;
+        .text-input {
+          width: 100%;
+          padding: 0.5rem;
+          background-color: #4a5162;
+          outline: none;
+          border-width: 0rem;
+          border-bottom: 0.15rem solid #726dfe;
+          color: #ffffff;
+        }
+        .text-input::placeholder {
+          color: hsla(0, 0%, 100%, 0.568);
+        }
+      }
+      .submit-button {
+        width: 75%;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border-width: 0rem;
+        cursor: pointer;
+        background-color: #726dfe;
+        color: #ffffff;
+        outline: none;
+      }
+      
+      .submit-button::hover {
+        background-color: #938ffe;
+      }
+    }
+  }
+}
