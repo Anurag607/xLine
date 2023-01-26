@@ -1,0 +1,21 @@
+.App {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #e8e8e8;
+  color: #4c768d;
+}
+
+/* welcome page */
+.welcome {
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2.5rem;
+  color: #37474f;
+}
+.welcome :is(h2, p, img) {
+  margin-bottom: 1.25rem;
+}
+
+/* chat component */
+
+/* send message */

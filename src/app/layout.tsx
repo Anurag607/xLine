@@ -2,8 +2,6 @@
 
 import '../styles/globals.css'
 
-import { ContextProvider } from '../context/index'
-
 export default function RootLayout({
   children,
 }: {
@@ -12,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body><ContextProvider>{children}</ContextProvider></body>
+      <body>{children}</body>
     </html>
   )
 }

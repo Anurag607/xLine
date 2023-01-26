@@ -1,0 +1,336 @@
+/* ----------------------------------SIGN UP-------------------------------------*/
+
+@mixin flex($dir : row, $gap: 0rem) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: center;
+    align-items: center;
+    gap: $gap;
+}
+
+@mixin bg($url : '') {
+    background-image: url($url);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.signupWrapper {
+    width: 100vw;
+    height: 100vh;
+    @include flex;
+    background-color: #fff;
+    section:nth-child(1) {
+        width: 60vw;
+        height: 150%;
+        @include bg($url : '../../../public/casual1.jpg');
+    }
+    section:nth-child(2) {
+        z-index: 1;
+        width: 40vw;
+        height: 100vh;
+        background-color: #ffffff;
+        @include flex($dir: row, $gap: 0rem);
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding-top: 2rem;
+        form {
+            width: 100%;
+            @include flex($dir: column, $gap: 1rem);
+            h2 {
+                font-family: 'Michroma', sans-serif;
+                font-size: 1.5rem;
+                margin-bottom: 0.25rem;
+                color: rgba(0,0,0,0.75);
+            }
+            .warning, .warning1 {
+                display: none;
+                border: transparent;
+                outline: none;
+                background: red;
+                color: #fff;
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+                border-radius: 0.25rem;
+                cursor: default;
+                max-width: 75vw;
+                text-align: center;
+            }
+            span {
+                @include flex($dir: row, $gap: 1rem);
+                font-size: 1rem;
+                font-family: 'Poppins', sans-serif;
+            }
+            span:nth-child(1) {
+                padding-bottom: 0.25rem;
+                border-top: transparent;
+                border-left: transparent;
+                border-right: transparent;
+                border-bottom: 0.05rem solid rgba(0,0,0,0.25);
+            }
+            .tologin {
+                @include flex($gap : 0.5rem);
+                font-size: 0.75rem;
+                font-family: 'Poppins', sans-serif;
+                cursor: default;
+                color: #fa86c4;
+            }
+            label {
+                @include flex($dir : column, $gap : 0.5rem);
+                align-items: flex-start;
+                .user {
+                    @include flex;
+                    width: auto;
+                    height: auto;
+                    span {
+                        width: 2rem;
+                        height: 1.95rem;
+                        @include bg($url : '../../../public/user (1).png');
+                        filter: brightness(0) opacity(0.75);
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: 0.05rem solid rgba(0,0,0,0.25);
+                        border-bottom: transparent;
+                    }
+                    input {
+                        outline: none;
+                        padding: 0.5rem 2rem 0.5rem 0.5rem;
+                        width: 15rem;
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: transparent;
+                        border-bottom: transparent;
+                        border-radius: 0.5rem;
+                        margin-left: 0.25rem;
+                    }
+                }
+                .phnum {
+                    @include flex;
+                    width: auto;
+                    height: auto;
+                    span {
+                        width: 2rem;
+                        height: 1.95rem;
+                        @include bg($url : '../../../public/phone.png');
+                        filter: brightness(0) opacity(0.75);
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: 0.05rem solid rgba(0,0,0,0.25);
+                        border-bottom: transparent;
+                    }
+                    input {
+                        outline: none;
+                        padding: 0.5rem 2rem 0.5rem 0.5rem;
+                        width: 15rem;
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: transparent;
+                        border-bottom: transparent;
+                        border-radius: 0.5rem;
+                        margin-left: 0.25rem;
+                    }
+                }
+                .signupemail {
+                    @include flex;
+                    width: auto;
+                    height: auto;
+                    span {
+                        width: 2rem;
+                        height: 1.95rem;
+                        @include bg($url : '../../../public/email.png');
+                        filter: brightness(0) opacity(0.75);
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: 0.05rem solid rgba(0,0,0,0.25);
+                        border-bottom: transparent;
+                        border-radius: 0;
+                        padding-right: 0.5rem;
+                    }
+                    input {
+                        outline: none;
+                        padding: 0.5rem 2rem 0.5rem 0.5rem;
+                        width: 15rem;
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: transparent;
+                        border-bottom: transparent;
+                        border-radius: 0.5rem;
+                        margin-left: 0.25rem;
+                    }
+                }
+                .pass {
+                    @include flex;
+                    width: auto;
+                    height: auto;
+                    span {
+                        width: 2rem;
+                        height: 1.9rem;
+                        @include bg($url : '../../../public/lock.png');
+                        filter: brightness(0) opacity(0.75);
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: 0.05rem solid rgba(0,0,0,0.25);
+                        border-bottom: transparent;
+                    }
+                    input {
+                        outline: none;
+                        padding: 0.5rem 2rem 0.5rem 0.5rem;
+                        width: 15rem;
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: transparent;
+                        border-bottom: transparent;
+                        border-radius: 0.5rem;
+                        margin-left: 0.25rem;
+                    }
+                }
+            }
+            section {
+                width: auto;
+                height: auto;
+                @include flex($dir : column, $gap : 0.75rem);
+                p {
+                    font-size: 0.75rem;
+                    color: rgba(0,0,0,0.50);
+                    cursor: default;
+                }
+                div {   
+                    outline: none;
+                    width: auto;
+                    height: auto;
+                    @include flex($gap : 0.65rem);
+                    padding: 0.5rem 1rem;
+                    border-radius: 0.25rem;
+                    cursor: pointer;
+                    span {
+                        font-size: 0.85rem;
+                    }
+                    box-shadow: 0 0 0.25rem #c5c5c5;
+                }
+            }
+        }
+    }
+
+    @keyframes animatedGradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .signInSubmit {
+        font-size: 1rem;
+        font-family: 'Poppins';
+        color: #fff;
+        background: linear-gradient(106.7deg, rgb(251, 0, 145) -2.6%, rgb(251, 134, 145) 31%, rgb(251, 158, 145) 45.8%, rgb(251, 218, 145) 100.1%);
+        padding: 0.5rem 2rem;
+        outline: none;
+        border: none;
+        width: 21rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        background-size: 200% 200%;
+    }
+    
+    .signInSubmit:hover {
+        animation: animatedGradient 5s ease infinite;
+    }
+}
+
+@media screen and (max-width: 925px) {
+    .signupWrapper {
+        section:nth-child(1) {
+            width: 0vw;
+        }
+        section:nth-child(2) {
+            width: 100vw;
+            height: auto;
+            min-height: 100vh;
+            overflow: scroll;
+            form {
+                height: auto;
+                overflow: scroll;
+                justify-content: flex-start;
+                padding-top: 7.5rem;
+                padding-bottom: 3rem;
+                h2 {
+                    font-size: 1.25rem;
+                }
+                span {
+                    font-size: 0.95rem;
+                }
+                label {
+                    .user, .pass, .signupemail, .phnum {
+                        input {
+                            font-size: 0.75rem;
+                        }
+                    }
+                }
+            }
+        }
+        .signInSubmit {
+            width: 18.5rem;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .signupWrapper {
+        section:nth-child(2) {
+            form {
+                label {
+                    .user, .pass, .signupemail, .phnum {
+                        input {
+                            width: 12.5rem;
+                        }
+                    }
+                }
+            }
+        }
+        .signInSubmit {
+            width: 17.5rem;
+        }
+    }
+}
+
+@media screen and (max-width: 325px) {
+    .signupWrapper {
+        section:nth-child(2) {
+            form {
+                label {
+                    .user, .pass, .signupemail, .phnum {
+                        input {
+                            width: 11.5rem;
+                        }
+                    }
+                }
+            }
+        }
+        .signInSubmit {
+            width: 16.5rem;
+        }
+    }
+}
+@media screen and (max-width: 300px) {
+    .signupWrapper {
+        section:nth-child(2) {
+            form {
+                label {
+                    .user, .pass, .signupemail, .phnum {
+                        input {
+                            width: 8.5rem;
+                        }
+                    }
+                }
+            }
+        }
+        .signInSubmit {
+            width: 13.5rem;
+        }
+    }
+}
