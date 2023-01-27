@@ -26,8 +26,8 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  height: 0rem; /* width of the horizontal  scrollbar */
-  width: 0rem; /* width of the vertical scrollbar */
+  height: 0.05rem; /* width of the horizontal  scrollbar */
+  width: 0.15rem; /* width of the vertical scrollbar */
 }
 
 ::-webkit-scrollbar-track {
@@ -35,8 +35,8 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #37474f;
-  border: 2px solid #37474f; /* creates padding around scroll thumb */
+  background-color: #f4f7fc;
+  border: 2px solid #f4f7fc; /* creates padding around scroll thumb */
 }
 
 a {

@@ -11,93 +11,46 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-        height: 0.05rem; /* width of the horizontal  scrollbar */
-        width: 0.15rem; /* width of the vertical scrollbar */
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: #ffffff; /* color of the tracking area */
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background-color: #37474f;
-        border: 2px solid #37474f; /* creates padding around scroll thumb */
-    }
-    .chat-groups {
-        width: 25%;
-        height: 100vh;
-        overflow-x: hidden;
-        background-color: #ffffff;
-        box-shadow: 0.1rem 0 0.25rem #e8e8e8;
-        left: 0;
-        top: 0;
-        position: fixed;
+    .chat-body {
         display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        flex-direction: row;
+        justify-content: flex-end;
         align-items: center;
-        overflow-y: scroll;
-        z-index: 100;
-        .sideHead {
-            margin-top: 6.75rem;
-            position: fixed;
+        width: 100vw;
+        height: 90vh;
+        position: relative;
+        .chat-groups {
+            width: 20vw;
+            height: 90%;
+            overflow-x: hidden;
+            background-color: #ffffff;
+            box-shadow: 0.1rem 0 0.25rem #e8e8e8;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            gap: 1rem;
-            width: 90%;
-            position: relative;
-            padding-block: 1rem;
-            border-bottom: 0.1rem solid #e8e8e8;
-            transition: all 0.3s ease-in-out;
-            .addGroupButton {
-                font-family: 'Poppins', sans-serif;
-                font-size: 1.25rem;
-                padding: 0.25rem 1rem;
-                outline: none;
-                border: none;
-                border-radius: 0.5rem;
-                background-color: #f65275;
-                color: #ffffff;
-                cursor: pointer;
-            }
-            .formCont {
-                display: none;
+            overflow-y: scroll;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            left: 0;
+            .sideHead {
+                margin-top: 13.5vh;
+                position: sticky;
+                top: 0;
+                display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
                 gap: 1rem;
+                width: 90%;
+                position: relative;
+                padding-block: 1rem;
+                border-bottom: 0.1rem solid #e8e8e8;
                 transition: all 0.3s ease-in-out;
-                height: 0rem;
-                opacity: 0;
-                .grpName {
-                    outline: none;
-                    border: none;
-                    padding: 0.5rem 0.75rem;
-                    background-color: #f4f7fc;
-                    font-family: 1.15rem;
-                    border-radius: 0.5rem;
-                    width: 12.5em;
+                .addGroupButton {
                     font-family: 'Poppins', sans-serif;
-                }
-                .users {
-                    cursor: pointer;
-                    color: #ffffff;
-                    background-color: #6f3df4;
-                    padding: 0.5rem;
-                    outline: 0.175rem solid transparent;
-                    border-radius: 0.5rem;
-                    font-family: 'Poppins', sans-serif;
-                    transition: all 0.3s ease;
-                    border: 0.1rem solid transparent;
-                }
-                .createGrpBtn {
-                    font-family: 'Poppins', sans-serif;
-                    font-size: 1rem;
+                    font-size: 1.25rem;
                     padding: 0.25rem 1rem;
                     outline: none;
                     border: none;
@@ -106,42 +59,109 @@
                     color: #ffffff;
                     cursor: pointer;
                 }
+                .formCont {
+                    display: none;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                    transition: all 0.3s ease-in-out;
+                    height: 0rem;
+                    opacity: 0;
+                    .grpName {
+                        outline: none;
+                        border: none;
+                        padding: 0.5rem 0.75rem;
+                        background-color: #f4f7fc;
+                        font-family: 1.15rem;
+                        border-radius: 0.5rem;
+                        width: 12.5em;
+                        font-family: 'Poppins', sans-serif;
+                    }
+                    .users {
+                        cursor: pointer;
+                        color: #ffffff;
+                        background-color: #6f3df4;
+                        padding: 0.5rem;
+                        outline: 0.175rem solid transparent;
+                        border-radius: 0.5rem;
+                        font-family: 'Poppins', sans-serif;
+                        transition: all 0.3s ease;
+                        border: 0.1rem solid transparent;
+                    }
+                    .createGrpBtn {
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 1rem;
+                        padding: 0.25rem 1rem;
+                        outline: none;
+                        border: none;
+                        border-radius: 0.5rem;
+                        background-color: #f65275;
+                        color: #ffffff;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .groups {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 1rem;
+                padding-block: 1.5rem;
+                transition: all 0.3s ease-in-out;
+                button {
+                    width: 10rem;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 1.25rem;
+                    padding: 0.25rem 1rem;
+                    outline: none;
+                    border: none;
+                    border-radius: 0.5rem;
+                    background-color: #6f3df4;
+                    color: #ffffff;
+                    cursor: pointer;
+                    text-transform: capitalize;
+                }
+                margin-bottom: 20vh;
             }
         }
-        .groups {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 1rem;
-            padding-block: 1.5rem;
-            transition: all 0.3s ease-in-out;
-            button {
-                width: 10rem;
-                font-family: 'Poppins', sans-serif;
-                font-size: 1.25rem;
-                padding: 0.25rem 1rem;
-                outline: none;
-                border: none;
-                border-radius: 0.5rem;
-                background-color: #6f3df4;
-                color: #ffffff;
-                cursor: pointer;
-                text-transform: capitalize;
+        .messages-wrapper {
+            width: 72.5vw;
+            height: 100%;
+            margin-top: 20vh;
+            padding: 3.5rem 3.5rem 0rem 3.5rem;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            position: relative;
+            .scrollSpan {
+                width: 68.5%;
+                height: 3.5rem;
+                background-color: #f4f7fc;
             }
         }
     }
-    .messages-wrapper {
-        width: 68.5%;
-        height: 100vh;
-        margin-top: 3.5rem;
-        padding: 3.5rem 3.5rem 0rem 3.5rem;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        position: relative;
-        .scrollSpan {
-            width: 68.5%;
-            height: 3.5rem;
+}
+
+@media screen and (max-width: 1100px) {
+    .chat-box {
+        .chat-body {
+            .chat-groups {
+                display: none;
+            }
+            .messages-wrapper {
+                width: 100vw;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .chat-box {
+        .chat-body {
+            .messages-wrapper {
+                padding: 3.5rem 1rem 0 1rem;
+            }
         }
     }
 }

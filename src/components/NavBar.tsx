@@ -20,11 +20,15 @@ const NavBar = () => {
     const [user] = useAuthState(auth)
     const router = useRouter()
 
+    /* eslint-disable */
+
     React.useEffect(() => {
         let auth = Cookie.get('currentLoggedIn')
         SetuserDetails(JSON.parse(auth || JSON.stringify(userDetails)))
         // if(user != null) console.log(user)
     }, [])
+
+    /* eslint-enable */
 
     return (
         <nav className = {`${styles['nav']} nav`}>

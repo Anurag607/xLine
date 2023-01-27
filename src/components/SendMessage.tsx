@@ -40,6 +40,7 @@ const SendMessage = ({ scroll }: {scroll: any}) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         autoFocus
+        autoComplete="false"
       />
       <button type="submit">Send</button>
     </form>

@@ -70,8 +70,8 @@ export default function Login() {
 
     React.useEffect(() => {
         if (loading) return;
-        if (user) router.push("/");
-      }, [user, loading])
+        if (user) router.push("/")
+      }, [user, loading, router])
 
     return (
         <main className={styles.loginWrapper}>

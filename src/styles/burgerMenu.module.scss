@@ -14,11 +14,11 @@
 }
 
 .burgerWrapper {
-    display: block;
+    display: none;
     transition: all 0.3s;
     border-radius: 0.75rem;
     background-color: transparent;
-    margin-left: 3.5rem;
+    margin-left: 2.75rem;
     cursor: pointer;
     .menu1 {
         width: 2.75rem;
@@ -30,6 +30,7 @@
         z-index: 1000;
         position: relative;
         background-color: transparent;
+        translate: 0 0.55rem;
         .menuBarCont {
             display: flex;
             justify-content: center;
@@ -87,72 +88,133 @@
     }
 
     .sidebar {
-        z-index: 800;
+        z-index: 100;
         position: absolute;
         top: 0;
         left: 0;
         width: 0vw;
         height: 100vh;
-        background-color: #ffffff;
+        background-color: transparent;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         gap: 1rem;
-        transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease;
         padding-top: 10rem;
-        .sidebarel {
-            z-index: 500;
-            list-style: none;
-            color: rgba(0,0,0,0.75);
-            text-align: left;
-            font-size: 1.5rem;
-            font-family: 'Poppins', sans-serif;
-            margin-left: 2rem;
-            letter-spacing: 0.075rem;
-            display: none;
-        }
-        .nav-right {
-            @include flex(column, 1rem);
-            align-items: flex-start;
-            margin-left: 2rem;
-            .searchbox {
-                background: transparent;
+        .chat-groups {
+            width: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            background-color: #ffffff;
+            box-shadow: 0.1rem 0 0.25rem #e8e8e8;
+            left: 0;
+            top: 0;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-y: scroll;
+            z-index: 100;
+            transition: all 0.3s ease-in-out !important;
+            .sideHead {
+                margin-top: 6.75rem;
+                position: fixed;
                 display: flex;
-                flex-direction: row-reverse;
-                justify-content: center;
+                flex-direction: column;
+                justify-content: flex-start;
                 align-items: center;
-                transition: all 0.5s;
-                width: auto;
-                input {
-                    border-radius: 2rem;
-                    height: 1.75rem;
-                    text-align: right;
-                    width: 0;
-                    color: black;
-                    transition: all 0.5s;
-                    margin-inline: 0.5rem;
-                    display: none;
-                    opacity: 0;
-                    border: 0.075rem solid #000000;
-                    text-align: left;
-                    padding-left: 0.75rem;
-                    // margin-bottom: 0.25rem;
+                gap: 1rem;
+                width: 90%;
+                position: relative;
+                padding-block: 1rem;
+                border-bottom: 0.1rem solid #e8e8e8;
+                transition: all 0.3s ease-in-out;
+                opacity: 0;
+                .addGroupButton {
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 1.25rem;
+                    padding: 0.25rem 1rem;
+                    outline: none;
+                    border: none;
+                    border-radius: 0.5rem;
+                    background-color: #f65275;
+                    color: #ffffff;
+                    cursor: pointer;
                 }
-                div {
-                    @include flex(row, 1rem);
-                    filter: brightness(0);
+                .formCont {
+                    display: none;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                    transition: all 0.3s ease-in-out;
+                    height: 0rem;
+                    opacity: 0;
+                    .grpName {
+                        outline: none;
+                        border: none;
+                        padding: 0.5rem 0.75rem;
+                        background-color: #f4f7fc;
+                        font-family: 1.15rem;
+                        border-radius: 0.5rem;
+                        width: 12.5em;
+                        font-family: 'Poppins', sans-serif;
+                    }
+                    .users {
+                        cursor: pointer;
+                        color: #ffffff;
+                        background-color: #6f3df4;
+                        padding: 0.5rem;
+                        outline: 0.175rem solid transparent;
+                        border-radius: 0.5rem;
+                        font-family: 'Poppins', sans-serif;
+                        transition: all 0.3s ease;
+                        border: 0.1rem solid transparent;
+                    }
+                    .createGrpBtn {
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 1rem;
+                        padding: 0.25rem 1rem;
+                        outline: none;
+                        border: none;
+                        border-radius: 0.5rem;
+                        background-color: #f65275;
+                        color: #ffffff;
+                        cursor: pointer;
+                    }
                 }
             }
-            .navicons {
-                filter: brightness(0);
+            .groups {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 1rem;
+                padding-block: 1.5rem;
+                transition: all 0.3s ease-in-out;
+                opacity: 0;
+                button {
+                    width: 10rem;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 1.25rem;
+                    padding: 0.25rem 1rem;
+                    outline: none;
+                    border: none;
+                    border-radius: 0.5rem;
+                    background-color: #6f3df4;
+                    color: #ffffff;
+                    cursor: pointer;
+                    text-transform: capitalize;
+                }
             }
         }
     }
 }
 
-// @media screen and (max-width: 1100px) {
-//     .burgerWrapper {
-//         display: block;
-//     }
-// }
+@media screen and (max-width: 1100px) {
+    .burgerWrapper {
+        display: block;
+    }
+}

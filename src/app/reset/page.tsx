@@ -14,7 +14,7 @@ function Reset() {
   useEffect(() => {
     if (loading) return;
     if (user) router.push("/")
-  }, [user, loading])
+  }, [user, loading, router])
 
   return (
     <div className="reset">
@@ -31,7 +31,7 @@ function Reset() {
         </button>
 
         <div>
-          Don't have an account? <Link href="/signup">Sign Up</Link>
+          Don&apos;t have an account? <Link href="/signup">Sign Up</Link>
         </div>
       </div>
     </div>

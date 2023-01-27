@@ -149,13 +149,9 @@ export default function Signup() {
     }
 
     React.useEffect(() => {
-        router.prefetch('/home')
-    }, [])
-
-    React.useEffect(() => {
         if (loading) return;
         if (user) router.push("/")
-      }, [user, loading])
+      }, [user, loading, router])
 
     return (
         <main className={styles.signupWrapper}>

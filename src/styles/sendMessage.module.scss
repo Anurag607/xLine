@@ -15,7 +15,7 @@
 }
 .send-message > input {
     height: auto;
-    width: 80%;
+    width: 75vw;
     border: none;
     padding: 0.5rem 1rem;
     background-color: white;
@@ -42,4 +42,39 @@
     font-weight: 600;
     cursor: pointer;
 }
-  
+
+@media screen and (max-width: 600px) {
+    .send-message > input {
+        width: 60vw;
+    }
+    .send-message > button {
+        width: 5rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .send-message > input {
+        width: 60vw;
+    }
+    .send-message > button {
+        width: 5rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .send-message > input {
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .send-message > input {
+        width: 40vw;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .send-message > input {
+        width: 35vw;
+    }
+}

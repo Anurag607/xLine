@@ -6,21 +6,24 @@ const Menu = () => {
     const menuBar2 = document.querySelector('.menu_bar2')
     const menuBar3 = document.querySelector('.menu_bar3')
     const sidebar = document.querySelector(".sidebar")
-    const sidebarel = document.querySelectorAll(".sidebarel")
-
-    console.log(menu.dataset.toggle)
+    const chatRooms = document.querySelector(".bg-chatRooms")
+    const chatRoomsChildren = document.querySelectorAll(".bg-chatRooms div")
 
     if (menu.dataset.toggle === "close") {
-        menu.style.backgroundColor = "rgba(0,0,0,0.75)"
+        menu.style.backgroundColor = "#f65275"
         menuBar1.style.backgroundColor = "#ffffff"
         menuBar2.style.backgroundColor = "#ffffff"
         menuBar3.style.backgroundColor = "#ffffff"
-        sidebarel.forEach((el,i) => {
-            el.style.transition = "all 0.3s 0"
-            el.style.display = "flex"
-            el.style.opacity = "1"
-        })
-        sidebar.style.width = '26vw'
+        sidebar.style.width = '17.5rem'
+        chatRooms.style.display = "flex"
+        setTimeout(() => {
+            chatRooms.style.width = '17.5rem'
+        }, 150)
+        setTimeout(() => {
+            chatRoomsChildren.forEach((el,i) => {
+                el.style.opacity = 1
+            })
+        }, 500)
         menuBar1.style.width = '100%'
         menuBar1.style.transform = 'translate(-66%, -11.5px) rotate(-45deg)'
         menuBar2.style.width = 0
@@ -32,12 +35,16 @@ const Menu = () => {
         menuBar1.style.backgroundColor = "#ffffff"
         menuBar2.style.backgroundColor = "#ffffff"
         menuBar3.style.backgroundColor = "#ffffff"
-        sidebarel.forEach((el,i) => {
-            el.style.transition = "all 0.3s 0.5s 0.5s"
-            el.style.opacity = "0"
-            el.style.display = "none"
+        chatRoomsChildren.forEach((el,i) => {
+            el.style.opacity = 0
         })
-        sidebar.style.width = "0"
+        setTimeout(() => {
+            chatRooms.style.width = '0'
+        }, 300)
+        setTimeout(() => {
+            chatRooms.style.display = "none"
+            sidebar.style.width = "0"
+        }, 500)
         menuBar1.style.width = '50%'
         menuBar1.style.transform = 'translate(-100%, -11.5px)'
         menuBar1.style.transformOrigin = '100% 0'
@@ -49,24 +56,4 @@ const Menu = () => {
     }
 }
 
-const HomePageAdjustment = () => {
-    const menu = document.querySelector(".menu1")
-    const menuBar1 = document.querySelector('.menu_bar1')
-    const menuBar2 = document.querySelector('.menu_bar2')
-    const menuBar3 = document.querySelector('.menu_bar3')
-
-    if (menu.dataset.toggle === "open") {
-        menu.style.backgroundColor = "transparent"
-        menuBar1.style.backgroundColor = "#ffffff"
-        menuBar2.style.backgroundColor = "#ffffff"
-        menuBar3.style.backgroundColor = "#ffffff"
-    }
-    else {
-        menu.style.backgroundColor = "rgba(0,0,0,0.75)"
-        menuBar1.style.backgroundColor = "#ffffff"
-        menuBar2.style.backgroundColor = "#ffffff"
-        menuBar3.style.backgroundColor = "#ffffff"
-    }
-}
-
-export {Menu, HomePageAdjustment}
+export {Menu}

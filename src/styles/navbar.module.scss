@@ -17,10 +17,11 @@
 
 .nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding-block: 1rem;
     width: 100vw;
+    height: 5vh;
     background-color: #f65275;
     position: relative;
     z-index: 1000;
@@ -217,38 +218,12 @@
 
 @media screen and (max-width: 1100px) {
     .nav {
+        margin: 0;
         display: flex;
         text-align: center;
         flex-wrap: wrap-reverse;
-    }
-
-    .nav-left, .searchbox {
-        display: none;
-    }
-
-    .navicons {
-        span:nth-child(1) {
-            display: none;
-        }
-        span:nth-child(3) {
-            width: auto;
-            height: auto;
-            border-radius: 0.5rem;
-            padding: 0.25rem;
-            div {
-                width: 2rem;
-                height: 2rem;
-            }
-            span {
-                display: none;
-            }
-        }
-    }
-
-    .navDash {
-        div:nth-child(2) {
-            display: none;
-        }
+        justify-content: space-between;
+        align-items: flex-start;
     }
 
     .navl {
@@ -259,10 +234,6 @@
         margin-right: 0.75rem;
     }
 
-    .searchbox {
-        transform: translateX(-27.5%);
-    }
-
     .login {
         margin: -0.175rem 0 0 0;
         display: flex;
@@ -271,17 +242,14 @@
         width: 6rem;
         height: 2rem;
     }
-
-    .navicons {
-        padding: 1rem 0 0 0;
-        gap: 1.25rem;
-    }
 }
 
-@media screen and (max-width: 750px) {
-    .searchbox {
-        input {
-            translate: 13rem 3rem;
+@media screen and (max-width: 600px) {
+    .nav {
+        .navDash {
+            div:nth-child(2) {
+                display: none   ;
+            }
         }
     }
 }

@@ -242,6 +242,14 @@
     }
 }
 
+@media screen and (max-width: 1240px) {
+    .signupWrapper {
+        section:nth-child(2) {
+            padding-top: 25vh;
+        }
+    }
+}
+
 @media screen and (max-width: 925px) {
     .signupWrapper {
         section:nth-child(1) {
