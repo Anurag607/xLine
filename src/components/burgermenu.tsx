@@ -143,7 +143,7 @@ const Burger = () => {
 
         getGroupsForUser()
 
-    }, [addGrpBtnState, user])
+    }, [addGrpBtnState, user]) // eslint-disable-line
 
     return (
         <div className={`${styles.burgerWrapper} burgerWrapper`}>

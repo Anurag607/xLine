@@ -27,12 +27,13 @@
     background-size: cover;
     @include flex;
     div {
-        z-index: 1;
-        width: 22.5rem;
-        height: 35rem;
-        border-radius: 0.75rem;
-        background-color: #fafafa;
         @include flex($dir: row, $gap: 0rem);
+        z-index: 1;
+        width: 21rem;
+        height: 30rem;
+        border-radius: 0.5rem;
+        background-color: #fafafa;
+        padding-block: 1.25rem;
         form {
             width: 100%;
             @include flex($dir: column, $gap: 1.25rem);
@@ -68,7 +69,7 @@
             }
             .toSignup {
                 @include flex($gap : 0.5rem);
-                margin-top: 2.5rem;
+                // margin-top: 2.5rem;
                 font-size: 0.75rem;
                 font-family: 'Poppins', sans-serif;
                 cursor: default;
@@ -97,7 +98,7 @@
                         background-color: #fafafa;
                         outline: none;
                         padding: 0.5rem 2rem 0.5rem 0.5rem;
-                        width: 15rem;
+                        width: 13.5rem;
                         border-top: transparent;
                         border-left: transparent;
                         border-right: transparent;
@@ -128,7 +129,7 @@
                         background-color: #fafafa;
                         outline: none;
                         padding: 0.5rem 2rem 0.5rem 0.5rem;
-                        width: 15rem;
+                        width: 13.5rem;
                         border-top: transparent;
                         border-left: transparent;
                         border-right: transparent;
@@ -142,7 +143,7 @@
                     @include flex($gap : 0.25rem);
                     justify-content: flex-end;
                     font-size: 0.75rem;
-                    width: 20rem;
+                    width: 18.5rem;
                 }
             }
             .loginSubmit {
@@ -153,7 +154,7 @@
                 padding: 0.5rem 2rem;
                 outline: none;
                 border: none;
-                width: 21rem;
+                width: 18.5rem;
                 border-radius: 0.5rem;
                 cursor: pointer;
                 background-size: 200% 200%;

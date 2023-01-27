@@ -17,6 +17,9 @@ import {
   collection,
   where,
   addDoc,
+  updateDoc,
+  doc,
+  getDoc
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -42,6 +45,18 @@ const signInWithGoogle = async () => {
     const user = res.user;
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
+    const commonRoom = doc(db, "chatRooms", process.env.NEXT_PUBLIC_COMMON_ROOM_ID!);
+    const q1 = query(collection(db, "chatRooms"), where("name", "==", "Common"))
+    const querySnapshot = await getDocs(q1);
+    let registeredUsers = ''
+    let flag = true
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data().users)
+      registeredUsers = doc.data().users
+    })
+    registeredUsers.split(',').map(el => {
+      if(el === user.uid) flag = false
+    })
     if (docs.docs.length === 0) {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
@@ -49,6 +64,11 @@ const signInWithGoogle = async () => {
         authProvider: "google",
         email: user.email,
       });
+      if(flag) {
+        await updateDoc(commonRoom, {
+          users: `${registeredUsers},${user.uid}`
+        });
+      }
     }
   } catch (err:any) {
     console.error(err);
@@ -69,12 +89,29 @@ const registerWithEmailAndPassword = async (name:string, email:string, password:
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+    const commonRoom = doc(db, "chatRooms", process.env.NEXT_PUBLIC_COMMON_ROOM_ID!);
+    const q = query(collection(db, "chatRooms"), where("name", "==", "Common"))
+    const querySnapshot = await getDocs(q);
+    let registeredUsers = ''
+    let flag = true
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data().users)
+      registeredUsers = doc.data().users
+    })
+    registeredUsers.split(',').map(el => {
+      if(el === user.uid) flag = false
+    })
     await addDoc(collection(db, "users"), {
       uid: user.uid,
       name,
       authProvider: "local",
       email,
     });
+    if(flag) {
+      await updateDoc(commonRoom, {
+        users: `${registeredUsers},${user.uid}`
+      });
+    }
   } catch (err:any) {
     console.error(err);
     alert(err.message);

@@ -7,6 +7,7 @@ import styles from './login.module.scss'
 import Image from 'next/image'
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from '../../../firebase/clientApp'
 import { useAuthState } from "react-firebase-hooks/auth"
+import Loader from '../../components/loader'
 
 interface LoginForm extends HTMLFormControlsCollection {
     email : HTMLInputElement,
@@ -69,11 +70,11 @@ export default function Login() {
     }
 
     React.useEffect(() => {
-        if (loading) return;
         if (user) router.push("/")
       }, [user, loading, router])
 
     return (
+        (loading) ? <Loader /> :
         <main className={styles.loginWrapper}>
             <div>
                 <form onSubmit={HandleSubmit}>

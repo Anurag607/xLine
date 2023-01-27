@@ -86,7 +86,7 @@ const ChatBox = () => {
                         }
                     }
                 })
-                if(Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined) Cookies.set("currentGroup", groups[0].id)
+                if(Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined && groups[0] !== undefined) Cookies.set("currentGroup", groups[0].id)
                 Cookies.set("groupList", JSON.stringify(groups))
                 setGroups(groups)
             })
@@ -136,7 +136,7 @@ const ChatBox = () => {
 
         getGroupsForUser()
 
-    }, [addGrpBtnState, user])
+    }, [addGrpBtnState, user]) // eslint-disable-line
     
     return (
         <main className={styles["chat-box"]}>

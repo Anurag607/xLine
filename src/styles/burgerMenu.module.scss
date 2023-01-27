@@ -142,6 +142,7 @@
                     background-color: #f65275;
                     color: #ffffff;
                     cursor: pointer;
+                    z-index: 1001;
                 }
                 .formCont {
                     display: none;
@@ -183,6 +184,7 @@
                         background-color: #f65275;
                         color: #ffffff;
                         cursor: pointer;
+                        z-index: 1001;
                     }
                 }
             }
