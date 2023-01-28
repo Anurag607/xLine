@@ -40,8 +40,10 @@ const Message = ({ message, index }: {message: any, index: number}) => {
 
       <div className={styles.replyToContainer}>
         <div
-          className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[JSON.parse(Cookies.get('selectedMsg')).uid === user?.uid ? "right" : ""]}`}
-          data-details={Cookies.get('selectedMsg')}
+          // className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[JSON.parse(Cookies.get('selectedMsg')).uid === user?.uid ? "right" : ""]}`}
+          className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[replyTo.uid === user?.uid ? "right" : ""]}`}
+          // data-details={Cookies.get('selectedMsg')}
+          data-details={JSON.stringify(replyTo)}
           data-switch={"off"}
           onClick={(event:React.MouseEvent<HTMLDivElement>) => { if(!deselectMsg(index)) selectMsg(index) }}
           >
