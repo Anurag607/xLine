@@ -1,5 +1,5 @@
 .messageContainer {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     .replyToContainer {
         display: flex;
         flex-direction: column;
@@ -11,7 +11,7 @@
         background-color: #fff;
         box-shadow: 0 0 0.25rem #dadada;
         padding: 0.5rem 0.5rem 0rem 0rem;
-        .reply-chat-bubble {
+        .replyTo-chat-bubble {
             border-radius: 0.75rem !important;
             padding: 0.5rem;
             background-color: #e8e8e8 !important;
@@ -24,38 +24,38 @@
             margin-bottom: 0.5rem;
             cursor: default;
             font-size: 0.75rem;
-            .reply-chat-bubble__left {
+            .replyTo-chat-bubble__left {
                 width: 1.5rem;
                 height: 1.5rem;
                 border-radius: 50%;
                 margin-right: 0.5rem;
                 cursor: default;
             }
-            .reply-chat-bubble__right {
-                .user-name {
+            .replyTo-chat-bubble__right {
+                .replyTo-user-name {
                     font-weight: bold;
                     margin-bottom: 0.25rem;
                     font-size: 0.9rem;
                     color: #37474f;
                     cursor: default;
                 }
-                .user-message {
+                .replyTo-user-message {
                     word-break: break-all;
                 }
-                .message-time {
+                .replyTo-message-time {
                     display: block;
                     text-align: right;
                 }
             }
         }
-        .reply-chat-bubble.right {
+        .replyTo-chat-bubble.right {
             margin-left: auto;
             border-radius: 1.25rem 1.25rem 0 1.25rem;
             background-color: #fff;
             box-shadow: 0 0 0.25rem #dadada;
             cursor: default;
         }
-        .chat-bubble {
+        .reply-chat-bubble {
             border-radius: 1.25rem 1.25rem 1.25rem 0;
             padding: 1rem;
             background-color: #ffffff;
@@ -67,31 +67,31 @@
             align-items: flex-start;
             margin-bottom: 0rem;
             cursor: default;
-            .chat-bubble__left {
+            .reply-chat-bubble__left {
                 width: 2rem;
                 height: 2rem;
                 border-radius: 50%;
                 margin-right: 0.5rem;
                 cursor: default;
             }
-            .chat-bubble__right {
-                .user-name {
+            .reply-chat-bubble__right {
+                .reply-user-name {
                     font-weight: bold;
                     margin-bottom: 0.25rem;
                     font-size: 0.9rem;
                     color: #37474f;
                     cursor: default;
                 }
-                .user-message {
+                .reply-user-message {
                     word-break: break-all;
                 }
-                .message-time {
+                .reply-message-time {
                     display: block;
                     text-align: right;
                 }
             }
         }
-        .chat-bubble.right {
+        .reply-chat-bubble.right {
             margin-left: auto;
             border-radius: 1.25rem 1.25rem 0 1.25rem;
             background-color: #fff;
@@ -115,6 +115,7 @@
         align-items: flex-start;
         margin-bottom: 1.25rem;
         cursor: default;
+        z-index: 100;
         .chat-bubble__left {
             width: 2rem;
             height: 2rem;
@@ -123,6 +124,7 @@
             cursor: default;
         }
         .chat-bubble__right {
+            z-index: 0;
             .user-name {
                 font-weight: bold;
                 margin-bottom: 0.25rem;

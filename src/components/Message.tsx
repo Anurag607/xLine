@@ -33,47 +33,53 @@ const Message = ({ message, index }: {message: any, index: number}) => {
     <div className={styles.messageContainer}>
       {( /*(Cookies.get("replyMode") !== undefined && Cookies.get("replyMode") === "true") ||*/ replyTo !== null ) ?
 
-      <div className={`${styles["replyToContainer"]} replyToContainer ${styles[message.uid === user?.uid ? "right" : ""]}`}>
+      <div
+        className={`${styles["replyToContainer"]} replyToContainer ${styles[message.uid === user?.uid ? "right" : ""]}`}
+        data-switch={"off"}
+        onClick={(event:React.MouseEvent<HTMLDivElement>) => {
+          if(!deselectMsg(index, event)) selectMsg(index, event)
+        }}
+      >
         <div
           // className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[JSON.parse(Cookies.get('selectedMsg')).uid === user?.uid ? "right" : ""]}`}
-          className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[replyTo.uid === user?.uid ? "right" : ""]}`}
+          className={`${styles["replyTo-chat-bubble"]} replyTo-chat-bubble ${styles[replyTo.uid === user?.uid ? "right" : ""]}`}
           // data-details={Cookies.get('selectedMsg')}
           data-details={JSON.stringify(replyTo)}
           data-switch={"off"}
-          onClick={(event:React.MouseEvent<HTMLDivElement>) => { if(!deselectMsg(index)) selectMsg(index) }}
+          onClick={(event:React.MouseEvent<HTMLDivElement>) => {
+            if(!deselectMsg(index, event)) selectMsg(index, event)
+          }}
         >
           <Image
-            className={styles["reply-chat-bubble__left"]}
+            className={styles["replyTo-chat-bubble__left"]}
             // src={`${(JSON.parse(Cookies.get('selectedMsg')).avatar === null) ? '/user.png' : JSON.parse(Cookies.get('selectedMsg')).avatar}`}
             src={`${(replyTo.avatar === null) ? '/user.png' : replyTo.avatar}`}
             alt="user avatar"
             width={50}
             height={50}
           />
-          <div className={styles["reply-chat-bubble__right"]}>
+          <div className={styles["replyTo-chat-bubble__right"]}>
             {/* <p className={styles["user-name"]}>{JSON.parse(Cookies.get('selectedMsg')).name}</p>
             <p className={styles["user-message"]}>{JSON.parse(Cookies.get('selectedMsg')).text}</p> */}
-            <p className={styles["user-name"]}>{replyTo.name}</p>
-            <p className={styles["user-message"]}>{replyTo.text}</p>
+            <p className={styles["replyTo-user-name"]}>{replyTo.name}</p>
+            <p className={styles["replyTo-user-message"]}>{replyTo.text}</p>
           </div>
         </div>
 
         <div
-          className={`${styles["chat-bubble"]} chat-bubble ${styles[message.uid === user?.uid ? "right" : ""]}`}
+          className={`${styles["reply-chat-bubble"]} reply-chat-bubble ${styles[message.uid === user?.uid ? "right" : ""]}`}
           data-details={JSON.stringify(message)}
-          data-switch={"off"}
-          onClick={(event:React.MouseEvent<HTMLDivElement>) => { if(!deselectMsg(index)) selectMsg(index) }}
           >
           <Image
-            className={styles["chat-bubble__left"]}
+            className={styles["reply-chat-bubble__left"]}
             src={`${(message.avatar === null) ? '/user.png' : message.avatar}`}
             alt="user avatar"
             width={50}
             height={50}
           />
-          <div className={styles["chat-bubble__right"]}>
-            <p className={styles["user-name"]}>{message.name}</p>
-            <p className={styles["user-message"]}>{message.text}</p>
+          <div className={styles["reply-chat-bubble__right"]}>
+            <p className={styles["reply-user-name"]}>{message.name}</p>
+            <p className={styles["reply-user-message"]}>{message.text}</p>
           </div>
         </div>
       </div> :
@@ -82,7 +88,9 @@ const Message = ({ message, index }: {message: any, index: number}) => {
         className={`${styles["chat-bubble"]} chat-bubble ${styles[message.uid === user?.uid ? "right" : ""]}`}
         data-details={JSON.stringify(message)}
         data-switch={"off"}
-        onClick={(event:React.MouseEvent<HTMLDivElement>) => { if(!deselectMsg(index)) selectMsg(index) }}
+        onClick={(event:React.MouseEvent<HTMLDivElement>) => {
+          if(!deselectMsg(index, event)) selectMsg(index, event)
+        }}
       >
         <Image
           className={styles["chat-bubble__left"]}
