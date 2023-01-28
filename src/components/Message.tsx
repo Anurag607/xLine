@@ -18,7 +18,6 @@ const Message = ({ message, index }: {message: any, index: number}) => {
   const [replyTo, setReplyTo] = React.useState<any>(null)
 
   React.useEffect(() => {
-    if(Cookies.get("selectedMsg")!== undefined && message.id === JSON.parse(Cookies.get("selectedMsg")).id) selectMsg(index)
 
     if(message.replyTo !== undefined && message.replyTo !== null) {
       try {
