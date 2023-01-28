@@ -28,6 +28,10 @@ const ChatBox = () => {
     const [addGrpBtnState ,setAddGrpBtnState] = useState<string>((Cookies.get('addGrpState') !== undefined) ? Cookies.get('addGrpState') : 'collapsed')
     const router = useRouter()
 
+    const styling = {
+        warning: React.useRef<HTMLInputElement>(null)
+    }
+
     const registerChatRoom = async () => {
         try {
           await addDoc(collection(db, "chatRooms"), {
@@ -80,7 +84,7 @@ const ChatBox = () => {
                     let allowedUsers = data.users.split(',')
                     if(user?.uid !== undefined && allowedUsers.includes(user.uid)) {
                         groups.push(data)
-                        if(data.name.toLowerCase() === "common" && Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined) {
+                        if(data.name.toLowerCase() === "common" && (Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined)) {
                             Cookies.set("currentGroup", data.id)
                             currentGrp = data.id
                         }
@@ -94,7 +98,7 @@ const ChatBox = () => {
             const qMsgs = query(collection(db, "messages"),
                 where('room', "==", (Cookies.get("currentGroup") !== undefined) ? Cookies.get("currentGroup") : currentGrp),
                 orderBy("createdAt"),
-                limit(50),
+                // limit(50),
             )
         
             const getMessages = onSnapshot(qMsgs, (QuerySnapshot) => {
@@ -143,7 +147,7 @@ const ChatBox = () => {
             <div className={styles["chat-body"]}>
                 <section className={`${styles["chat-groups"]} chatRooms`}>
                     <div className={styles.sideHead}>
-                        <button className={styles.addGroupButton} data-toggle={addGrpBtnState} onClick={(event) => {
+                        <button className={`${styles.addGroupButton} addGroupButton`} data-toggle={addGrpBtnState} onClick={(event) => {
                             const target:HTMLButtonElement = event.currentTarget
                             const formCont:HTMLFormElement = document.querySelector('.formCont')!
                             console.log(formCont)
@@ -170,10 +174,28 @@ const ChatBox = () => {
                         <form className={`${styles.formCont} formCont`}
                             onSubmit={(event) => {
                                 event.preventDefault()
-                                registerChatRoom()
+                                if(groupName.length >= 4) {
+                                    styling.warning.current!.style.display = "none"
+                                    const target:HTMLButtonElement = document.querySelector('.addGroupButton')!
+                                    const formCont:HTMLFormElement = event.currentTarget
+                                    formCont.style.opacity = "0"
+                                    setTimeout(() => {
+                                        formCont.style.height = "0rem"
+                                        formCont.style.display = 'none'
+                                    }, 300)
+                                    target.dataset.toggle = 'collapsed'
+                                    styling.warning.current!.style.display = "none"
+                                    setAddGrpBtnState("collapsed")
+                                    Cookies.set("addGrpState", target.dataset.toggle)
+                                    registerChatRoom()
+                                }
+                                else {
+                                    styling.warning.current!.style.display = "block"
+                                }
                             }}
                         >
-                            <input type="text" className={styles.grpName} placeholder="Enter Group Name..." value={groupName} onChange={(event) => setGroupName(event.target.value)} />
+                            <span className={styles.warning} ref={styling.warning}>Group name must be at least 4 characters long</span>
+                            <input type="text" className={styles.grpName} placeholder="Enter Group Name..." value={groupName} minLength={4} onChange={(event) => setGroupName(event.target.value)} />
                             {usersList.map((el,i) => {
                                 if(el.uid !== user?.uid) {
                                     return <div className={styles.users} key={i} data-status="not-added" data-details={JSON.stringify(el)} onClick={(event => {
@@ -217,8 +239,8 @@ const ChatBox = () => {
                     </div>
                 </section>
                 <section className={`${styles["messages-wrapper"]} messages`}>
-                    {messages.map((message:any) => (
-                        <Message key={message.id} message={message} />
+                    {messages.map((message:any, index:number) => (
+                        <Message key={message.id} message={message} index={index} />
                     ))}
                     <div className={styles.scrollSpan} ref={scroll} />
                 </section>

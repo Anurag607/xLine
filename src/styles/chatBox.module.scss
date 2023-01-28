@@ -17,7 +17,7 @@
         justify-content: flex-end;
         align-items: center;
         width: 100vw;
-        height: 90vh;
+        height: 95vh;        
         position: relative;
         .chat-groups {
             width: 20vw;
@@ -68,6 +68,18 @@
                     transition: all 0.3s ease-in-out;
                     height: 0rem;
                     opacity: 0;
+                    .warning {
+                        display: none;
+                        border: transparent;
+                        outline: none;
+                        background: red;
+                        color: #fafafa;
+                        padding: 0.25rem 0.5rem;
+                        font-size: 0.75rem;
+                        border-radius: 0.25rem;
+                        cursor: default;
+                        text-align: center;
+                    }
                     .grpName {
                         outline: none;
                         border: none;
@@ -110,6 +122,7 @@
                 gap: 1rem;
                 padding-block: 1.5rem;
                 transition: all 0.3s ease-in-out;
+                margin-bottom: 20vh;
                 button {
                     width: 10rem;
                     font-family: 'Poppins', sans-serif;
@@ -123,7 +136,6 @@
                     cursor: pointer;
                     text-transform: capitalize;
                 }
-                margin-bottom: 20vh;
             }
         }
         .messages-wrapper {

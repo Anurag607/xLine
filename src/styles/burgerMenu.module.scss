@@ -27,10 +27,10 @@
         cursor: pointer;
         border-radius: 15px;
         transition: all 0.5s;
-        z-index: 1000;
+        z-index: 1500;
         position: relative;
         background-color: transparent;
-        translate: 0 0.55rem;
+        translate: 0 0.15rem;
         .menuBarCont {
             display: flex;
             justify-content: center;
@@ -88,7 +88,7 @@
     }
 
     .sidebar {
-        z-index: 100;
+        z-index: 1000;
         position: absolute;
         top: 0;
         left: 0;
@@ -102,9 +102,10 @@
         gap: 1rem;
         transition: all 0.3s ease;
         padding-top: 10rem;
+        cursor: default;
         .chat-groups {
             width: 0;
-            height: 100vh;
+            height: 90vh;
             overflow-x: hidden;
             background-color: #ffffff;
             box-shadow: 0.1rem 0 0.25rem #e8e8e8;
@@ -116,7 +117,7 @@
             justify-content: flex-start;
             align-items: center;
             overflow-y: scroll;
-            z-index: 100;
+            z-index: 1000 !important;
             transition: all 0.3s ease-in-out !important;
             .sideHead {
                 margin-top: 6.75rem;
@@ -142,7 +143,7 @@
                     background-color: #f65275;
                     color: #ffffff;
                     cursor: pointer;
-                    z-index: 1001;
+                    z-index: 1500;
                 }
                 .formCont {
                     display: none;
@@ -153,6 +154,18 @@
                     transition: all 0.3s ease-in-out;
                     height: 0rem;
                     opacity: 0;
+                    .warning {
+                        display: none;
+                        border: transparent;
+                        outline: none;
+                        background: red;
+                        color: #fafafa;
+                        padding: 0.25rem 0.5rem;
+                        font-size: 0.75rem;
+                        border-radius: 0.25rem;
+                        cursor: default;
+                        text-align: center;
+                    }
                     .grpName {
                         outline: none;
                         border: none;
@@ -184,7 +197,7 @@
                         background-color: #f65275;
                         color: #ffffff;
                         cursor: pointer;
-                        z-index: 1001;
+                        z-index: 1500;
                     }
                 }
             }

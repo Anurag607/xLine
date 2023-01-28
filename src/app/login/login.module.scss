@@ -38,7 +38,7 @@
             width: 100%;
             @include flex($dir: column, $gap: 1.25rem);
             h2 {
-                font-family: 'Lobster', cursive;
+                font-family: 'Lobster', 'Poppins', sans-serif;
                 font-size: 3rem;
                 margin-bottom: 0.5rem;
                 color: rgba(0,0,0,0.75);

@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import {useRouter} from 'next/navigation'
 import Link from "next/link"
 import { auth, sendPasswordReset } from '../../../firebase/clientApp'
+import Loader from '../../components/loader'
 
 function Reset() {
   const [email, setEmail] = useState("")
@@ -12,11 +13,11 @@ function Reset() {
   const router = useRouter()
 
   useEffect(() => {
-    if (loading) return;
     if (user) router.push("/")
   }, [user, loading, router])
 
   return (
+    (loading) ? <Loader /> :
     <div className="reset">
       <div className="reset__container">
         <input

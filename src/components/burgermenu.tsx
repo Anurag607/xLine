@@ -21,12 +21,11 @@ import {useRouter} from 'next/navigation'
 
 const Burger = () => {
 
-    const [userDetails, SetuserDetails] = React.useState<userDetails>({
-        email: '',
-        name: '',
-        avatar: ''
-    })
     const [groupName, setGroupName] = useState<string>("")
+
+    const styling = {
+        warning: React.useRef<HTMLInputElement>(null)
+    }
 
     const registerChatRoom = async () => {
         try {
@@ -89,13 +88,13 @@ const Burger = () => {
                     let allowedUsers = data.users.split(',')
                     if(user?.uid !== undefined && allowedUsers.includes(user.uid)) {
                         groups.push(data)
-                        if(data.name.toLowerCase() === "common" && Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined) {
+                        if(data.name.toLowerCase() === "common" && (Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined)) {
                             Cookies.set("currentGroup", data.id)
                             currentGrp = data.id
                         }
                     }
                 })
-                if(Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined) Cookies.set("currentGroup", groups[0].id)
+                if(Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined && groups[0] !== undefined) Cookies.set("currentGroup", groups[0].id)
                 Cookies.set("groupList", JSON.stringify(groups))
                 setGroups(groups)
             })
@@ -103,7 +102,7 @@ const Burger = () => {
             const qMsgs = query(collection(db, "messages"),
                 where('room', "==", (Cookies.get("currentGroup") !== undefined) ? Cookies.get("currentGroup") : currentGrp),
                 orderBy("createdAt"),
-                limit(50),
+                // limit(50),
             )
         
             const getMessages = onSnapshot(qMsgs, (QuerySnapshot) => {
@@ -181,6 +180,7 @@ const Burger = () => {
                                     formCont.style.display = 'none'
                                 }, 300)
                                 target.dataset.toggle = 'collapsed'
+                                styling.warning.current!.style.display = "none"
                                 setAddGrpBtnState("collapsed")
                                 Cookies.set("addGrpState", target.dataset.toggle)
                             }
@@ -188,9 +188,26 @@ const Burger = () => {
                         <form className={`${styles.formCont} bg-formCont`}
                             onSubmit={(event) => {
                                 event.preventDefault()
-                                registerChatRoom()
+                                if(groupName.length >= 4) {
+                                    styling.warning.current!.style.display = "none"
+                                    const target:HTMLButtonElement = document.querySelector('.addGroupButton')!
+                                    const formCont:HTMLFormElement = event.currentTarget
+                                    formCont.style.opacity = "0"
+                                    setTimeout(() => {
+                                        formCont.style.height = "0rem"
+                                        formCont.style.display = 'none'
+                                    }, 300)
+                                    target.dataset.toggle = 'collapsed'
+                                    setAddGrpBtnState("collapsed")
+                                    Cookies.set("addGrpState", target.dataset.toggle)
+                                    registerChatRoom()
+                                }
+                                else {
+                                    styling.warning.current!.style.display = "block"
+                                }
                             }}
                         >
+                            <span className={styles.warning} ref={styling.warning}>Group name must be at least 4 characters long</span>
                             <input type="text" className={styles.grpName} placeholder="Enter Group Name..." value={groupName} onChange={(event) => setGroupName(event.target.value)} />
                             {usersList.map((el,i) => {
                                 if(el.uid !== user?.uid) {

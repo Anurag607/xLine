@@ -19,6 +19,7 @@ const SendMessage = ({ scroll }: {scroll: any}) => {
       name: (displayName === null) ? email.split("@")[0] : displayName,
       avatar: photoURL,
       createdAt: serverTimestamp(),
+      replyTo: (Cookies.get("replyMode") === "true") ? JSON.parse(Cookies.get('selectedMsg')).id : '',
       room: Cookies.get('currentGroup'),
       uid,
     })
@@ -40,7 +41,7 @@ const SendMessage = ({ scroll }: {scroll: any}) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         autoFocus
-        autoComplete="false"
+        autoComplete="off"
       />
       <button type="submit">Send</button>
     </form>
