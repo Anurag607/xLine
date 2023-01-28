@@ -4,13 +4,9 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import Image from 'next/image'
 import styles from '../styles/messages.module.scss'
 import {selectMsg, deselectMsg} from '../scripts/msgReply.mjs'
-import Cookies from 'js-cookie'
 import {
-  query,
-  collection,
-  onSnapshot,
-  where,
-  getFirestore, doc, getDoc
+  doc,
+  getDoc
 } from "firebase/firestore"
 
 const Message = ({ message, index }: {message: any, index: number}) => {
@@ -37,7 +33,7 @@ const Message = ({ message, index }: {message: any, index: number}) => {
     <div className={styles.messageContainer}>
       {( /*(Cookies.get("replyMode") !== undefined && Cookies.get("replyMode") === "true") ||*/ replyTo !== null ) ?
 
-      <div className={styles.replyToContainer}>
+      <div className={`${styles["replyToContainer"]} replyToContainer ${styles[message.uid === user?.uid ? "right" : ""]}`}>
         <div
           // className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[JSON.parse(Cookies.get('selectedMsg')).uid === user?.uid ? "right" : ""]}`}
           className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[replyTo.uid === user?.uid ? "right" : ""]}`}
@@ -45,7 +41,7 @@ const Message = ({ message, index }: {message: any, index: number}) => {
           data-details={JSON.stringify(replyTo)}
           data-switch={"off"}
           onClick={(event:React.MouseEvent<HTMLDivElement>) => { if(!deselectMsg(index)) selectMsg(index) }}
-          >
+        >
           <Image
             className={styles["reply-chat-bubble__left"]}
             // src={`${(JSON.parse(Cookies.get('selectedMsg')).avatar === null) ? '/user.png' : JSON.parse(Cookies.get('selectedMsg')).avatar}`}
@@ -87,7 +83,7 @@ const Message = ({ message, index }: {message: any, index: number}) => {
         data-details={JSON.stringify(message)}
         data-switch={"off"}
         onClick={(event:React.MouseEvent<HTMLDivElement>) => { if(!deselectMsg(index)) selectMsg(index) }}
-        >
+      >
         <Image
           className={styles["chat-bubble__left"]}
           src={`${(message.avatar === null) ? '/user.png' : message.avatar}`}
