@@ -36,7 +36,7 @@ const Message = ({ message, index }: {message: any, index: number}) => {
 
   return (
     <div className={styles.messageContainer}>
-      {( (Cookies.get("replyMode") !== undefined && Cookies.get("replyMode") === "true") || replyTo !== null ) ?
+      {( /*(Cookies.get("replyMode") !== undefined && Cookies.get("replyMode") === "true") ||*/ replyTo !== null ) ?
 
       <div className={styles.replyToContainer}>
         <div

@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from "react"
 import {
   query,
+  doc,
   collection,
   orderBy,
   onSnapshot,
   limit,
   addDoc,
   serverTimestamp,
-  where
+  where,
+  updateDoc,
 } from "firebase/firestore"
 import { db,auth } from "../../firebase/clientApp"
 import Message from "./Message"
