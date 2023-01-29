@@ -120,7 +120,10 @@ const ChatBox = () => {
 
     useEffect(() => {
 
+        scroll.current.scrollIntoView()
+
         if(!user) return
+        
         const formCont:HTMLFormElement = document.querySelector('.formCont')!
         if(addGrpBtnState === 'expanded') {
             formCont.style.display = 'flex'
@@ -136,7 +139,6 @@ const ChatBox = () => {
             }, 300)
         }
 
-        scroll.current.scrollIntoView()
 
         getUserList()
 

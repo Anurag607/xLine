@@ -3,26 +3,29 @@ import Cookies from 'js-cookie'
 const deselectMsgs = () => {
     const msgs = document.querySelector('.messages')
     msgs.childNodes.forEach((el,i) => {
-        if(el.childNodes.length > 0) {
-            el.childNodes[0].style.backgroundColor = "#ffffff"
-            if(el.childNodes[0].childNodes.length === 2) {
-                el.childNodes[0].childNodes[1].style.backgroundColor = "#ffffff"
+        console.log()
+        if(el.childElementCount > 1) {
+            if(el.childNodes[1].childElementCount > 0) {
+                el.childNodes[1].childNodes[0].style.backgroundColor = "#ffffff"
             }
+        } else if(el.childElementCount > 0) {
+            el.childNodes[0].style.backgroundColor = "#ffffff"
         }
-        Cookies.remove("selectedMsg", {path: ''})
-        Cookies.set("replyMode", false)
     })
+    Cookies.remove("selectedMsg", {path: ''})
+    Cookies.set("replyMode", false)
 }
 
 const deselectMsg = (index, event) => {
     const messages = document.querySelector('.messages')
-    let selectedMsg = messages.children[index].children[0]
+    let msg = messages.children[index]
+    let selectedMsg = msg.children[0]
+    if(msg.childElementCount > 1) {
+        selectedMsg = msg.children[msg.childElementCount-1].lastChild
+    }
     if(selectedMsg.dataset.switch === 'on') {
         selectedMsg.dataset.switch = 'off'
         selectedMsg.style.backgroundColor = "#ffffff"
-        if(selectedMsg.children.length === 2) {
-            selectedMsg.children[1].style.backgroundColor = "#ffffff"
-        }
         Cookies.remove("selectedMsg", {path: ''})
         Cookies.set("replyMode", false)
         return true
@@ -32,13 +35,16 @@ const deselectMsg = (index, event) => {
 
 const selectMsg = (index, event) => {
     const messages = document.querySelector('.messages')
-    let selectedMsg = messages.children[index].children[0]
+    let msg = messages.children[index]
+    let selectedMsg = msg.children[0]
+    if(msg.childElementCount > 1) {
+        selectedMsg = msg.children[msg.childElementCount-1].lastChild
+    }
     deselectMsgs()
     selectedMsg.style.backgroundColor = "#CCCCFF"
     selectedMsg.dataset.switch = 'on'
-    if(selectedMsg.children.length === 2) {
-        Cookies.set("selectedMsg", selectedMsg.children[1].dataset.details)
-        selectedMsg.children[1].style.backgroundColor = "#CCCCFF"
+    if(selectedMsg.childElementCount > 2) {
+        Cookies.set("selectedMsg", selectedMsg.children[selectedMsg.childElementCount-2].dataset.details)
     }
     else Cookies.set("selectedMsg", selectedMsg.dataset.details)
     Cookies.set("replyMode", true)

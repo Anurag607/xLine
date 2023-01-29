@@ -1,14 +1,15 @@
 .messageContainer {
     margin-bottom: 2rem;
+    background-color: transparent !important;
     .replyToContainer {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-end;
+        align-items: flex-start;
         width: 12.75rem;
         height: auto;
         border-radius: 1.25rem 1.25rem 1.25rem 0;
-        background-color: #fff;
+        background-color: #ffffff;
         box-shadow: 0 0 0.25rem #dadada;
         padding: 0.5rem 0.5rem 0rem 0rem;
         position: relative;
@@ -25,6 +26,7 @@
             margin-bottom: 0.5rem;
             cursor: default;
             font-size: 0.75rem;
+            margin-left: 1rem;
             .replyTo-chat-bubble__left {
                 width: 1.5rem;
                 height: 1.5rem;
@@ -50,16 +52,15 @@
             }
         }
         .replyTo-chat-bubble.right {
-            margin-left: auto;
             border-radius: 1.25rem 1.25rem 0 1.25rem;
-            background-color: #fff;
+            background-color: transparent;
             box-shadow: 0 0 0.25rem #dadada;
             cursor: default;
         }
         .reply-chat-bubble {
             border-radius: 1.25rem 1.25rem 1.25rem 0;
             padding: 1rem 1rem 0rem 1rem;
-            background-color: #ffffff;
+            background-color: transparent;
             color: #37474f;
             width: max-content;
             max-width: calc(100% - 3rem);
@@ -94,8 +95,9 @@
         }
         .reply-chat-bubble.right {
             margin-left: auto;
+            align-items: flex-end;
             border-radius: 1.25rem 1.25rem 0 1.25rem;
-            background-color: #fff;
+            background-color: transparent;
             box-shadow: 0 0 0.25rem #dadada;
             cursor: default;
         }
@@ -104,18 +106,20 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            align-items: center;
-            padding-inline: 0.5rem;
+            padding-right: 0.5rem;
             padding-bottom: 0.35rem;
+            background-color: transparent !important;
             span {
                 font-family: 'Poppins', sans-serif;
                 font-size: 0.75rem;
                 color: #c5c5c5;
+                background-color: transparent !important;
             }
         }
     }
     .replyToContainer.right {
         margin-left: auto;
+        align-items: flex-end;
         border-radius: 1.25rem 1.25rem 0 1.25rem;
     }
     .chat-bubble {
@@ -169,17 +173,19 @@
             justify-content: flex-end;
             align-items: center;
             align-items: center;
+            background-color: transparent !important;
             span {
                 font-family: 'Poppins', sans-serif;
                 font-size: 0.75rem;
                 color: #c5c5c5;
+                background-color: transparent !important;
             }
         }
     }
     .chat-bubble.right {
         margin-left: auto;
         border-radius: 1.25rem 1.25rem 0 1.25rem;
-        background-color: #fff;
+        background-color: #ffffff;
         box-shadow: 0 0 0.25rem #dadada;
         cursor: default;
     }
