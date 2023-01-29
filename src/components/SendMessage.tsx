@@ -19,7 +19,7 @@ const SendMessage = ({ scroll }: {scroll: any}) => {
       name: (displayName === null) ? email.split("@")[0] : displayName,
       avatar: photoURL,
       createdAt: serverTimestamp(),
-      replyTo: (Cookies.get("replyMode") === "true") ? JSON.parse(Cookies.get('selectedMsg')).id : '',
+      replyTo: (Cookies.get("replyMode") === "true") ? JSON.parse(Cookies.get('selectedMsg')).id : null,
       room: Cookies.get('currentGroup'),
       uid,
     })

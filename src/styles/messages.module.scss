@@ -11,6 +11,7 @@
         background-color: #fff;
         box-shadow: 0 0 0.25rem #dadada;
         padding: 0.5rem 0.5rem 0rem 0rem;
+        position: relative;
         .replyTo-chat-bubble {
             border-radius: 0.75rem !important;
             padding: 0.5rem;
@@ -57,7 +58,7 @@
         }
         .reply-chat-bubble {
             border-radius: 1.25rem 1.25rem 1.25rem 0;
-            padding: 1rem;
+            padding: 1rem 1rem 0rem 1rem;
             background-color: #ffffff;
             color: #37474f;
             width: max-content;
@@ -98,6 +99,20 @@
             box-shadow: 0 0 0.25rem #dadada;
             cursor: default;
         }
+        .time {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            align-items: center;
+            padding-inline: 0.5rem;
+            padding-bottom: 0.35rem;
+            span {
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.75rem;
+                color: #c5c5c5;
+            }
+        }
     }
     .replyToContainer.right {
         margin-left: auto;
@@ -112,32 +127,52 @@
         max-width: calc(100% - 3rem);
         box-shadow: 0 0 0.25rem #dadada;
         display: flex;
+        flex-direction: column;
         align-items: flex-start;
         margin-bottom: 1.25rem;
         cursor: default;
         z-index: 100;
-        .chat-bubble__left {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            cursor: default;
-        }
-        .chat-bubble__right {
-            z-index: 0;
-            .user-name {
-                font-weight: bold;
-                margin-bottom: 0.25rem;
-                font-size: 0.9rem;
-                color: #37474f;
+        div:nth-child(1) {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-self: start;
+            width: 100%;
+            .chat-bubble__left {
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                margin-right: 0.5rem;
                 cursor: default;
             }
-            .user-message {
-                word-break: break-all;
+            .chat-bubble__right {
+                z-index: 0;
+                .user-name {
+                    font-weight: bold;
+                    margin-bottom: 0.25rem;
+                    font-size: 0.9rem;
+                    color: #37474f;
+                    cursor: default;
+                }
+                .user-message {
+                    word-break: break-all;
+                }
+                .message-time {
+                    display: block;
+                    text-align: right;
+                }
             }
-            .message-time {
-                display: block;
-                text-align: right;
+        }
+        .time {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            align-items: center;
+            span {
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.75rem;
+                color: #c5c5c5;
             }
         }
     }

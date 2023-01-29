@@ -146,6 +146,28 @@
             overflow-x: hidden;
             overflow-y: scroll;
             position: relative;
+            .dateContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: auto;
+                background-color: transparent;
+                margin-block: 2.5rem;
+                span {
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 0.85rem;
+                    background-color: #4741af;
+                    border-radius: 0.75rem;
+                    border: none;
+                    outline: none;
+                    box-shadow: 0 0 0.5rem #CCCCFF;
+                    padding: 0.5rem 1rem;
+                    color: #fafafa;
+                    cursor: default;
+                }
+            }
             .scrollSpan {
                 width: 68.5%;
                 height: 3.5rem;

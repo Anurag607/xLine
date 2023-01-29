@@ -12,10 +12,14 @@ import {
 const Message = ({ message, index }: {message: any, index: number}) => {
   const [user] = useAuthState(auth)
   const [replyTo, setReplyTo] = React.useState<any>(null)
+  const [time, setTime] = React.useState<string>('')
 
   React.useEffect(() => {
 
-    if(message.replyTo !== undefined && message.replyTo !== null) {
+    let dateTime = message.createdAt.toDate()
+    setTime(currTime => currTime = `${dateTime.getHours()}:${dateTime.getMinutes()}`)
+
+    if(message.replyTo !== undefined && message.replyTo !== null && message.replyTo.length > 0) {
       try {
         const getMessages = async() => {
           let docRef = doc(db, 'messages', message.replyTo)
@@ -82,6 +86,10 @@ const Message = ({ message, index }: {message: any, index: number}) => {
             <p className={styles["reply-user-message"]}>{message.text}</p>
           </div>
         </div>
+
+        <div className={styles.time}>
+          <span>{time}</span>
+        </div>
       </div> :
 
       <div
@@ -92,16 +100,21 @@ const Message = ({ message, index }: {message: any, index: number}) => {
           if(!deselectMsg(index, event)) selectMsg(index, event)
         }}
       >
-        <Image
-          className={styles["chat-bubble__left"]}
-          src={`${(message.avatar === null) ? '/user.png' : message.avatar}`}
-          alt="user avatar"
-          width={50}
-          height={50}
-        />
-        <div className={styles["chat-bubble__right"]}>
-          <p className={styles["user-name"]}>{message.name}</p>
-          <p className={styles["user-message"]}>{message.text}</p>
+        <div>
+          <Image
+            className={styles["chat-bubble__left"]}
+            src={`${(message.avatar === null) ? '/user.png' : message.avatar}`}
+            alt="user avatar"
+            width={50}
+            height={50}
+          />
+          <div className={styles["chat-bubble__right"]}>
+            <p className={styles["user-name"]}>{message.name}</p>
+            <p className={styles["user-message"]}>{message.text}</p>
+          </div>
+        </div>
+        <div className={styles.time}>
+          <span>{time}</span>
         </div>
       </div>
     }

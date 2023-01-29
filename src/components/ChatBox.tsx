@@ -8,8 +8,7 @@ import {
   limit,
   addDoc,
   serverTimestamp,
-  where,
-  updateDoc,
+  where
 } from "firebase/firestore"
 import { db,auth } from "../../firebase/clientApp"
 import Message from "./Message"
@@ -29,6 +28,7 @@ const ChatBox = () => {
     const [addUsers, setAddUsers] = useState<any[]>([user?.uid])
     const [addGrpBtnState ,setAddGrpBtnState] = useState<string>((Cookies.get('addGrpState') !== undefined) ? Cookies.get('addGrpState') : 'collapsed')
     const router = useRouter()
+    const [date, setDate] = useState<string>("")
 
     const styling = {
         warning: React.useRef<HTMLInputElement>(null)
@@ -241,9 +241,47 @@ const ChatBox = () => {
                     </div>
                 </section>
                 <section className={`${styles["messages-wrapper"]} messages`}>
-                    {messages.map((message:any, index:number) => (
-                        <Message key={message.id} message={message} index={index} />
-                    ))}
+                    {messages.map((message:any, index:number) => {
+                        let dateTime = (message.createdAt !== null) ? message.createdAt.toDate() : new Date()
+                        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                        let day = dateTime.getDate()
+                        let month = dateTime.getMonth()
+                        let year = dateTime.getFullYear()
+                        switch(day[1]) {
+                            case '1' : {
+                                day += 'st'
+                                break
+                            }
+                            case '2' : {
+                                day += 'nd'
+                                break
+                            }
+                            case '3' : {
+                                day += 'rd'
+                                break
+                            }
+                            default : {
+                                day += 'th'
+                                break
+                            }
+                        }
+                        let currentDate = `${day} ${months[month]} ${year}`
+                        let date = Cookies.get('currentDate')
+                        if(date !== currentDate) {
+                            Cookies.set('currentDate', currentDate)
+                            return (
+                                <div key={message.id}>
+                                    <div className={styles.dateContainer}>
+                                        <span>{currentDate}</span>
+                                    </div>
+                                    <Message key={message.id} message={message} index={index} />
+                                </div>
+                            )
+                        }
+                        else {
+                            return <Message key={message.id} message={message} index={index} />
+                        }
+                    })}
                     <div className={styles.scrollSpan} ref={scroll} />
                 </section>
             </div>
