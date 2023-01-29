@@ -20,7 +20,7 @@ import {useRouter} from 'next/navigation'
 
 const ChatBox = () => {
     const [messages, setMessages] = useState<any>([])
-    const scroll = useRef<any>()
+    const scroll = useRef<any>(null)
     const [groupName, setGroupName] = useState<string>("")
     const [user] = useAuthState(auth)
     const [usersList, setUsersList] = useState<any[]>((typeof Cookies.get("usersList") !== "undefined") ? JSON.parse(Cookies.get("usersList")) : [])
@@ -28,11 +28,16 @@ const ChatBox = () => {
     const [addUsers, setAddUsers] = useState<any[]>([user?.uid])
     const [addGrpBtnState ,setAddGrpBtnState] = useState<string>((Cookies.get('addGrpState') !== undefined) ? Cookies.get('addGrpState') : 'collapsed')
     const router = useRouter()
-    const [date, setDate] = useState<string>("")
 
     const styling = {
         warning: React.useRef<HTMLInputElement>(null)
     }
+
+    useEffect(() => {
+        const messagesCont:HTMLElement = document.querySelector('.messages')!
+        let el = messagesCont.children[messagesCont.childElementCount-2] as HTMLDivElement
+        if(el !== undefined) el.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
+    }, [messages]) //eslint-disable-line
 
     const registerChatRoom = async () => {
         try {
@@ -92,6 +97,7 @@ const ChatBox = () => {
                         }
                     }
                 })
+                if(groups.length === 0) window.location.reload()
                 if(Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined && groups[0] !== undefined) Cookies.set("currentGroup", groups[0].id)
                 Cookies.set("groupList", JSON.stringify(groups))
                 setGroups(groups)
@@ -119,8 +125,6 @@ const ChatBox = () => {
     }
 
     useEffect(() => {
-
-        scroll.current.scrollIntoView()
 
         if(!user) return
         
@@ -242,7 +246,7 @@ const ChatBox = () => {
                         })}
                     </div>
                 </section>
-                <section className={`${styles["messages-wrapper"]} messages`}>
+                <section className={`${styles["messages-wrapper"]} messages`} id={"messages-wrapper"}>
                     {messages.map((message:any, index:number) => {
                         let dateTime = (message.createdAt !== null) ? message.createdAt.toDate() : new Date()
                         let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -284,7 +288,7 @@ const ChatBox = () => {
                             return <Message key={message.id} message={message} index={index} />
                         }
                     })}
-                    <div className={styles.scrollSpan} ref={scroll} />
+                    <div className={`${styles.scrollSpan} scrollSpan`} ref={scroll} />
                 </section>
             </div>
             <SendMessage scroll={scroll} />

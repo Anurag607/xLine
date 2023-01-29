@@ -16,7 +16,7 @@ const Message = ({ message, index }: {message: any, index: number}) => {
 
   React.useEffect(() => {
 
-    let dateTime = message.createdAt.toDate()
+    let dateTime = (message.createdAt !== null) ? message.createdAt.toDate() : new Date()
     setTime(currTime => currTime = `${dateTime.getHours()}:${dateTime.getMinutes()}`)
 
     if(message.replyTo !== undefined && message.replyTo !== null && message.replyTo.length > 0) {
