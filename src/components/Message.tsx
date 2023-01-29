@@ -42,6 +42,8 @@ const Message = ({ message, index }: {message: any, index: number}) => {
         data-switch={"off"}
         onClick={(event:React.MouseEvent<HTMLDivElement>) => {
           if(!deselectMsg(index, event)) selectMsg(index, event)
+          const sendMsg:HTMLInputElement = document.querySelector(".form-input__input")!
+          if(sendMsg !== undefined && sendMsg !== null) sendMsg.focus()
         }}
       >
         <div
@@ -98,6 +100,8 @@ const Message = ({ message, index }: {message: any, index: number}) => {
         data-switch={"off"}
         onClick={(event:React.MouseEvent<HTMLDivElement>) => {
           if(!deselectMsg(index, event)) selectMsg(index, event)
+          const sendMsg:HTMLInputElement = document.querySelector(".form-input__input")!
+          if(sendMsg !== undefined && sendMsg !== null) sendMsg.focus()
         }}
       >
         <div>
