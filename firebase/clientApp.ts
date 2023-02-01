@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
 import {
   GoogleAuthProvider,
   getAuth,
@@ -9,7 +9,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
-} from "firebase/auth";
+} from "firebase/auth"
 import {
   getFirestore,
   query,
@@ -20,7 +20,7 @@ import {
   updateDoc,
   doc,
   getDoc
-} from "firebase/firestore";
+} from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -43,6 +43,7 @@ const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
+    console.log(user)
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
     const commonRoom = doc(db, "chatRooms", process.env.NEXT_PUBLIC_COMMON_ROOM_ID!);
@@ -63,11 +64,12 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
-      });
+        avatar: user.photoURL
+      })
       if(flag) {
         await updateDoc(commonRoom, {
           users: `${registeredUsers},${user.uid}`
-        });
+        })
       }
     }
   } catch (err:any) {
@@ -106,6 +108,7 @@ const registerWithEmailAndPassword = async (name:string, email:string, password:
       name,
       authProvider: "local",
       email,
+      avatar: '../public/user.png'
     });
     if(flag) {
       await updateDoc(commonRoom, {

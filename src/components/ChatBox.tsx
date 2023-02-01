@@ -17,6 +17,7 @@ import styles from "../styles/chatBox.module.scss"
 import { useAuthState } from "react-firebase-hooks/auth"
 import Cookies from 'js-cookie'
 import {useRouter} from 'next/navigation'
+import Image from 'next/image'
 
 const ChatBox = () => {
     const [messages, setMessages] = useState<any>([])
@@ -230,7 +231,13 @@ const ChatBox = () => {
                                             newList.splice(i,1)
                                             setAddUsers(newList)
                                         }
-                                    })}>{`+ ${el.name}`}</div>
+                                    })}>
+                                        <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
+                                        <div className={styles.details}>
+                                            <span className={styles.name}>{`+ ${el.name}`}</span>
+                                            <span className={styles.email}>{`${el.email}`}</span>
+                                        </div>
+                                    </div>
                                 }
                             })}
                             <input type="submit" className={styles.createGrpBtn} value="Create Group"/>

@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import styles from '../styles/burgerMenu.module.scss'
 import {Menu} from '../scripts/burger.mjs'
-import Link from 'next/link'
 import Cookies from 'js-cookie'
 import Image from 'next/image'
-import { userDetails } from '@/utils/userDetails'
 import {
     query,
     collection,
@@ -236,7 +234,13 @@ const Burger = () => {
                                             newList.splice(i,1)
                                             setAddUsers(newList)
                                         }
-                                    })}>{`+ ${el.name}`}</div>
+                                    })}>
+                                        <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
+                                        <div className={styles.details}>
+                                            <span className={styles.name}>{`+ ${el.name}`}</span>
+                                            <span className={styles.email}>{`${el.email}`}</span>
+                                        </div>
+                                    </div>
                                 }
                             })}
                             <input type="submit" className={styles.createGrpBtn} value="Create Group"/>

@@ -177,7 +177,11 @@
                         font-family: 'Poppins', sans-serif;
                     }
                     .users {
-                        cursor: pointer;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        gap: 1rem;
                         color: #ffffff;
                         background-color: #6f3df4;
                         padding: 0.5rem;
@@ -186,6 +190,26 @@
                         font-family: 'Poppins', sans-serif;
                         transition: all 0.3s ease;
                         border: 0.1rem solid transparent;
+                        cursor: pointer;
+                        width: 95%;
+                        .profilePic {
+                            border-radius: 50%;
+                        }
+                        .details {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            gap: 0.25rem;
+                            .name {
+                                font-size: 0.85rem;
+                            }
+                            .email {
+                                font-size: 0.6rem;
+                                padding-left: 0.25rem;
+                                color: #ffffff;
+                            }
+                        }
                     }
                     .createGrpBtn {
                         font-family: 'Poppins', sans-serif;
@@ -198,6 +222,7 @@
                         color: #ffffff;
                         cursor: pointer;
                         z-index: 1500;
+                        width: 100%;
                     }
                 }
             }
