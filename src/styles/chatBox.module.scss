@@ -138,6 +138,86 @@
                         width: 100%;
                     }
                 }
+                .addUserButton {
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 1.25rem;
+                    padding: 0.25rem 1rem;
+                    outline: none;
+                    border: none;
+                    border-radius: 0.5rem;
+                    background-color: #f65275;
+                    color: #ffffff;
+                    cursor: pointer;
+                }
+                .userList {
+                    display: none;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                    transition: all 0.3s ease-in-out;
+                    height: 0rem;
+                    opacity: 0;
+                    .warning {
+                        display: none;
+                        border: transparent;
+                        outline: none;
+                        background: red;
+                        color: #fafafa;
+                        padding: 0.25rem 0.5rem;
+                        font-size: 0.75rem;
+                        border-radius: 0.25rem;
+                        cursor: default;
+                        text-align: center;
+                    }
+                    .users {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        gap: 1rem;
+                        color: #ffffff;
+                        background-color: #6f3df4;
+                        padding: 0.5rem;
+                        outline: 0.175rem solid transparent;
+                        border-radius: 0.5rem;
+                        font-family: 'Poppins', sans-serif;
+                        transition: all 0.3s ease;
+                        border: 0.1rem solid transparent;
+                        cursor: pointer;
+                        width: 95%;
+                        .profilePic {
+                            border-radius: 50%;
+                        }
+                        .details {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            gap: 0.25rem;
+                            .name {
+                                font-size: 0.85rem;
+                            }
+                            .email {
+                                font-size: 0.6rem;
+                                padding-left: 0.25rem;
+                                color: #ffffff;
+                            }
+                        }
+                    }
+                    .addUserBtn {
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 1rem;
+                        padding: 0.25rem 1rem;
+                        outline: none;
+                        border: none;
+                        border-radius: 0.5rem;
+                        background-color: #f65275;
+                        color: #ffffff;
+                        cursor: pointer;
+                        width: 100%;
+                    }
+                }
             }
             .groups {
                 display: flex;
