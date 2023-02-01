@@ -92,7 +92,9 @@ const Burger = () => {
                         }
                     }
                 })
-                if(groups.length === 0) window.location.reload()
+                if(groups.length === 0) {
+                    window.location.href = window.location.origin + window.location.pathname + window.location.search
+                }
                 if(Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined && groups[0] !== undefined) Cookies.set("currentGroup", groups[0].id)
                 Cookies.set("groupList", JSON.stringify(groups))
                 setGroups(groups)
