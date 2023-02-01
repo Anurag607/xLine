@@ -8,6 +8,7 @@ import { auth, logout } from "../../firebase/clientApp"
 import Burger from '../components/burgermenu'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 const NavBar = () => {
 
@@ -37,6 +38,10 @@ const NavBar = () => {
                 <div className={styles["navicons"]}>
                     {(user) ?
                         <span className={styles.navDash} onClick={() => {
+                            Cookies.remove('currentGroup', {path: ''})
+                            Cookies.remove('groupList', {path: ''})
+                            Cookies.remove('usersList', {path: ''})
+                            Cookies.remove('addGrpState', {path: ''})
                             router.push('/login')
                             logout()
                         }}>

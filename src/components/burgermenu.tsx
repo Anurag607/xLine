@@ -29,8 +29,10 @@ const Burger = () => {
     const [groups, setGroups] = useState<any[]>((typeof Cookies.get("groupList") !== "undefined") ? JSON.parse(Cookies.get("groupList")) : [])
     const [addUsers, setAddUsers] = useState<any[]>([user?.uid])
     const [updateUsers, setUpdateUsers] = useState<any[]>([user?.uid])
+    const [admittedUsers, setAdmittedUsers] = useState<any[]>((Cookies.get('currentGroup') !== undefined) ? JSON.parse(Cookies.get('currentGroup')).users.split(',') : [user?.uid])
     const [addGrpBtnState ,setAddGrpBtnState] = useState<string>((Cookies.get('addGrpState') !== undefined) ? Cookies.get('addGrpState') : 'collapsed')
     const [addUserBtnState ,setAddUserBtnState] = useState<string>((Cookies.get('addUserState') !== undefined) ? Cookies.get('addUserState') : 'collapsed')
+    const [seeUserBtnState ,setseeUserBtnState] = useState<string>((Cookies.get('seeUserState') !== undefined) ? Cookies.get('seeUserState') : 'collapsed')
     const router = useRouter()
 
     const styling = {
@@ -103,7 +105,7 @@ const Burger = () => {
                     if(user?.uid !== undefined && allowedUsers.includes(user.uid)) {
                         groups.push(data)
                         if(data.name.toLowerCase() === "common" && (Cookies.get("currentGroup") === null || Cookies.get("currentGroup") === undefined)) {
-                            Cookies.set("currentGroup", JSON.stringify({id: data.id, admin: data.admin}))
+                            Cookies.set("currentGroup", JSON.stringify(data))
                             currentGrp = data.id
                         }
                     }
@@ -159,25 +161,44 @@ const Burger = () => {
         }
 
         const userList:HTMLFormElement = document.querySelector('.bg-userList')!
-        if(addUserBtnState === 'expanded') {
-            userList.style.display = 'flex'
-            userList.style.height = "auto"
-            setTimeout(() => {
-                userList.style.opacity = "1"
-            }, 100)
-        } else {
-            userList.style.opacity = "0"
-            setTimeout(() => {
-                userList.style.height = "0rem"
-                userList.style.display = 'none'
-            }, 300)
+        if(userList !== undefined && userList !== null) {
+            if(addUserBtnState === 'expanded') {
+                userList.style.display = 'flex'
+                userList.style.height = "auto"
+                setTimeout(() => {
+                    userList.style.opacity = "1"
+                }, 100)
+            } else {
+                userList.style.opacity = "0"
+                setTimeout(() => {
+                    userList.style.height = "0rem"
+                    userList.style.display = 'none'
+                }, 300)
+            }
+        }
+
+        const addeduserList:HTMLDivElement = document.querySelector('.bg-addeduserList')!
+        if(userList !== undefined && userList !== null) {
+            if(seeUserBtnState === 'expanded') {
+                addeduserList.style.display = 'flex'
+                addeduserList.style.height = "auto"
+                setTimeout(() => {
+                    addeduserList.style.opacity = "1"
+                }, 100)
+            } else {
+                addeduserList.style.opacity = "0"
+                setTimeout(() => {
+                    addeduserList.style.height = "0rem"
+                    addeduserList.style.display = 'none'
+                }, 300)
+            }
         }
 
         getUserList()
 
         getGroupsForUser()
 
-    }, [addGrpBtnState, addUserBtnState, user]) // eslint-disable-line
+    }, [addGrpBtnState, addUserBtnState, seeUserBtnState, user]) // eslint-disable-line
 
     return (
         <div className={`${styles.burgerWrapper} burgerWrapper`}>
@@ -288,53 +309,21 @@ const Burger = () => {
                             })}
                             <input type="submit" className={styles.createGrpBtn} value="Create Group"/>
                         </form>
-                        <button className={`${styles.addUserButton} addUserButton`} data-toggle={addUserBtnState} onClick={(event) => {
-                            const target:HTMLButtonElement = event.currentTarget
-                            const userList:HTMLFormElement = document.querySelector('.bg-userList')!
-                            if(target.dataset.toggle === 'collapsed') {
-                                userList.style.display = 'flex'
-                                userList.style.height = "auto"
-                                setTimeout(() => {
-                                    userList.style.opacity = "1"
-                                }, 100)
-                                target.dataset.toggle = 'expanded'
-                                setAddUserBtnState("expanded")
-                                Cookies.set("addUserState", target.dataset.toggle)
-                            } else {
-                                userList.style.opacity = "0"
-                                setTimeout(() => {
-                                    userList.style.height = "0rem"
-                                    userList.style.display = 'none'
-                                }, 300)
-                                setTimeout(() => {
-                                    styling.warning.current!.style.display = "none"
-                                }, 200)
-                                target.dataset.toggle = 'collapsed'
-                                setAddUserBtnState("collapsed")
-                                Cookies.set("addUserState", target.dataset.toggle)
-                            }
-                        }}>Add Users +</button>
-                        <form className={`${styles.userList} bg-userList`}
-                            onSubmit={(event) => {
-                                event.preventDefault()
-                                if(user?.uid !== '') {
-                                    styling.warning.current!.style.display = "block"
-                                    styling.warning.current!.innerHTML = "Only the admin can add Users"
-                                }
-                                else if(updateUsers.length < 2) {
-                                    styling.warning.current!.style.display = "block"
-                                }
-                                else {
-                                    styling.warning.current!.style.display = "none"
-                                    const target:HTMLButtonElement = document.querySelector('.addUserButton')!
-                                    const users = document.querySelectorAll('.users');
-                                    users.forEach((el, i:number) => {
-                                        let target = el as HTMLDivElement
-                                        target.dataset.status = "not-added"
-                                        target.style.outlineColor = "transparent"
-                                        target.style.borderColor = "transparent"
-                                    })
-                                    const userList:HTMLFormElement = event.currentTarget
+                        {(user?.uid === ((Cookies.get('currentGroup') !== undefined) ? JSON.parse(Cookies.get('currentGroup')).admin : '')) ?
+                        <>
+                            <button className={`${styles.addUserButton} addUserButton`} data-toggle={addUserBtnState} onClick={(event) => {
+                                const target:HTMLButtonElement = event.currentTarget
+                                const userList:HTMLFormElement = document.querySelector('.bg-userList')!
+                                if(target.dataset.toggle === 'collapsed') {
+                                    userList.style.display = 'flex'
+                                    userList.style.height = "auto"
+                                    setTimeout(() => {
+                                        userList.style.opacity = "1"
+                                    }, 100)
+                                    target.dataset.toggle = 'expanded'
+                                    setAddUserBtnState("expanded")
+                                    Cookies.set("addUserState", target.dataset.toggle)
+                                } else {
                                     userList.style.opacity = "0"
                                     setTimeout(() => {
                                         userList.style.height = "0rem"
@@ -344,56 +333,137 @@ const Burger = () => {
                                         styling.warning.current!.style.display = "none"
                                     }, 200)
                                     target.dataset.toggle = 'collapsed'
-                                    styling.warning.current!.style.display = "none"
                                     setAddUserBtnState("collapsed")
                                     Cookies.set("addUserState", target.dataset.toggle)
-                                    updateUserList()
                                 }
-                            }}
-                        >
-                            <span className={styles.warning} ref={styling.warning}>Add at least one User</span>
-                            {usersList.map((el,i) => {
-                                if(el.uid !== user?.uid) {
-                                    return <div className={`${styles.users} users`} key={i} data-status="not-added" data-details={JSON.stringify(el)} onClick={(event => {
-                                        const target:HTMLDivElement = event.currentTarget
-                                        if(target.dataset.status === 'not-added') {
-                                            target.dataset.status = 'added'
-                                            target.style.outlineColor = "rgba(0,0,0,0.5)"
-                                            target.style.borderColor = "#ffffff"
-                                            let newList = [
-                                                ...updateUsers,
-                                                JSON.parse(target.dataset.details as string).uid
-                                            ]
-                                            setUpdateUsers(newList)
-                                        } else if(target.dataset.status === 'added') {
+                            }}>Add Users +</button>
+                            <form className={`${styles.userList} bg-userList`}
+                                onSubmit={(event) => {
+                                    event.preventDefault()
+                                    if(user?.uid !== '') {
+                                        styling.warning.current!.style.display = "block"
+                                        styling.warning.current!.innerHTML = "Only the admin can add Users"
+                                    }
+                                    else if(updateUsers.length < 2) {
+                                        styling.warning.current!.style.display = "block"
+                                    }
+                                    else {
+                                        styling.warning.current!.style.display = "none"
+                                        const target:HTMLButtonElement = document.querySelector('.addUserButton')!
+                                        const users = document.querySelectorAll('.users');
+                                        users.forEach((el, i:number) => {
+                                            let target = el as HTMLDivElement
                                             target.dataset.status = "not-added"
                                             target.style.outlineColor = "transparent"
                                             target.style.borderColor = "transparent"
-                                            let newList = addUsers
-                                            let index = 0
-                                            let id = JSON.parse(target.dataset.details as string).id
-                                            newList.forEach((el,i) => {
-                                                if(el.id === id) index = i
-                                            })
-                                            newList.splice(i,1)
-                                            setUpdateUsers(newList)
-                                        }
-                                    })}>
-                                        <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
-                                        <div className={styles.details}>
-                                            <span className={styles.name}>{`+ ${el.name}`}</span>
-                                            <span className={styles.email}>{`${el.email}`}</span>
+                                        })
+                                        const userList:HTMLFormElement = event.currentTarget
+                                        userList.style.opacity = "0"
+                                        setTimeout(() => {
+                                            userList.style.height = "0rem"
+                                            userList.style.display = 'none'
+                                        }, 300)
+                                        setTimeout(() => {
+                                            styling.warning.current!.style.display = "none"
+                                        }, 200)
+                                        target.dataset.toggle = 'collapsed'
+                                        styling.warning.current!.style.display = "none"
+                                        setAddUserBtnState("collapsed")
+                                        Cookies.set("addUserState", target.dataset.toggle)
+                                        updateUserList()
+                                    }
+                                }}
+                            >
+                                <span className={styles.warning} ref={styling.warning}>Add at least one User</span>
+                                {usersList.map((el,i) => {
+                                    if(el.uid !== user?.uid && !admittedUsers.includes(el.uid)) {
+                                        return <div className={`${styles.users} users`} 
+                                        key={i} 
+                                        data-status="not-added" 
+                                        style={{outlineColor: `${(admittedUsers.includes(el.uid)) ? 'rgba(0,0,0,0.5)' : 'transparent'}}`, borderColor: `${(admittedUsers.includes(el.uid)) ? '#ffffff' : 'transparent'}}`}}
+                                        data-details={JSON.stringify(el)} 
+                                        onClick={(event => {
+                                            const target:HTMLDivElement = event.currentTarget
+                                            if(target.dataset.status === 'not-added') {
+                                                target.dataset.status = 'added'
+                                                target.style.outlineColor = "rgba(0,0,0,0.5)"
+                                                target.style.borderColor = "#ffffff"
+                                                let newList = [
+                                                    ...updateUsers,
+                                                    JSON.parse(target.dataset.details as string).uid
+                                                ]
+                                                setUpdateUsers(newList)
+                                            } else if(target.dataset.status === 'added') {
+                                                target.dataset.status = "not-added"
+                                                target.style.outlineColor = "transparent"
+                                                target.style.borderColor = "transparent"
+                                                let newList = addUsers
+                                                let index = 0
+                                                let id = JSON.parse(target.dataset.details as string).id
+                                                newList.forEach((el,i) => {
+                                                    if(el.id === id) index = i
+                                                })
+                                                newList.splice(i,1)
+                                                setUpdateUsers(newList)
+                                            }
+                                        })}>
+                                            <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
+                                            <div className={styles.details}>
+                                                <span className={styles.name}>{`+ ${el.name}`}</span>
+                                                <span className={styles.email}>{`${el.email}`}</span>
+                                            </div>
                                         </div>
+                                    }
+                                })}
+                                <input type="submit" className={styles.addUserBtn} value="Add Users"/>
+                            </form>
+                        </> : <></>}
+                    </div>
+                    <button className={`${styles.seeUserButton} seeUserButton`} data-toggle={seeUserBtnState} onClick={(event) => {
+                        const target:HTMLButtonElement = event.currentTarget
+                        const userList:HTMLDivElement = document.querySelector('.addeduserList')!
+                        if(target.dataset.toggle === 'collapsed') {
+                            userList.style.display = 'flex'
+                            userList.style.height = "auto"
+                            setTimeout(() => {
+                                userList.style.opacity = "1"
+                            }, 100)
+                            target.dataset.toggle = 'expanded'
+                            setseeUserBtnState("expanded")
+                            Cookies.set("seeUserState", target.dataset.toggle)
+                        } else {
+                            userList.style.opacity = "0"
+                            setTimeout(() => {
+                                userList.style.height = "0rem"
+                                userList.style.display = 'none'
+                            }, 300)
+                            setTimeout(() => {
+                                styling.warning.current!.style.display = "none"
+                            }, 200)
+                            target.dataset.toggle = 'collapsed'
+                            setseeUserBtnState("collapsed")
+                            Cookies.set("seeUserState", target.dataset.toggle)
+                        }
+                    }}>{`Users >`}</button>
+                    <div className={`${styles.addeduserList} bg-addeduserList`}>
+                        {usersList.map((el,i) => {
+                            if(admittedUsers.includes(el.uid)) {
+                                return <div className={`${styles.users} users`} 
+                                    key={i} 
+                                    data-details={JSON.stringify(el)}>
+                                    <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
+                                    <div className={styles.details}>
+                                        <span className={styles.name}>{`${el.name}`}</span>
+                                        <span className={styles.email}>{`${el.email}`}</span>
                                     </div>
-                                }
-                            })}
-                            <input type="submit" className={styles.addUserBtn} value="Add Users"/>
-                        </form>
+                                </div>
+                            }
+                        })}
                     </div>
                     <div className={styles.groups}>
                         {groups.map((el,i) => {
                             return <button className={styles.group} style={{backgroundColor: (JSON.parse(Cookies.get('currentGroup')).id == el.id) ? '#f2c335' : '#6f3df4'}} key={i} data-details={JSON.stringify(el)} onClick={(event) => {
-                                Cookies.set("currentGroup", JSON.stringify({id: JSON.parse((event.target as HTMLButtonElement).dataset.details as string).id, admin: JSON.parse((event.target as HTMLButtonElement).dataset.details as string).admin}))
+                                Cookies.set("currentGroup", (event.target as HTMLButtonElement).dataset.details)
                                 router.refresh()
                                 window.location.reload()
                             }} >{`${el.name} >`}</button>

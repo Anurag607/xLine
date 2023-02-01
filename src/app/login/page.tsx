@@ -67,10 +67,6 @@ export default function Login() {
 
     const HandleSubmit = (e : React.FormEvent<LoginFormEl>) => {
         e.preventDefault()
-        Cookies.remove('currentGroup', {path: ''})
-        Cookies.remove('groupList', {path: ''})
-        Cookies.remove('usersList', {path: ''})
-        Cookies.remove('addGrpState', {path: ''})
         logInWithEmailAndPassword(logindet.email, logindet.password)
     }
 
@@ -111,10 +107,6 @@ export default function Login() {
                     <section className={styles.options}>
                         <p>Or Sign In using </p>
                         <div className={styles.googleSignIn} onClick={() => {
-                            Cookies.remove('currentGroup', {path: ''})
-                            Cookies.remove('groupList', {path: ''})
-                            Cookies.remove('usersList', {path: ''})
-                            Cookies.remove('addGrpState', {path: ''})
                             signInWithGoogle()
                         }}>
                             <Image src='/google.png' alt='Google' width={20} height={20} />

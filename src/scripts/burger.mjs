@@ -7,6 +7,7 @@ const Menu = () => {
     const menuBar3 = document.querySelector('.menu_bar3')
     const sidebar = document.querySelector(".sidebar")
     const chatRooms = document.querySelector(".bg-chatRooms")
+    const seeUserBtn = document.querySelector(".seeUserButton")
     const chatRoomsChildren = document.querySelectorAll(".bg-chatRooms div")
 
     if (menu.dataset.toggle === "close") {
@@ -23,6 +24,7 @@ const Menu = () => {
             chatRoomsChildren.forEach((el,i) => {
                 el.style.opacity = 1
             })
+            seeUserBtn.style.opacity = 1
         }, 500)
         menuBar1.style.width = '100%'
         menuBar1.style.transform = 'translate(-66%, -11.5px) rotate(-45deg)'
@@ -35,6 +37,7 @@ const Menu = () => {
         menuBar1.style.backgroundColor = "#ffffff"
         menuBar2.style.backgroundColor = "#ffffff"
         menuBar3.style.backgroundColor = "#ffffff"
+        seeUserBtn.style.opacity = 0
         chatRoomsChildren.forEach((el,i) => {
             el.style.opacity = 0
         })

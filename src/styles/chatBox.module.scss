@@ -219,6 +219,66 @@
                     }
                 }
             }
+            .seeUserButton {
+                margin-block: 1rem;
+                font-family: 'Poppins', sans-serif;
+                font-size: 1.25rem;
+                padding: 0.25rem 1rem;
+                outline: none;
+                border: none;
+                border-radius: 0.5rem;
+                background-color: #f65275;
+                color: #ffffff;
+                cursor: pointer;
+            }
+            .addeduserList {
+                display: none;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 1rem;
+                transition: all 0.3s ease-in-out;
+                height: 0rem;
+                opacity: 0;
+                padding-bottom: 1rem;
+                width: 90%;
+                border-bottom: 0.1rem solid #e8e8e8;
+                .users {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                    color: #ffffff;
+                    background-color: #6f3df4;
+                    padding: 0.5rem;
+                    outline: 0.175rem solid transparent;
+                    border-radius: 0.5rem;
+                    font-family: 'Poppins', sans-serif;
+                    transition: all 0.3s ease;
+                    border: 0.1rem solid transparent;
+                    cursor: default;
+                    width: 85%;
+                    .profilePic {
+                        border-radius: 50%;
+                    }
+                    .details {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        gap: 0.25rem;
+                        .name {
+                            font-size: 0.85rem;
+                        }
+                        .email {
+                            font-size: 0.6rem;
+                            padding-left: 0.25rem;
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
             .groups {
                 display: flex;
                 flex-direction: column;
