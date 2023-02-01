@@ -10,7 +10,8 @@ import {
   serverTimestamp,
   where,
   QuerySnapshot,
-  updateDoc
+  updateDoc,
+  getDoc
 } from "firebase/firestore"
 import { db,auth } from "../../firebase/clientApp"
 import Message from "./Message"
@@ -65,10 +66,15 @@ const ChatBox = () => {
     const updateUserList = async () => {
         try {
             const docRef = doc(db, 'chatRooms', JSON.parse(Cookies.get('currentGroup')).id)
+            const docSnap = await getDoc(docRef)
+            let data = docSnap.data()
             await updateDoc(docRef, {
-                users: updateUsers.join(',')
+                users: [...new Set([...data?.users.split(','),...updateUsers])].join(',')
             })
-            setUpdateUsers([user?.uid])
+            let delta = JSON.parse(Cookies.get('currentGroup'))
+            delta.users = [...new Set([...data?.users.split(','),...updateUsers])].join(',')
+            Cookies.set('currentGroup', JSON.stringify(delta))
+            window.location.reload()
         } catch(err) {
             console.error(err)
         }
