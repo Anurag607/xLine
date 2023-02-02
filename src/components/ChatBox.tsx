@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { FormEventHandler, useEffect, useRef, useState } from "react"
 import {
   query,
   doc,
@@ -32,6 +32,7 @@ const ChatBox = () => {
     const [addUsers, setAddUsers] = useState<any[]>([user?.uid])
     const [updateUsers, setUpdateUsers] = useState<any[]>([user?.uid])
     const [admittedUsers, setAdmittedUsers] = useState<any[]>((Cookies.get('currentGroup') !== undefined) ? JSON.parse(Cookies.get('currentGroup')).users.split(',') : [user?.uid])
+    const [admins, setAdmins] = useState<any[]>((Cookies.get('currentGroup') !== undefined) ? JSON.parse(Cookies.get('currentGroup')).admin.split(',') : [''])
     const [addGrpBtnState ,setAddGrpBtnState] = useState<string>((Cookies.get('addGrpState') !== undefined) ? Cookies.get('addGrpState') : 'collapsed')
     const [addUserBtnState ,setAddUserBtnState] = useState<string>((Cookies.get('addUserState') !== undefined) ? Cookies.get('addUserState') : 'collapsed')
     const [seeUserBtnState ,setseeUserBtnState] = useState<string>((Cookies.get('seeUserState') !== undefined) ? Cookies.get('seeUserState') : 'collapsed')
@@ -73,6 +74,55 @@ const ChatBox = () => {
             })
             let delta = JSON.parse(Cookies.get('currentGroup'))
             delta.users = [...new Set([...data?.users.split(','),...updateUsers])].join(',')
+            Cookies.set('currentGroup', JSON.stringify(delta))
+            window.location.reload()
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
+    const removeUser = async () => {
+        try {
+            const docRef = doc(db, 'chatRooms', JSON.parse(Cookies.get('currentGroup')).id)
+            const docSnap = await getDoc(docRef)
+            let data = docSnap.data()
+            let existingUsers = data?.users.split(',')
+            let id = JSON.parse(Cookies.get('selectedUser')).uid
+            existingUsers = existingUsers.filter((uid:string) => uid !== id)
+            await updateDoc(docRef, {
+                users: existingUsers.join(',')
+            })
+            let delta = JSON.parse(Cookies.get('currentGroup'))
+            delta.users = existingUsers.join(',')
+            Cookies.set('currentGroup', JSON.stringify(delta))
+            if(admins.includes(id)) {
+                let newAdminList = data?.admin.split(',')
+                newAdminList = newAdminList.filter((uid:string) => uid !== id)
+                console.log(newAdminList)
+                await updateDoc(docRef, {
+                    admin: newAdminList.join(',')
+                })
+                let delta = JSON.parse(Cookies.get('currentGroup'))
+                delta.admin = newAdminList.join(',')
+                Cookies.set('currentGroup', JSON.stringify(delta))
+            }
+            window.location.reload()
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
+    const updateAdminList = async (newadminList:string[]) => {
+        try {
+            const docRef = doc(db, 'chatRooms', JSON.parse(Cookies.get('currentGroup')).id)
+            const docSnap = await getDoc(docRef)
+            let data = docSnap.data()
+            await updateDoc(docRef, {
+                admin: [...new Set([...data?.admin.split(','),...newadminList])].join(',')
+            })
+            let delta = JSON.parse(Cookies.get('currentGroup'))
+            delta.admin = [...new Set([...data?.admin.split(','),...newadminList])].join(',')
+            setAdmins([...new Set([...data?.admin.split(','),...newadminList])])
             Cookies.set('currentGroup', JSON.stringify(delta))
             window.location.reload()
         } catch(err) {
@@ -314,11 +364,36 @@ const ChatBox = () => {
                             })}
                             <input type="submit" className={styles.createGrpBtn} value="Create Group"/>
                         </form>
-                        {(user?.uid === ((Cookies.get('currentGroup') !== undefined) ? JSON.parse(Cookies.get('currentGroup')).admin : '')) ?
+                        {((Cookies.get('currentGroup') !== undefined) ? JSON.parse(Cookies.get('currentGroup')).admin.split(',').includes(user?.uid) : '') ?
                         <>
                             <button className={`${styles.addUserButton} addUserButton`} data-toggle={addUserBtnState} onClick={(event) => {
                                 const target:HTMLButtonElement = event.currentTarget
                                 const userList:HTMLFormElement = document.querySelector('.userList')!
+
+                                const seeuserList:HTMLFormElement = document.querySelector('.addeduserList')!
+                                if(seeuserList !== null && seeuserList !== undefined) {
+                                    seeuserList.style.opacity = "0"
+                                    setTimeout(() => {
+                                        seeuserList.style.height = "0rem"
+                                        seeuserList.style.display = 'none'
+                                    }, 300)
+                                    setTimeout(() => {
+                                        styling.warning.current!.style.display = "none"
+                                        const modal = document.querySelectorAll('.modal')
+                                        const allinfos = document.querySelectorAll('.adduser-infoContainer')
+                                        allinfos.forEach(info => {
+                                            (info as HTMLDivElement).style.paddingBottom = '0rem'
+                                        })
+                                        modal.forEach((el,index) => {
+                                            (el as HTMLFormElement).style.display = 'none'
+                                        })
+                                    }, 200);
+                                    (document.querySelector('.seeUserButton') as HTMLButtonElement).dataset.toggle = 'collapsed'
+                                    setseeUserBtnState("collapsed")
+                                    setUpdateUsers([user?.uid])
+                                    Cookies.set("seeUserState", "collapsed")
+                                }
+
                                 if(target.dataset.toggle === 'collapsed') {
                                     userList.style.display = 'flex'
                                     userList.style.height = "auto"
@@ -345,7 +420,7 @@ const ChatBox = () => {
                             <form className={`${styles.userList} userList`}
                                 onSubmit={(event) => {
                                     event.preventDefault()
-                                    if(user?.uid !== JSON.parse(Cookies.get('currentGroup')).admin) {
+                                    if(!JSON.parse(Cookies.get('currentGroup')).admin.split(',').includes(user?.uid)) {
                                         styling.warning.current!.style.display = "block"
                                         styling.warning.current!.innerHTML = "Only the admin can add Users"
                                     }
@@ -383,35 +458,36 @@ const ChatBox = () => {
                                 {usersList.map((el,i) => {
                                     if(el.uid !== user?.uid && !admittedUsers.includes(el.uid)) {
                                         return <div className={`${styles.users} users`} 
-                                            key={i} 
-                                            data-status="not-added" 
-                                            data-details={JSON.stringify(el)} 
-                                            style={{outlineColor: `${(admittedUsers.includes(el.uid)) ? 'rgba(0,0,0,0.5)' : 'transparent'}}`, borderColor: `${(admittedUsers.includes(el.uid)) ? '#ffffff' : 'transparent'}}`}}
-                                            onClick={(event => {
-                                                const target:HTMLDivElement = event.currentTarget
-                                                if(target.dataset.status === 'not-added') {
-                                                    target.dataset.status = 'added'
-                                                    target.style.outlineColor = "rgba(0,0,0,0.5)"
-                                                    target.style.borderColor = "#ffffff"
-                                                    let newList = [
-                                                        ...updateUsers,
-                                                        JSON.parse(target.dataset.details as string).uid
-                                                    ]
-                                                    setUpdateUsers(newList)
-                                                } else if(target.dataset.status === 'added') {
-                                                    target.dataset.status = "not-added"
-                                                    target.style.outlineColor = "transparent"
-                                                    target.style.borderColor = "transparent"
-                                                    let newList = addUsers
-                                                    let index = 0
-                                                    let id = JSON.parse(target.dataset.details as string).id
-                                                    newList.forEach((el,i) => {
-                                                        if(el.id === id) index = i
-                                                    })
-                                                    newList.splice(i,1)
-                                                    setUpdateUsers(newList)
-                                                }
-                                            })}>
+                                                    key={i} 
+                                                    data-status="not-added" 
+                                                    data-details={JSON.stringify(el)} 
+                                                    style={{outlineColor: `${(admittedUsers.includes(el.uid)) ? 'rgba(0,0,0,0.5)' : 'transparent'}}`, borderColor: `${(admittedUsers.includes(el.uid)) ? '#ffffff' : 'transparent'}}`}}
+                                                    onClick={(event => {
+                                                        const target:HTMLDivElement = event.currentTarget
+                                                        if(target.dataset.status === 'not-added') {
+                                                            target.dataset.status = 'added'
+                                                            target.style.outlineColor = "rgba(0,0,0,0.5)"
+                                                            target.style.borderColor = "#ffffff"
+                                                            let newList = [
+                                                                ...updateUsers,
+                                                                JSON.parse(target.dataset.details as string).uid
+                                                            ]
+                                                            setUpdateUsers(newList)
+                                                        } else if(target.dataset.status === 'added') {
+                                                            target.dataset.status = "not-added"
+                                                            target.style.outlineColor = "transparent"
+                                                            target.style.borderColor = "transparent"
+                                                            let newList = updateUsers
+                                                            let index = 0
+                                                            let id = JSON.parse(target.dataset.details as string).id
+                                                            newList.forEach((el,i) => {
+                                                                if(el.id === id) index = i
+                                                            })
+                                                            newList.splice(i,1)
+                                                            setUpdateUsers(newList)
+                                                        }
+                                                    })}
+                                                >
                                             <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
                                             <div className={styles.details}>
                                                 <span className={styles.name}>{`+ ${el.name}`}</span>
@@ -428,6 +504,23 @@ const ChatBox = () => {
                     <button className={`${styles.seeUserButton} seeUserButton`} data-toggle={seeUserBtnState} onClick={(event) => {
                         const target:HTMLButtonElement = event.currentTarget
                         const userList:HTMLDivElement = document.querySelector('.addeduserList')!
+
+                        const adduserList:HTMLFormElement = document.querySelector('.userList')!
+                        if(adduserList !== null && adduserList !== undefined) {
+                            adduserList.style.opacity = "0"
+                            setTimeout(() => {
+                                adduserList.style.height = "0rem"
+                                adduserList.style.display = 'none'
+                            }, 300)
+                            setTimeout(() => {
+                                styling.warning.current!.style.display = "none"
+                            }, 200);
+                            (document.querySelector('.addUserButton') as HTMLButtonElement).dataset.toggle = 'collapsed'
+                            setAddUserBtnState("collapsed")
+                            setUpdateUsers([user?.uid])
+                            Cookies.set("addUserState", "collapsed")
+                        }
+                        
                         if(target.dataset.toggle === 'collapsed') {
                             userList.style.display = 'flex'
                             userList.style.height = "auto"
@@ -437,7 +530,7 @@ const ChatBox = () => {
                             target.dataset.toggle = 'expanded'
                             setseeUserBtnState("expanded")
                             Cookies.set("seeUserState", target.dataset.toggle)
-                        } else {
+                        } else if(target.dataset.toggle === 'expanded') {
                             userList.style.opacity = "0"
                             setTimeout(() => {
                                 userList.style.height = "0rem"
@@ -445,6 +538,14 @@ const ChatBox = () => {
                             }, 300)
                             setTimeout(() => {
                                 styling.warning.current!.style.display = "none"
+                                const modal = document.querySelectorAll('.modal')
+                                const allinfos = document.querySelectorAll('.adduser-infoContainer')
+                                allinfos.forEach(info => {
+                                    (info as HTMLDivElement).style.paddingBottom = '0rem'
+                                })
+                                modal.forEach((el,index) => {
+                                    (el as HTMLFormElement).style.display = 'none'
+                                })
                             }, 200)
                             target.dataset.toggle = 'collapsed'
                             setseeUserBtnState("collapsed")
@@ -454,14 +555,87 @@ const ChatBox = () => {
                     <div className={`${styles.addeduserList} addeduserList`}>
                         {usersList.map((el,i) => {
                             if(admittedUsers.includes(el.uid)) {
-                                return <div className={`${styles.users} users`} 
-                                    key={i} 
-                                    data-details={JSON.stringify(el)}>
-                                    <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
-                                    <div className={styles.details}>
-                                        <span className={styles.name}>{`${el.name}`}</span>
-                                        <span className={styles.email}>{`${el.email}`}</span>
+                                return <div 
+                                            className={`${styles.users} admittedUsers`} 
+                                            key={i} 
+                                            data-status="not-selected" 
+                                            data-details={JSON.stringify(el)}
+                                        >
+                                    <div className={`${styles.infoContainer} adduser-infoContainer`}
+                                        onClick={(event => {
+                                            if(!admins.includes(user?.uid)) return
+                                            if(el.uid === user?.uid) return
+                                            const target:HTMLDivElement = event.currentTarget
+                                            const allusers = document.querySelectorAll('.admittedUsers')
+                                            const modal = document.querySelectorAll('.modal')
+                                            let currentIndex = [...(target.parentElement!).parentElement!.children].indexOf(target.parentElement!)
+                                            let currUser = allusers[currentIndex] as HTMLDivElement
+                                            modal.forEach((el,index) => {
+                                                (el as HTMLFormElement).style.display = 'none'
+                                            })
+                                            allusers.forEach((user,index) => {
+                                                if(index !== currentIndex) (user as HTMLDivElement).dataset.status = 'not-selected';
+                                                if(index !== currentIndex) (allusers[index].children[0] as HTMLDivElement).style.paddingBottom = '0rem'
+                                            })
+                                            if(currUser.dataset.status === 'not-selected') {
+                                                target.style.paddingBottom = '1rem'
+                                                currUser.dataset.status = 'selected';
+                                                (modal[currentIndex] as HTMLFormElement).style.display = 'flex'
+                                                Cookies.set('selectedUser', currUser.dataset.details)
+                                            } else if(currUser.dataset.status === 'selected') {
+                                                target.style.paddingBottom = '0rem'
+                                                currUser.dataset.status = "not-selected";
+                                                (modal[currentIndex] as HTMLFormElement).style.display = 'none'
+                                                Cookies.remove('selectedUser')
+                                            }
+                                        })}
+                                    >
+                                        {(admins.includes(el.uid)) ? <Image className={styles.adminSymbol} src='/crown.png' alt={'admin'} width={10} height={10} /> : <></>}
+                                        <Image className={styles.profilePic} src={el.avatar ? el.avatar : '/user.png'} alt={'profilePic'} width={28} height={28}/>
+                                        <div className={styles.details}>
+                                            <span className={styles.name}>{`${el.name}`}</span>
+                                            <span className={styles.email}>{`${el.email}`}</span>
+                                        </div>
                                     </div>
+                                    <form className={`${styles.modal} modal`}
+                                        onSubmit={(event) => {
+                                            event.preventDefault();
+                                            const remove = document.querySelector('#remove') as HTMLInputElement
+                                            const admin = document.querySelector('#admin') as HTMLInputElement
+                                            if(admin.checked) {
+                                                let newList = [
+                                                    ...admins,
+                                                    JSON.parse(Cookies.get('selectedUser')).uid
+                                                ]
+                                                updateAdminList(newList)
+                                            }
+                                            if(remove.checked) {
+                                                removeUser()
+                                            }
+                                        }}
+                                    >
+                                        <span>
+                                            <label htmlFor="admin" className={styles.adminLabel}>Assign User as Admin</label>
+                                            <input type="checkbox" id='admin' name='admin' className={`${styles.admin} admin checkbox`} onClick={(event) => {
+                                                const boxes = document.querySelectorAll('.checkbox')
+                                                boxes.forEach((el,index) => {
+                                                    if(index !== [...boxes].indexOf(event.currentTarget)) (el as HTMLInputElement).checked = false;
+                                                });
+                                                (document.querySelector('#admin') as HTMLInputElement).checked = true
+                                            }} />
+                                        </span>
+                                        <span>
+                                            <label htmlFor="remove" className={styles.removeLabel}>Remove User</label>
+                                            <input type="checkbox" id='remove' name='remove' className={`${styles.remove} remove checkbox`} onClick={(event) => {
+                                                const boxes = document.querySelectorAll('.checkbox')
+                                                boxes.forEach((el,index) => {
+                                                    if(index !== [...boxes].indexOf(event.currentTarget)) (el as HTMLInputElement).checked = false;
+                                                });
+                                                (document.querySelector('#remove') as HTMLInputElement).checked = true
+                                            }} />
+                                        </span>
+                                        <input type="submit" value={'Done' } className={styles.doneBtn} />
+                                    </form>
                                 </div>
                             }
                         })}

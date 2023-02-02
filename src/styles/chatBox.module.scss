@@ -245,10 +245,10 @@
                 border-bottom: 0.1rem solid #e8e8e8;
                 .users {
                     display: flex;
-                    flex-direction: row;
-                    justify-content: flex-start;
+                    flex-direction: column;
+                    justify-content: center;
                     align-items: center;
-                    gap: 1rem;
+                    gap: 0rem;
                     color: #ffffff;
                     background-color: #6f3df4;
                     padding: 0.5rem;
@@ -257,24 +257,83 @@
                     font-family: 'Poppins', sans-serif;
                     transition: all 0.3s ease;
                     border: 0.1rem solid transparent;
-                    cursor: default;
+                    cursor: pointer;
                     width: 85%;
-                    .profilePic {
-                        border-radius: 50%;
+                    position: relative;
+                    .adminSymbol {
+                        position: absolute;
+                        top: 0.35rem;
+                        left: 92%;
                     }
-                    .details {
+                    .infoContainer {
                         display: flex;
-                        flex-direction: column;
+                        flex-direction: row;
                         justify-content: flex-start;
-                        align-items: flex-start;
-                        gap: 0.25rem;
-                        .name {
-                            font-size: 0.85rem;
+                        align-items: center;
+                        gap: 1rem;
+                        background-color: transparent;
+                        padding-bottom: 0rem;
+                        .profilePic {
+                            border-radius: 50%;
                         }
-                        .email {
-                            font-size: 0.6rem;
-                            padding-left: 0.25rem;
+                        .details {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            gap: 0.25rem;
+                            .name {
+                                font-size: 0.85rem;
+                            }
+                            .email {
+                                font-size: 0.6rem;
+                                color: #ffffff;
+                            }
+                        }
+                    }
+                    .modal {
+                        display: none;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 0.5rem;
+                        padding: 0.5rem;
+                        box-shadow: 0 0 0.35rem 0rem #e8e8e8;
+                        border-radius: 0.5rem;
+                        background-color: #ffffff;
+                        width: auto;
+                        height: auto;
+                        outline: 0.05rem solid rgba(0,0,0,0.25);
+                        cursor: default;
+                        span {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-end;
+                            align-items: center;
+                            gap: 0.5rem;
+                            background-color: transparent;
+                            width: 10rem;
+                            height: auto;
+                            label {
+                                font-family: 'Poppins', sans-serif;
+                                font-size: 0.75rem;
+                                color: #37474f;
+                            }
+                            input {
+                                cursor: pointer;
+                            }
+                        }
+                        .doneBtn {
+                            font-size: 0.85rem;
+                            font-family: 'Poppins', sans-serif;
+                            padding: 0.15rem 1rem;
+                            background-color: #f65275;
+                            outline: none;
+                            border: none;
                             color: #ffffff;
+                            border-radius: 0.35rem;
+                            margin-top: 0.75rem;
+                            cursor: pointer;
                         }
                     }
                 }
@@ -301,7 +360,7 @@
                     cursor: pointer;
                     text-transform: capitalize;
                 }
-            }
+            }            
         }
         .messages-wrapper {
             width: 72.5vw;
