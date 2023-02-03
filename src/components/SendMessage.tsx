@@ -21,7 +21,7 @@ const SendMessage = ({ scroll }: {scroll: any}) => {
       avatar: photoURL,
       createdAt: serverTimestamp(),
       replyTo: (Cookies.get("replyMode") === "true") ? JSON.parse(Cookies.get('selectedMsg')).id : null,
-      room: Cookies.get('currentGroup'),
+      room: JSON.parse(Cookies.get('currentGroup')).id,
       uid,
     })
     setMessage("")
