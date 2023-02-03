@@ -39,7 +39,8 @@ const ChatBox = () => {
     const router = useRouter()
 
     const styling = {
-        warning: React.useRef<HTMLInputElement>(null)
+        warningGroup: React.useRef<HTMLInputElement>(null),
+        warningUser: React.useRef<HTMLInputElement>(null)
     }
 
     useEffect(() => {
@@ -204,7 +205,8 @@ const ChatBox = () => {
 
         if(!user) return
 
-        styling.warning.current!.style.display = "none"
+        styling.warningGroup.current!.style.display = "none"
+        styling.warningUser.current!.style.display = "none"
         
         const formCont:HTMLFormElement = document.querySelector('.formCont')!
         if(addGrpBtnState === 'expanded') {
@@ -285,7 +287,7 @@ const ChatBox = () => {
                                     formCont.style.display = 'none'
                                 }, 300)
                                 setTimeout(() => {
-                                    styling.warning.current!.style.display = "none"
+                                    styling.warningGroup.current!.style.display = "none"
                                 }, 200)
                                 target.dataset.toggle = 'collapsed'
                                 setAddGrpBtnState("collapsed")
@@ -296,7 +298,7 @@ const ChatBox = () => {
                             onSubmit={(event) => {
                                 event.preventDefault()
                                 if(groupName.length >= 4) {
-                                    styling.warning.current!.style.display = "none"
+                                    styling.warningGroup.current!.style.display = "none"
                                     const target:HTMLButtonElement = document.querySelector('.addGroupButton')!
                                     const users = document.querySelectorAll('.grp-users');
                                     users.forEach((el, i:number) => {
@@ -312,20 +314,20 @@ const ChatBox = () => {
                                         formCont.style.display = 'none'
                                     }, 300)
                                     setTimeout(() => {
-                                        styling.warning.current!.style.display = "none"
+                                        styling.warningGroup.current!.style.display = "none"
                                     }, 200)
                                     target.dataset.toggle = 'collapsed'
-                                    styling.warning.current!.style.display = "none"
+                                    styling.warningGroup.current!.style.display = "none"
                                     setAddGrpBtnState("collapsed")
                                     Cookies.set("addGrpState", target.dataset.toggle)
                                     registerChatRoom()
                                 }
                                 else {
-                                    styling.warning.current!.style.display = "block"
+                                    styling.warningGroup.current!.style.display = "block"
                                 }
                             }}
                         >
-                            <span className={styles.warning} ref={styling.warning}>Group name must be at least 4 characters long</span>
+                            <span className={styles.warning} ref={styling.warningGroup}>Group name must be at least 4 characters long</span>
                             <input type="text" className={styles.grpName} placeholder="Enter Group Name..." value={groupName} minLength={4} onChange={(event) => setGroupName(event.target.value)} />
                             {usersList.map((el,i) => {
                                 if(el.uid !== user?.uid) {
@@ -378,7 +380,7 @@ const ChatBox = () => {
                                         seeuserList.style.display = 'none'
                                     }, 300)
                                     setTimeout(() => {
-                                        styling.warning.current!.style.display = "none"
+                                        styling.warningUser.current!.style.display = "none"
                                         const modal = document.querySelectorAll('.modal')
                                         const allinfos = document.querySelectorAll('.adduser-infoContainer')
                                         allinfos.forEach(info => {
@@ -410,7 +412,7 @@ const ChatBox = () => {
                                         userList.style.display = 'none'
                                     }, 300)
                                     setTimeout(() => {
-                                        styling.warning.current!.style.display = "none"
+                                        styling.warningUser.current!.style.display = "none"
                                     }, 200)
                                     target.dataset.toggle = 'collapsed'
                                     setAddUserBtnState("collapsed")
@@ -421,14 +423,14 @@ const ChatBox = () => {
                                 onSubmit={(event) => {
                                     event.preventDefault()
                                     if(!JSON.parse(Cookies.get('currentGroup')).admin.split(',').includes(user?.uid)) {
-                                        styling.warning.current!.style.display = "block"
-                                        styling.warning.current!.innerHTML = "Only the admin can add Users"
+                                        styling.warningUser.current!.style.display = "block"
+                                        styling.warningUser.current!.innerHTML = "Only the admin can add Users"
                                     }
                                     else if(updateUsers.length < 2) {
-                                        styling.warning.current!.style.display = "block"
+                                        styling.warningUser.current!.style.display = "block"
                                     }
                                     else {
-                                        styling.warning.current!.style.display = "none"
+                                        styling.warningUser.current!.style.display = "none"
                                         const target:HTMLButtonElement = document.querySelector('.addUserButton')!
                                         const users = document.querySelectorAll('.users');
                                         users.forEach((el, i:number) => {
@@ -444,17 +446,17 @@ const ChatBox = () => {
                                             userList.style.display = 'none'
                                         }, 300)
                                         setTimeout(() => {
-                                            styling.warning.current!.style.display = "none"
+                                            styling.warningUser.current!.style.display = "none"
                                         }, 200)
                                         target.dataset.toggle = 'collapsed'
-                                        styling.warning.current!.style.display = "none"
+                                        styling.warningUser.current!.style.display = "none"
                                         setAddUserBtnState("collapsed")
                                         Cookies.set("addUserState", target.dataset.toggle)
                                         updateUserList()
                                     }
                                 }}
                             >
-                                <span className={styles.warning} ref={styling.warning}>Add at least one User</span>
+                                <span className={styles.warning} ref={styling.warningUser}>Add at least one User</span>
                                 {usersList.map((el,i) => {
                                     if(el.uid !== user?.uid && !admittedUsers.includes(el.uid)) {
                                         return <div className={`${styles.users} users`} 
@@ -513,7 +515,7 @@ const ChatBox = () => {
                                 adduserList.style.display = 'none'
                             }, 300)
                             setTimeout(() => {
-                                styling.warning.current!.style.display = "none"
+                                styling.warningUser.current!.style.display = "none"
                             }, 200);
                             (document.querySelector('.addUserButton') as HTMLButtonElement).dataset.toggle = 'collapsed'
                             setAddUserBtnState("collapsed")
@@ -537,7 +539,7 @@ const ChatBox = () => {
                                 userList.style.display = 'none'
                             }, 300)
                             setTimeout(() => {
-                                styling.warning.current!.style.display = "none"
+                                styling.warningUser.current!.style.display = "none"
                                 const modal = document.querySelectorAll('.modal')
                                 const allinfos = document.querySelectorAll('.adduser-infoContainer')
                                 allinfos.forEach(info => {
