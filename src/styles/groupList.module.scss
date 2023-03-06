@@ -1,0 +1,24 @@
+.groups {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20vh;
+    color: var(--primary-light) !important;
+    button {
+        width: 10rem;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.25rem;
+        padding: 0.25rem 1rem;
+        outline: none;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: var(--secondary);
+        color: var(--primary-light) !important;
+        cursor: pointer;
+        text-transform: capitalize;
+    }
+} 

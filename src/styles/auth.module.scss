@@ -36,7 +36,7 @@
           outline: none;
           border-width: 0rem;
           border-bottom: 0.15rem solid #726dfe;
-          color: #ffffff;
+          color: var(--primary-light);
         }
         .text-input::placeholder {
           color: hsla(0, 0%, 100%, 0.568);
@@ -49,7 +49,7 @@
         border-width: 0rem;
         cursor: pointer;
         background-color: #726dfe;
-        color: #ffffff;
+        color: var(--primary-light);
         outline: none;
       }
       

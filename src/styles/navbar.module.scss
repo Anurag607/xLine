@@ -22,7 +22,7 @@
     padding-block: 1rem;
     width: 100vw;
     height: 5vh;
-    background-color: #f65275;
+    background-color: var(--primary);
     position: relative;
     z-index: 1500;
     position: fixed;
@@ -56,7 +56,7 @@
 }
 
 .navl:hover {
-    color: #ffffff;
+    color: var(--primary-light);
     border-radius: 0.5rem;
     background-color: rgba(0, 0, 0, 0.75);
 }
@@ -133,8 +133,8 @@
     border-radius: 50rem;
     width: 10rem;
     height: 2.25rem;
-    background-color: #ffffff;
-    color: #ffffff;
+    background-color: var(--primary-light);
+    color: var(--primary-light);
     transition: 0.5s;
     display: flex;
     flex-direction: column;
@@ -147,15 +147,15 @@
 
 .login:hover {
     background-color: rgba(0,0,0,0.75);
-    color: #ffffff;
+    color: var(--primary-light);
 }
 
 .navDash {
     font-size: 1.1rem;
-    color: #ffffff;
+    color: var(--primary-light);
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
-    border: 0.1rem solid #ffffff;
+    border: 0.1rem solid var(--primary-light);
     transition: 0.5s;
     display: flex;
     flex-direction: row;
@@ -191,8 +191,8 @@
 }
 
 .navDash:hover {
-    border-color: #ffffff;
-    background-color: #ffffff;
+    border-color: var(--primary-light);
+    background-color: var(--primary-light);
     color: #000000;
 }
 

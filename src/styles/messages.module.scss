@@ -9,15 +9,15 @@
         width: 12.75rem;
         height: auto;
         border-radius: 1.25rem 1.25rem 1.25rem 0;
-        background-color: #ffffff;
-        box-shadow: 0 0 0.25rem #dadada;
+        background-color: var(--primary-light);
+        box-shadow: 0 0 0.25rem var(--secondary-grey);
         padding: 0.5rem 0.5rem 0rem 0rem;
         position: relative;
         .replyTo-chat-bubble {
             border-radius: 0.75rem !important;
             padding: 0.5rem;
-            background-color: #e8e8e8 !important;
-            color: #37474f;
+            background-color: var(--primary-grey) !important;
+            color: var(--primary-dark);
             width: max-content;
             max-width: calc(100% - 3rem);
             box-shadow: none !important;
@@ -39,7 +39,7 @@
                     font-weight: bold;
                     margin-bottom: 0.25rem;
                     font-size: 0.9rem;
-                    color: #37474f;
+                    color: var(--primary-dark);
                     cursor: default;
                 }
                 .replyTo-user-message {
@@ -54,14 +54,14 @@
         .replyTo-chat-bubble.right {
             border-radius: 1.25rem 1.25rem 0 1.25rem;
             background-color: transparent;
-            box-shadow: 0 0 0.25rem #dadada;
+            box-shadow: 0 0 0.25rem var(--secondary-grey);
             cursor: default;
         }
         .reply-chat-bubble {
             border-radius: 1.25rem 1.25rem 1.25rem 0;
             padding: 1rem 1rem 0rem 1rem;
             background-color: transparent;
-            color: #37474f;
+            color: var(--primary-dark);
             width: max-content;
             max-width: calc(100% - 3rem);
             box-shadow: none !important;
@@ -81,7 +81,7 @@
                     font-weight: bold;
                     margin-bottom: 0.25rem;
                     font-size: 0.9rem;
-                    color: #37474f;
+                    color: var(--primary-dark);
                     cursor: default;
                 }
                 .reply-user-message {
@@ -98,7 +98,7 @@
             align-items: flex-end;
             border-radius: 1.25rem 1.25rem 0 1.25rem;
             background-color: transparent;
-            box-shadow: 0 0 0.25rem #dadada;
+            box-shadow: 0 0 0.25rem var(--secondary-grey);
             cursor: default;
         }
         .time {
@@ -112,7 +112,7 @@
             span {
                 font-family: 'Poppins', sans-serif;
                 font-size: 0.75rem;
-                color: #c5c5c5;
+                color: var(--tertiary-grey);
                 background-color: transparent !important;
             }
         }
@@ -125,11 +125,11 @@
     .chat-bubble {
         border-radius: 1.25rem 1.25rem 1.25rem 0;
         padding: 1rem 1rem 0.5rem 1rem;
-        background-color: #ffffff;
-        color: #37474f;
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
         width: max-content;
         max-width: calc(100% - 3rem);
-        box-shadow: 0 0 0.25rem #dadada;
+        box-shadow: 0 0 0.25rem var(--secondary-grey);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -156,7 +156,7 @@
                     font-weight: bold;
                     margin-bottom: 0.25rem;
                     font-size: 0.9rem;
-                    color: #37474f;
+                    color: var(--primary-dark);
                     cursor: default;
                 }
                 .user-message {
@@ -178,7 +178,7 @@
             span {
                 font-family: 'Poppins', sans-serif;
                 font-size: 0.75rem;
-                color: #c5c5c5;
+                color: var(--tertiary-grey);
                 background-color: transparent !important;
             }
         }
@@ -186,8 +186,8 @@
     .chat-bubble.right {
         margin-left: auto;
         border-radius: 1.25rem 1.25rem 0 1.25rem;
-        background-color: #ffffff;
-        box-shadow: 0 0 0.25rem #dadada;
+        background-color: var(--primary-light);
+        box-shadow: 0 0 0.25rem var(--secondary-grey);
         cursor: default;
     }
 }
