@@ -330,7 +330,6 @@ const ChatBox = () => {
   return (
     <main className={styles["chat-box"]}>
       <div className={styles["chat-body"]}>
-        <Sidebar />
         <section className={`${styles["chat-groups"]} chatRooms`}>
           <div className={styles.sideHead}>
             <button

@@ -1,23 +1,24 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import {useRouter} from 'next/navigation'
-import Link from "next/link"
-import { auth, sendPasswordReset } from '../../../firebase/clientApp'
-import Loader from '../../components/loader'
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { auth, sendPasswordReset } from "../../../firebase/clientApp";
+import Loader from "../../components/loader";
 
 function Reset() {
-  const [email, setEmail] = useState("")
-  const [user, loading, error] = useAuthState(auth)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [user, loading, error] = useAuthState(auth);
+  const router = useRouter();
 
   useEffect(() => {
-    if (user) router.push("/")
-  }, [user, loading, router])
+    if (user) router.push("/chat");
+  }, []); //eslint-disable-line
 
-  return (
-    (loading) ? <Loader /> :
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="reset">
       <div className="reset__container">
         <input
@@ -39,4 +40,4 @@ function Reset() {
   );
 }
 
-export default Reset
+export default Reset;

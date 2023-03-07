@@ -9,10 +9,11 @@ import {
   auth,
   logInWithEmailAndPassword,
   signInWithGoogle,
-} from "../../../firebase/clientApp";
+} from "../../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Loader from "../../components/loader";
+import Loader from "../../../components/loader";
 import Cookies from "js-cookie";
+
 interface LoginForm extends HTMLFormControlsCollection {
   email: HTMLInputElement;
   password: HTMLInputElement;
@@ -27,7 +28,7 @@ type template = { email: string; password: string };
 export default function Login() {
   const router = useRouter();
 
-  const [user, loading] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   const styling = {
     email: React.useRef<HTMLInputElement>(null),
@@ -73,10 +74,8 @@ export default function Login() {
   };
 
   React.useEffect(() => {
-    if (user) {
-      router.push("/chat");
-    }
-  }, [user]); //esline-disable-line
+    if (user) router.push("/");
+  }, [user, loading, router]);
 
   return loading ? (
     <Loader />

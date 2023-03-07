@@ -55,12 +55,8 @@ const GroupList = () => {
   };
 
   useEffect(() => {
-    if (!user) {
-      window.location.reload();
-      return;
-    }
     getGroupsForUser();
-  }, [user]);
+  }, []);
 
   return (
     <div className={styles.groups}>

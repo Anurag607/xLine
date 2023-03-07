@@ -5,6 +5,8 @@ import {
   orderBy,
   onSnapshot,
   where,
+  doc,
+  getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../../firebase/clientApp";
 import Message from "./Message";
@@ -21,8 +23,26 @@ const ChatBox = () => {
     Cookies.get("currentGroup") || ""
   );
   const [user] = useAuthState(auth);
+  const [bgImage, setBgImage] = useState<string>(Cookies.get("bgImage" || ""));
+
+  // Function for getting background pic
+  const getBgImage = async () => {
+    const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+    const querySnapshot = await getDocs(q);
+    let userData: any = {};
+    querySnapshot.forEach((doc) => {
+      userData = doc.data();
+    });
+    Cookies.set(userData.bg);
+    setBgImage(userData.bg);
+  };
 
   useEffect(() => {
+    getBgImage();
+  }, []);
+
+  // Function for scrolling into view the most recent message...
+  const scrollToMessage = () => {
     const messagesCont: HTMLElement = document.querySelector(".messages")!;
     let el = messagesCont.children[
       messagesCont.childElementCount - 2
@@ -33,18 +53,18 @@ const ChatBox = () => {
         inline: "nearest",
         behavior: "smooth",
       });
-  }, [messages]); //eslint-disable-line
+  };
 
-  useEffect(() => {
-    if (!user || currentGroup.length === 0) {
-      window.location.reload();
-      return;
-    }
-
+  // Function for getting messages for current group...
+  const getMessageData = () => {
     try {
       const qMsgs = query(
         collection(db, "messages"),
-        where("room", "==", JSON.parse(Cookies.get("currentGroup")).id),
+        where(
+          "room",
+          "==",
+          JSON.parse(Cookies.get("currentGroup") || "{id=''}").id
+        ),
         orderBy("createdAt")
       );
 
@@ -54,21 +74,35 @@ const ChatBox = () => {
           messages.push({ ...doc.data(), id: doc.id });
         });
         setMessages(messages);
+        scrollToMessage();
       });
 
       getMessages;
     } catch (err) {
       console.error(err);
     }
-  }, [user]); // eslint-disable-line
+  };
 
+  useEffect(() => {
+    getMessageData();
+    scrollToMessage();
+  }, []);
+
+  useEffect(() => {
+    scrollToMessage();
+  }, [messages]);
+
+  // Rendering components here...
   return (
     <main className={styles["chat-box"]}>
       <div className={styles["chat-body"]}>
-        <Sidebar />
+        <Sidebar class="main" />
         <section
           className={`${styles["messages-wrapper"]} messages`}
           id={"messages-wrapper"}
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.677), rgba(0, 0, 0, 0.65)), url('${bgImage}')`,
+          }}
         >
           {messages.map((message: any, index: number) => {
             let dateTime =

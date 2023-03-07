@@ -5,7 +5,7 @@ const Menu = () => {
   const menuBar1: HTMLElement = document.querySelector(".menu_bar1")!;
   const menuBar2: HTMLElement = document.querySelector(".menu_bar2")!;
   const menuBar3: HTMLElement = document.querySelector(".menu_bar3")!;
-  const sidebar: HTMLElement = document.querySelector(".sidebar")!;
+  const sidebar: HTMLElement = document.querySelector(".burgerSidebar")!;
 
   if (menu.dataset.toggle === "close") {
     menu.style.backgroundColor = "var(--primary)";
@@ -34,6 +34,7 @@ const Menu = () => {
     menuBar2.style.backgroundColor = "var(--primary-light)";
     menuBar3.style.backgroundColor = "var(--primary-light)";
     sidebar.childNodes.forEach((node: any) => {
+      node.style.transition = "all 0.3s";
       node.style.opacity = "0";
     });
     setTimeout(() => {

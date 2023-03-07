@@ -17,14 +17,20 @@ const Burger = () => {
   const [burgerState, setBurgerState] = React.useState("close");
   const [messages, setMessages] = useState<any>([]);
   const [user] = useAuthState(auth);
+  const [currentGroup, setCurrentGroup] = useState<string>(
+    Cookies.get("currentGroup") || ""
+  );
 
+  // Function for getting messages for current group...
   useEffect(() => {
-    if (!user || burgerState === "close") return;
-
     try {
       const qMsgs = query(
         collection(db, "messages"),
-        where("room", "==", JSON.parse(Cookies.get("currentGroup")).id),
+        where(
+          "room",
+          "==",
+          JSON.parse(Cookies.get("currentGroup") || "{id=''}").id
+        ),
         orderBy("createdAt")
       );
 
@@ -42,6 +48,7 @@ const Burger = () => {
     }
   }, [user]); // eslint-disable-line
 
+  // Rendering components here...
   return (
     <div className={`${styles.burgerWrapper} burgerWrapper`}>
       <div
@@ -60,7 +67,7 @@ const Burger = () => {
           <span className={`${styles["menu_bar3"]} menu_bar3`} />
         </div>
       </div>
-      <Sidebar />
+      <Sidebar class="burger" />
     </div>
   );
 };

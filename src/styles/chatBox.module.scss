@@ -28,6 +28,9 @@
             overflow-y: scroll;
             position: relative;
             scroll-behavior: smooth;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
             .dateContainer {
                 display: flex;
                 flex-direction: row;

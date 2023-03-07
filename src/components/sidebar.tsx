@@ -52,13 +52,17 @@ const Nav: FC<NavProps> = ({ activeTab, onTabClicked }) => (
   </header>
 );
 
-export const Sidebar = () => {
+export const Sidebar = (props: { class: string }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   const handleTabClicked = (index: number) => setActiveTab(index);
 
   return (
-    <aside className={`${styles["sidebar"]} sidebar`}>
+    <aside
+      className={`${
+        styles[`${props.class === "burger" ? "burgerSidebar" : "sidebar"}`]
+      } burgerSidebar`}
+    >
       <div>
         <Nav activeTab={activeTab} onTabClicked={handleTabClicked} />
 
@@ -84,12 +88,25 @@ export const Sidebar = () => {
               <div className={styles["row"]}>
                 <div className={styles["switch-label"]}>Dark Mode</div>
                 <span className={styles["switch"]}>
-                  <input id="switch-round" type="checkbox" />
-                  <label htmlFor="switch-round"></label>
+                  <input
+                    id={
+                      props.class === "burger"
+                        ? "bg-switch-round"
+                        : "switch-round"
+                    }
+                    type="checkbox"
+                  />
+                  <label
+                    htmlFor={
+                      props.class === "burger"
+                        ? "bg-switch-round"
+                        : "switch-round"
+                    }
+                  ></label>
                 </span>
               </div>
             </form>
-            <Settings />
+            <Settings class={props.class} />
           </div>
         </ReactCarousel>
       </div>

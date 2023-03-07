@@ -39,38 +39,42 @@ const Message = ({ message, index }: { message: any; index: number }) => {
 
   return (
     <div className={styles.messageContainer}>
-      {
-        /*(Cookies.get("replyMode") !== undefined && Cookies.get("replyMode") === "true") ||*/ replyTo !==
-        null ? (
+      {replyTo !== null ? (
+        <div
+          className={`${styles["replyToContainer"]} replyToContainer ${
+            styles[message.uid === user?.uid ? "right" : ""]
+          }`}
+          data-switch={"off"}
+          onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+            if (!deselectMsg(index, event)) selectMsg(index, event);
+            const sendMsg: HTMLInputElement =
+              document.querySelector(".form-input__input")!;
+            if (sendMsg !== undefined && sendMsg !== null) sendMsg.focus();
+          }}
+        >
           <div
-            className={`${styles["replyToContainer"]} replyToContainer ${
-              styles[message.uid === user?.uid ? "right" : ""]
+            className={`${styles["replyTo-chat-bubble"]} replyTo-chat-bubble ${
+              styles[replyTo.uid === user?.uid ? "right" : ""]
             }`}
+            data-details={JSON.stringify(replyTo)}
             data-switch={"off"}
             onClick={(event: React.MouseEvent<HTMLDivElement>) => {
               if (!deselectMsg(index, event)) selectMsg(index, event);
-              const sendMsg: HTMLInputElement =
-                document.querySelector(".form-input__input")!;
-              if (sendMsg !== undefined && sendMsg !== null) sendMsg.focus();
             }}
           >
-            <div
-              // className={`${styles["reply-chat-bubble"]} chat-bubble ${styles[JSON.parse(Cookies.get('selectedMsg')).uid === user?.uid ? "right" : ""]}`}
-              className={`${
-                styles["replyTo-chat-bubble"]
-              } replyTo-chat-bubble ${
-                styles[replyTo.uid === user?.uid ? "right" : ""]
-              }`}
-              // data-details={Cookies.get('selectedMsg')}
-              data-details={JSON.stringify(replyTo)}
-              data-switch={"off"}
-              onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-                if (!deselectMsg(index, event)) selectMsg(index, event);
-              }}
-            >
+            {replyTo.image !== null &&
+            replyTo.image !== undefined &&
+            replyTo.image.length > 0 ? (
+              <div
+                className={styles.messageBubbleImg}
+                style={{ backgroundImage: `url('${replyTo.image}')` }}
+              />
+            ) : (
+              <></>
+            )}
+            <div className={styles["replyTo-chat-bubble__wrapper"]}>
               <Image
                 className={styles["replyTo-chat-bubble__left"]}
-                // src={`${(JSON.parse(Cookies.get('selectedMsg')).avatar === null) ? '/user.png' : JSON.parse(Cookies.get('selectedMsg')).avatar}`}
                 src={`${
                   replyTo.avatar === null ? "/user.png" : replyTo.avatar
                 }`}
@@ -79,73 +83,85 @@ const Message = ({ message, index }: { message: any; index: number }) => {
                 height={50}
               />
               <div className={styles["replyTo-chat-bubble__right"]}>
-                {/* <p className={styles["user-name"]}>{JSON.parse(Cookies.get('selectedMsg')).name}</p>
-            <p className={styles["user-message"]}>{JSON.parse(Cookies.get('selectedMsg')).text}</p> */}
                 <p className={styles["replyTo-user-name"]}>{replyTo.name}</p>
                 <p className={styles["replyTo-user-message"]}>{replyTo.text}</p>
               </div>
             </div>
-
-            <div
-              className={`${styles["reply-chat-bubble"]} reply-chat-bubble ${
-                styles[message.uid === user?.uid ? "right" : ""]
-              }`}
-              data-details={JSON.stringify(message)}
-            >
-              <Image
-                className={styles["reply-chat-bubble__left"]}
-                src={`${
-                  message.avatar === null ? "/user.png" : message.avatar
-                }`}
-                alt="user avatar"
-                width={50}
-                height={50}
-              />
-              <div className={styles["reply-chat-bubble__right"]}>
-                <p className={styles["reply-user-name"]}>{message.name}</p>
-                <p className={styles["reply-user-message"]}>{message.text}</p>
-              </div>
-            </div>
-
-            <div className={styles.time}>
-              <span>{time}</span>
-            </div>
           </div>
-        ) : (
+
           <div
-            className={`${styles["chat-bubble"]} chat-bubble ${
+            className={`${styles["reply-chat-bubble"]} reply-chat-bubble ${
               styles[message.uid === user?.uid ? "right" : ""]
             }`}
             data-details={JSON.stringify(message)}
-            data-switch={"off"}
-            onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-              if (!deselectMsg(index, event)) selectMsg(index, event);
-              const sendMsg: HTMLInputElement =
-                document.querySelector(".form-input__input")!;
-              if (sendMsg !== undefined && sendMsg !== null) sendMsg.focus();
-            }}
           >
-            <div>
-              <Image
-                className={styles["chat-bubble__left"]}
-                src={`${
-                  message.avatar === null ? "/user.png" : message.avatar
-                }`}
-                alt="user avatar"
-                width={50}
-                height={50}
-              />
-              <div className={styles["chat-bubble__right"]}>
-                <p className={styles["user-name"]}>{message.name}</p>
-                <p className={styles["user-message"]}>{message.text}</p>
-              </div>
-            </div>
-            <div className={styles.time}>
-              <span>{time}</span>
+            <Image
+              className={styles["reply-chat-bubble__left"]}
+              src={`${
+                message.avatar === null || message.avatar === undefined
+                  ? "/user.png"
+                  : message.avatar
+              }`}
+              alt="user avatar"
+              width={50}
+              height={50}
+            />
+            <div className={styles["reply-chat-bubble__right"]}>
+              <p className={styles["reply-user-name"]}>{message.name}</p>
+              <p className={styles["reply-user-message"]}>{message.text}</p>
             </div>
           </div>
-        )
-      }
+
+          <div className={styles.time}>
+            <span>{time}</span>
+          </div>
+        </div>
+      ) : (
+        <div
+          className={`${styles["chat-bubble"]} chat-bubble ${
+            styles[message.uid === user?.uid ? "right" : ""]
+          }`}
+          data-details={JSON.stringify(message)}
+          data-switch={"off"}
+          onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+            if (!deselectMsg(index, event)) selectMsg(index, event);
+            const sendMsg: HTMLInputElement =
+              document.querySelector(".form-input__input")!;
+            if (sendMsg !== undefined && sendMsg !== null) sendMsg.focus();
+          }}
+        >
+          {message.image !== null &&
+          message.image !== undefined &&
+          message.image.length > 0 ? (
+            <div
+              className={styles.messageBubbleImg}
+              style={{ backgroundImage: `url('${message.image}')` }}
+            />
+          ) : (
+            <></>
+          )}
+          <div className={styles.messageTxt}>
+            <Image
+              className={styles["chat-bubble__left"]}
+              src={`${
+                message.avatar === null || message.avatar === undefined
+                  ? "/user.png"
+                  : message.avatar
+              }`}
+              alt="user avatar"
+              width={50}
+              height={50}
+            />
+            <div className={styles["chat-bubble__right"]}>
+              <p className={styles["user-name"]}>{message.name}</p>
+              <p className={styles["user-message"]}>{message.text}</p>
+            </div>
+          </div>
+          <div className={styles.time}>
+            <span>{time}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

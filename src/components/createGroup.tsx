@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GroupAdd } from "@mui/icons-material";
 
-const CreateGroup = () => {
+// Function for Creating Groups...
+const CreateGroup = (props: { class: string }) => {
   const [groupName, setGroupName] = useState<string>("");
   const [user] = useAuthState(auth);
   const [usersList, setUsersList] = useState<any[]>(
@@ -30,6 +31,7 @@ const CreateGroup = () => {
     warningUser: React.useRef<HTMLInputElement>(null),
   };
 
+  // Function for Registering Groups in DB...
   const registerChatRoom = async () => {
     try {
       await addDoc(collection(db, "chatRooms"), {
@@ -46,75 +48,121 @@ const CreateGroup = () => {
     }
   };
 
+  // Function for handling form submit...
+  const submitHandler = (event: React.MouseEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (groupName.length >= 4) {
+      styling.warningGroup.current!.style.display = "none";
+      const target: HTMLButtonElement =
+        document.querySelector(".addGroupButton")!;
+      const users = document.querySelectorAll(".grp-users");
+      users.forEach((el, i: number) => {
+        let target = el as HTMLDivElement;
+        target.dataset.status = "not-added";
+        target.style.outlineColor = "transparent";
+        target.style.borderColor = "transparent";
+      });
+      const formCont: HTMLFormElement = event.currentTarget;
+      formCont.style.opacity = "0";
+      setTimeout(() => {
+        formCont.style.height = "0rem";
+        formCont.style.display = "none";
+      }, 300);
+      setTimeout(() => {
+        styling.warningGroup.current!.style.display = "none";
+      }, 200);
+      target.dataset.toggle = "collapsed";
+      styling.warningGroup.current!.style.display = "none";
+      setAddGrpBtnState("collapsed");
+      Cookies.set("addGrpState", target.dataset.toggle);
+      registerChatRoom();
+    } else {
+      styling.warningGroup.current!.style.display = "block";
+    }
+  };
+
+  // Function for Selecting Users for addition to the group ...
+  const handleAddUser = (
+    event: React.MouseEvent<HTMLDivElement>,
+    i: number
+  ) => {
+    const target: HTMLDivElement = event.currentTarget;
+    if (
+      target.dataset.status === "not-added" &&
+      target.textContent !== `+ ${user?.displayName}`
+    ) {
+      target.dataset.status = "added";
+      target.style.outlineColor = "rgba(0,0,0,0.5)";
+      target.style.borderColor = "var(--primary-light)";
+      let newList = [
+        ...addUsers,
+        JSON.parse(target.dataset.details as string).uid,
+      ];
+      setAddUsers(newList);
+    } else if (
+      target.dataset.status === "added" &&
+      target.textContent !== `+ ${user?.displayName}`
+    ) {
+      target.dataset.status = "not-added";
+      target.style.outlineColor = "transparent";
+      target.style.borderColor = "transparent";
+      let newList = addUsers;
+      let index = 0;
+      let id = JSON.parse(target.dataset.details as string).id;
+      newList.forEach((el, i) => {
+        if (el.id === id) index = i;
+      });
+      newList.splice(i, 1);
+      setAddUsers(newList);
+    }
+  };
+
+  // Function for handling group addition...
+  const handleAddGrp = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const target: HTMLButtonElement = event.currentTarget;
+    const formCont: HTMLFormElement = document.querySelector(
+      `${props.class === "burger" ? ".bg-formCont" : ".formCont"}`
+    )!;
+    if (target.dataset.toggle === "collapsed") {
+      formCont.style.display = "flex";
+      formCont.style.height = "auto";
+      setTimeout(() => {
+        formCont.style.opacity = "1";
+      }, 100);
+      target.dataset.toggle = "expanded";
+      setAddGrpBtnState("expanded");
+      Cookies.set("addGrpState", target.dataset.toggle);
+    } else {
+      formCont.style.opacity = "0";
+      setTimeout(() => {
+        formCont.style.height = "0rem";
+        formCont.style.display = "none";
+      }, 300);
+      setTimeout(() => {
+        styling.warningGroup.current!.style.display = "none";
+      }, 200);
+      target.dataset.toggle = "collapsed";
+      setAddGrpBtnState("collapsed");
+      Cookies.set("addGrpState", target.dataset.toggle);
+    }
+  };
+
+  // Redering components here...
   return (
     <div className={styles.createGroup}>
       <button
         className={`${styles.addGroupButton} addGroupButton`}
         data-toggle={addGrpBtnState}
-        onClick={(event) => {
-          const target: HTMLButtonElement = event.currentTarget;
-          const formCont: HTMLFormElement =
-            document.querySelector(".formCont")!;
-          if (target.dataset.toggle === "collapsed") {
-            formCont.style.display = "flex";
-            formCont.style.height = "auto";
-            setTimeout(() => {
-              formCont.style.opacity = "1";
-            }, 100);
-            target.dataset.toggle = "expanded";
-            setAddGrpBtnState("expanded");
-            Cookies.set("addGrpState", target.dataset.toggle);
-          } else {
-            formCont.style.opacity = "0";
-            setTimeout(() => {
-              formCont.style.height = "0rem";
-              formCont.style.display = "none";
-            }, 300);
-            setTimeout(() => {
-              styling.warningGroup.current!.style.display = "none";
-            }, 200);
-            target.dataset.toggle = "collapsed";
-            setAddGrpBtnState("collapsed");
-            Cookies.set("addGrpState", target.dataset.toggle);
-          }
-        }}
+        onClick={handleAddGrp}
       >
         Add Group
         <GroupAdd />
       </button>
       <form
-        className={`${styles.formCont} formCont`}
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (groupName.length >= 4) {
-            styling.warningGroup.current!.style.display = "none";
-            const target: HTMLButtonElement =
-              document.querySelector(".addGroupButton")!;
-            const users = document.querySelectorAll(".grp-users");
-            users.forEach((el, i: number) => {
-              let target = el as HTMLDivElement;
-              target.dataset.status = "not-added";
-              target.style.outlineColor = "transparent";
-              target.style.borderColor = "transparent";
-            });
-            const formCont: HTMLFormElement = event.currentTarget;
-            formCont.style.opacity = "0";
-            setTimeout(() => {
-              formCont.style.height = "0rem";
-              formCont.style.display = "none";
-            }, 300);
-            setTimeout(() => {
-              styling.warningGroup.current!.style.display = "none";
-            }, 200);
-            target.dataset.toggle = "collapsed";
-            styling.warningGroup.current!.style.display = "none";
-            setAddGrpBtnState("collapsed");
-            Cookies.set("addGrpState", target.dataset.toggle);
-            registerChatRoom();
-          } else {
-            styling.warningGroup.current!.style.display = "block";
-          }
-        }}
+        className={`${styles.formCont} ${
+          props.class === "burger" ? "bg-formCont" : "formCont"
+        }`}
+        onSubmit={submitHandler}
       >
         <span className={styles.warning} ref={styling.warningGroup}>
           Group name must be at least 4 characters long
@@ -136,35 +184,7 @@ const CreateGroup = () => {
                 data-status="not-added"
                 data-details={JSON.stringify(el)}
                 onClick={(event) => {
-                  const target: HTMLDivElement = event.currentTarget;
-                  if (
-                    target.dataset.status === "not-added" &&
-                    target.textContent !== `+ ${user?.displayName}`
-                  ) {
-                    target.dataset.status = "added";
-                    target.style.outlineColor = "rgba(0,0,0,0.5)";
-                    target.style.borderColor = "var(--primary-light)";
-                    let newList = [
-                      ...addUsers,
-                      JSON.parse(target.dataset.details as string).uid,
-                    ];
-                    setAddUsers(newList);
-                  } else if (
-                    target.dataset.status === "added" &&
-                    target.textContent !== `+ ${user?.displayName}`
-                  ) {
-                    target.dataset.status = "not-added";
-                    target.style.outlineColor = "transparent";
-                    target.style.borderColor = "transparent";
-                    let newList = addUsers;
-                    let index = 0;
-                    let id = JSON.parse(target.dataset.details as string).id;
-                    newList.forEach((el, i) => {
-                      if (el.id === id) index = i;
-                    });
-                    newList.splice(i, 1);
-                    setAddUsers(newList);
-                  }
+                  handleAddUser(event, i);
                 }}
               >
                 <Image

@@ -49,12 +49,12 @@ const selectMsg = (index: number, event: React.MouseEvent) => {
   (selectedMsg as HTMLDivElement).style.backgroundColor =
     "var(--tertiary-light-1)";
   (selectedMsg as HTMLDivElement).dataset.switch = "on";
+  console.log(selectedMsg, selectedMsg.childElementCount);
   if (selectedMsg.childElementCount > 2) {
-    Cookies.set(
-      "selectedMsg",
+    let id =
       (selectedMsg.children[selectedMsg.childElementCount - 2] as HTMLElement)
-        .dataset.details
-    );
+        .dataset.details || (selectedMsg as HTMLElement).dataset.details;
+    Cookies.set("selectedMsg", id);
   } else
     Cookies.set("selectedMsg", (selectedMsg as HTMLDivElement).dataset.details);
   Cookies.set("replyMode", true);
