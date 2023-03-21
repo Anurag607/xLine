@@ -6,11 +6,8 @@
     justify-content: flex-start;
     align-items: flex-end;
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
     background-color: var(--tertiary-light);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     .chat-body {
         display: flex;
         flex-direction: row;

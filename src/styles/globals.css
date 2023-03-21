@@ -23,12 +23,16 @@ body {
 }
 
 :root {
-  --primary: #f65275;
+  /* --primary: #f65275;
   --secondary: #6f3df4;
+  --tertiary-light: #f4f7fc;
+  --tertiary-light-1: #CCCCFF; */
+  --primary: #ff4779;
+  --secondary: #8843e4;
   --primary-light: #ffffff;
   --secondary-light: #fafafa;
-  --tertiary-light: #f4f7fc;
-  --tertiary-light-1: #CCCCFF;
+  --tertiary-light: #ffe1e8;
+  --tertiary-light-1: #ffe1e8;
   --primary-grey: #e8e8e8;
   --secondary-grey: #dadada;
   --tertiary-grey: #c5c5c5;
@@ -39,9 +43,9 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  height: 0.05rem;
+  height: 0rem;
   /* width of the horizontal  scrollbar */
-  width: 0.15rem;
+  width: 0rem;
   /* width of the vertical scrollbar */
 }
 
