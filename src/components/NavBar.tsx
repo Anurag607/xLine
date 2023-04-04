@@ -31,6 +31,7 @@ const NavBar = () => {
   /* eslint-disable */
   React.useEffect(() => {
     getProfilePic();
+    if (user === null || user === undefined) router.push("/login");
   }, []);
 
   /* eslint-enable */
@@ -45,10 +46,12 @@ const NavBar = () => {
               className={styles.navDash}
               onClick={() => {
                 Cookie.set("loggedIn", false);
-                router.push("/");
-                new Promise((resolve, reject) => {
-                  resolve(logout());
-                });
+                router.push("/login");
+                router.refresh();
+                logout();
+                // new Promise((resolve, reject) => {
+                //   resolve(logout());
+                // });
               }}
             >
               <div>
@@ -69,7 +72,7 @@ const NavBar = () => {
             <Link href="/" as="/">
               <span className={styles.login}>
                 <div />
-                <span>Login</span>
+                {/* <span>Login</span> */}
               </span>
             </Link>
           )}

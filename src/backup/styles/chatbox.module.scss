@@ -243,6 +243,7 @@
                 padding-bottom: 1rem;
                 width: 90%;
                 border-bottom: 0.1rem solid var(--primary-grey);
+                overflow-y: scroll;
                 .users {
                     display: flex;
                     flex-direction: column;
