@@ -112,8 +112,22 @@ const UserList = () => {
     }
   };
 
+  const func = () => {
+    const q = query(collection(db, "users"));
+    let users: any[] = [];
+    const getUsers = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let temp = doc.data();
+        users.push(temp.uid);
+      });
+      console.log(users.join(","));
+    });
+    getUsers;
+  };
+
   useEffect(() => {
     getUserList();
+    // func();
   }, []);
 
   return (

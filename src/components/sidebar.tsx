@@ -77,10 +77,10 @@ export const Sidebar = (props: { class: string }) => {
           selectedItem={activeTab}
           onChange={handleTabClicked}
         >
-          <div>
+          <div style={{ overflowY: "scroll" }}>
             <GroupList />
           </div>
-          <div>
+          <div style={{ overflowY: "scroll" }}>
             <UserList />
           </div>
           <div>

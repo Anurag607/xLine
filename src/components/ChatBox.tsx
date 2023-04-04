@@ -101,7 +101,9 @@ const ChatBox = () => {
           className={`${styles["messages-wrapper"]} messages`}
           id={"messages-wrapper"}
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.677), rgba(0, 0, 0, 0.65)), url('${bgImage}')`,
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.677), rgba(0, 0, 0, 0.65)), url('${
+              bgImage && bgImage.length > 0 ? bgImage : "/116.jpg"
+            }')`,
           }}
         >
           {messages.map((message: any, index: number) => {
