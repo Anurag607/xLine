@@ -96,3 +96,11 @@
 //     </aside>
 //   );
 // };
+
+import React from "react";
+
+const burgerSidebar = () => {
+  return <div>burgerSidebar</div>;
+};
+
+export default burgerSidebar;
