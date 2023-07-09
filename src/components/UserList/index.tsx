@@ -8,9 +8,9 @@ import {
   updateDoc,
   getDoc,
 } from "firebase/firestore";
-import { db, auth } from "../../firebase/clientApp";
+import { db, auth } from "../../../firebase/clientApp";
 import Cookies from "js-cookie";
-import styles from "../styles/userList.module.scss";
+import styles from "./userList.module.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Image from "next/image";
 

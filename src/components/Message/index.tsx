@@ -1,9 +1,9 @@
 import React from "react";
-import { db, auth } from "../../firebase/clientApp";
+import { db, auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Image from "next/image";
-import styles from "../styles/messages.module.scss";
-import { selectMsg, deselectMsg } from "../scripts/msgReply";
+import styles from "./messages.module.scss";
+import { selectMsg, deselectMsg } from "../../scripts/msgReply";
 import { doc, getDoc } from "firebase/firestore";
 
 const Message = ({ message, index }: { message: any; index: number }) => {

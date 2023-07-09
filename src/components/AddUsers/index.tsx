@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import styles from "../styles/addUser.module.scss";
+import styles from "./addUser.module.scss";
 import Image from "next/image";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
-import { db, auth } from "../../firebase/clientApp";
+import { db, auth } from "../../../firebase/clientApp";
 import Cookies from "js-cookie";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { PersonAdd } from "@mui/icons-material";
 
-const AddUsers = (props: { class: string }) => {
+const AddUsers: React.FC<{ class: string }> = (props) => {
   const [user] = useAuthState(auth);
   const [addUserBtnState, setAddUserBtnState] = useState<string>(
     Cookies.get("addUserState") !== undefined

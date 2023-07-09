@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/burgerMenu.module.scss";
-import { Menu } from "../scripts/burger";
+import styles from "./burgerMenu.module.scss";
+import { Menu } from "../../scripts/burger";
 import Cookies from "js-cookie";
 import {
   query,
@@ -9,9 +9,9 @@ import {
   onSnapshot,
   where,
 } from "firebase/firestore";
-import { db, auth } from "../../firebase/clientApp";
+import { db, auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Sidebar } from "./sidebar";
+import { Sidebar } from "../Sidebar";
 
 const Burger = () => {
   const [burgerState, setBurgerState] = React.useState("close");

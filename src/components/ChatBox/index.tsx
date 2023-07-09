@@ -8,13 +8,13 @@ import {
   doc,
   getDocs,
 } from "firebase/firestore";
-import { db, auth } from "../../firebase/clientApp";
-import Message from "./Message";
-import SendMessage from "./SendMessage";
-import styles from "../styles/chatBox.module.scss";
+import { db, auth } from "../../../firebase/clientApp";
+import Message from "../Message";
+import SendMessage from "../SendMessage";
+import styles from "./chatBox.module.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Cookies from "js-cookie";
-import { Sidebar } from "../components/sidebar";
+import { Sidebar } from "../Sidebar";
 
 const ChatBox = () => {
   const [messages, setMessages] = useState<any>([]);

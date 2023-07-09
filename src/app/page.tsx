@@ -11,8 +11,10 @@ import {
   signInWithGoogle,
 } from "../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Loader from "../components/loader";
+import Loader from "../components/Loader";
 import Cookies from "js-cookie";
+
+// Defining the types for the form...
 interface LoginForm extends HTMLFormControlsCollection {
   email: HTMLInputElement;
   password: HTMLInputElement;
@@ -25,6 +27,7 @@ interface LoginFormEl extends HTMLFormElement {
 type template = { email: string; password: string };
 
 export default function Login() {
+  // Defining the variables (router, ref, states)...
   const router = useRouter();
 
   const [user, loading] = useAuthState(auth);
@@ -41,6 +44,7 @@ export default function Login() {
     password: "",
   });
 
+  // Function to handle the change in the input fields...
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -67,11 +71,13 @@ export default function Login() {
     }
   };
 
+  // Function to handle the submit of the form...
   const HandleSubmit = (e: React.FormEvent<LoginFormEl>) => {
     e.preventDefault();
     logInWithEmailAndPassword(logindet.email, logindet.password);
   };
 
+  // Clearing the cookies for new session...
   React.useEffect(() => {
     Cookies.remove("currentGroup", { path: "" });
     Cookies.remove("groupList", { path: "" });
@@ -81,6 +87,7 @@ export default function Login() {
     Cookies.remove("currentDate", { path: "" });
   }, []);
 
+  // Checking if the user is logged in or not...
   React.useEffect(() => {
     if (user) {
       Cookies.set("loggedIn", true);
@@ -88,16 +95,20 @@ export default function Login() {
     }
   }, [user]); //esline-disable-line
 
+  // Returning the JSX (LOGIN FORM)...
   return loading ? (
     <Loader />
   ) : (
     <main className={styles.loginWrapper}>
       <div>
+        {/* Login Form... */}
         <form onSubmit={HandleSubmit}>
           <h2>Login</h2>
+          {/* Warning! */}
           <span className={styles.warning} ref={styling.warning}>
             Invalid Username or Password
           </span>
+          {/* Email: Input Field */}
           <span>
             <label htmlFor="email">
               Email:
@@ -116,6 +127,7 @@ export default function Login() {
               </span>
             </label>
           </span>
+          {/* Password: Input Field */}
           <span>
             <label htmlFor="password">
               Password:
@@ -140,6 +152,7 @@ export default function Login() {
               </span>
             </label>
           </span>
+          {/* Submit Button */}
           <input
             type="submit"
             placeholder="Login"
@@ -147,6 +160,7 @@ export default function Login() {
             name="submit"
             className={styles.loginSubmit}
           />
+          {/* Google Sign In */}
           <section className={styles.options}>
             <p>Or Sign In using </p>
             <div
@@ -159,6 +173,7 @@ export default function Login() {
               <span>Sign in with Google</span>
             </div>
           </section>
+          {/* Sign Up */}
           <span className={styles.toSignup} ref={styling.toSignup}>
             Dont have an account?
             <Link href="/signup" as="/signup" passHref>

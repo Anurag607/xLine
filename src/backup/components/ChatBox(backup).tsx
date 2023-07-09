@@ -21,7 +21,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Sidebar } from "../../components/sidebar";
+import { Sidebar } from "../../components/Sidebar";
 
 const ChatBox = () => {
   const [messages, setMessages] = useState<any>([]);

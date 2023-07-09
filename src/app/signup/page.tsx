@@ -3,9 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Head from "next/head";
 import styles from "./signup.module.scss";
-import Cookie from "js-cookie";
 import Image from "next/image";
 import {
   auth,
@@ -14,6 +12,7 @@ import {
 } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+// Defining the types for the form...
 interface SignupForm extends HTMLFormControlsCollection {
   cnfrmpass: string;
   email: string;
@@ -33,6 +32,7 @@ type signupTemplate = {
 };
 
 export default function Signup() {
+  // Defining the variables (router, ref, states)...
   const router = useRouter();
 
   const [user, loading, error] = useAuthState(auth);
@@ -50,6 +50,7 @@ export default function Signup() {
     password: "",
   });
 
+  // Function to handle the change in the input fields...
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let target = e.currentTarget;
     switch (target.name) {
@@ -90,6 +91,7 @@ export default function Signup() {
     }
   };
 
+  // Function to check the validity of the password...
   const checkPasswordValidity = (value: string) => {
     const isNonWhiteSpace = /^\S*$/;
     if (!isNonWhiteSpace.test(value)) {
@@ -125,6 +127,7 @@ export default function Signup() {
     return null;
   };
 
+  // Function to handle the submit of the form...
   const HandleSubmit = (e: React.FormEvent<SignupFormEl>) => {
     e.preventDefault();
     let status = 201;
@@ -157,29 +160,24 @@ export default function Signup() {
       );
   };
 
+  // Checking if the user is logged in or not...
   React.useEffect(() => {
     if (loading) return;
     if (user) router.push("/chat");
   }, []); //eslint-disable-line
 
+  // Returning the JSX (SIGNUP FORM)...
   return (
     <main className={styles.signupWrapper}>
-      <Head>
-        <link rel="icon" href="/parking.png" type="image/x-icon" />
-        <meta charSet="UTF-8" />
-        <meta name="description" content="SplitWise Like App" />
-        <meta name="keywords" content="Payment, e-transaction, blockchain" />
-        <meta name="author" content="Deep" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PocketPal</title>
-      </Head>
-      <section></section>
       <section>
+        {/* Signup Form... */}
         <form onSubmit={HandleSubmit}>
           <h2 ref={styling.heading}>Signup</h2>
+          {/* Warning! */}
           <span className={styles.warning} ref={styling.warning}>
             Username Already Exists
           </span>
+          {/* Username: Input Field */}
           <span>
             <label htmlFor="username">
               Username:
@@ -197,6 +195,7 @@ export default function Signup() {
               </span>
             </label>
           </span>
+          {/* Email: Input Field */}
           <span>
             <label htmlFor="email">
               Email:
@@ -213,6 +212,7 @@ export default function Signup() {
               </span>
             </label>
           </span>
+          {/* Password: Input Field */}
           <span>
             <label htmlFor="password">
               Password:
@@ -229,6 +229,7 @@ export default function Signup() {
               </span>
             </label>
           </span>
+          {/* Comfirm Password: Input Field */}
           <span>
             <label htmlFor="cnfrmpass">
               Confirm Password:
@@ -245,6 +246,7 @@ export default function Signup() {
               </span>
             </label>
           </span>
+          {/* Submit Button */}
           <input
             type="submit"
             placeholder="Sign Up"
@@ -252,6 +254,7 @@ export default function Signup() {
             name="submit"
             className={styles.signInSubmit}
           />
+          {/* Sign In with Google */}
           <section>
             <p>Or Sign In using </p>
             <div onClick={signInWithGoogle}>
@@ -259,6 +262,7 @@ export default function Signup() {
               <span>Sign in with Google</span>
             </div>
           </section>
+          {/* Login */}
           <span className={styles.tologin}>
             Already have an account?
             <Link href="/" as="/">

@@ -18,7 +18,6 @@ import {
   addDoc,
   updateDoc,
   doc,
-  getDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -37,22 +36,32 @@ const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
 
+// Function for logging in a user via Google Provider...
 const signInWithGoogle = async () => {
   try {
+    // Creating a new user...
     const res = await signInWithPopup(auth, googleProvider);
+
+    // Initializing the user and common room...
     const user = res.user;
-    const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    const docs = await getDocs(q);
     const commonRoom = doc(
       db,
       "chatRooms",
       process.env.NEXT_PUBLIC_COMMON_ROOM_ID!
     );
+
+    // Getting the user data from the database...
+    const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    const docs = await getDocs(q);
+
+    // Getting the common room data from the database...
     const q1 = query(
       collection(db, "chatRooms"),
       where("name", "==", "Common")
     );
     const querySnapshot = await getDocs(q1);
+
+    // Getting the registered users from the common room...
     let registeredUsers = "";
     let flag = true;
     querySnapshot.forEach((doc) => {
@@ -61,6 +70,8 @@ const signInWithGoogle = async () => {
     registeredUsers.split(",").map((el) => {
       if (el === user.uid) flag = false;
     });
+
+    // Adding the user to the database if user not registered...
     if (docs.docs.length === 0) {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
@@ -69,6 +80,8 @@ const signInWithGoogle = async () => {
         email: user.email,
         avatar: user.photoURL,
       });
+
+      // Updating the common room...
       if (flag) {
         await updateDoc(commonRoom, {
           users: `${registeredUsers},${user.uid}`,
@@ -81,6 +94,7 @@ const signInWithGoogle = async () => {
   }
 };
 
+// Function for logging in a user via email and password...
 const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -90,19 +104,25 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
   }
 };
 
+// Function for Registering a new user via email and password...
 const registerWithEmailAndPassword = async (
   name: string,
   email: string,
   password: string
 ) => {
   try {
+    // Creating a new user...
     const res = await createUserWithEmailAndPassword(auth, email, password);
+
+    // Initializing the user and common room...
     const user = res.user;
     const commonRoom = doc(
       db,
       "chatRooms",
       process.env.NEXT_PUBLIC_COMMON_ROOM_ID!
     );
+
+    // Checking if the user is already registered in common room...
     const q = query(collection(db, "chatRooms"), where("name", "==", "Common"));
     const querySnapshot = await getDocs(q);
     let registeredUsers = "";
@@ -113,13 +133,18 @@ const registerWithEmailAndPassword = async (
     registeredUsers.split(",").map((el) => {
       if (el === user.uid) flag = false;
     });
+
+    // Adding the user to the common room...
     await addDoc(collection(db, "users"), {
       uid: user.uid,
       name,
       authProvider: "local",
       email,
-      avatar: "../public/user.png",
+      avatar:
+        "https://res.cloudinary.com/dotwawzhk/image/upload/v1688918295/user_sa91hj.png",
     });
+
+    // Updating the common room...
     if (flag) {
       await updateDoc(commonRoom, {
         users: `${registeredUsers},${user.uid}`,
@@ -131,6 +156,7 @@ const registerWithEmailAndPassword = async (
   }
 };
 
+// Function for sending password reset email...
 const sendPasswordReset = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
@@ -141,6 +167,7 @@ const sendPasswordReset = async (email: string) => {
   }
 };
 
+// Function for logging out a user...
 const logout = () => {
   signOut(auth);
 };

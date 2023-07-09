@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styles from "../styles/createGroup.module.scss";
+import styles from "./createGroup.module.scss";
 import Image from "next/image";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db, auth } from "../../firebase/clientApp";
+import { db, auth } from "../../../firebase/clientApp";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";

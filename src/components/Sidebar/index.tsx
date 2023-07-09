@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import styles from "../styles/sidebar.module.scss";
+import styles from "./sidebar.module.scss";
 import {
   Groups2Outlined,
   SettingsOutlined,
@@ -7,9 +7,9 @@ import {
 } from "@mui/icons-material";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel as ReactCarousel } from "react-responsive-carousel";
-import GroupList from "./groupList";
-import UserList from "./userList";
-import Settings from "./settings";
+import GroupList from "../GroupList";
+import UserList from "../UserList";
+import Settings from "../Settings";
 
 const Icon = ({ icon }: { icon: string }) => {
   switch (icon) {

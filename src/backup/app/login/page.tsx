@@ -11,7 +11,7 @@ import {
   signInWithGoogle,
 } from "../../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Loader from "../../../components/loader";
+import Loader from "../../../components/Loader";
 import Cookies from "js-cookie";
 
 interface LoginForm extends HTMLFormControlsCollection {

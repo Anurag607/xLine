@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 import Cookies from "js-cookie";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { db, auth } from "../../firebase/clientApp";
+import { db, auth } from "../../../firebase/clientApp";
 import { useRouter } from "next/navigation";
-import styles from "../styles/groupList.module.scss";
+import styles from "./groupList.module.scss";
 
 const GroupList = () => {
   const router = useRouter();

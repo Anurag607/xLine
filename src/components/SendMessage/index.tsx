@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { auth, db } from "../../firebase/clientApp";
+import { auth, db } from "../../../firebase/clientApp";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import styles from "../styles/sendMessage.module.scss";
+import styles from "./sendMessage.module.scss";
 import Cookies from "js-cookie";
 import { deselectMsgs } from "@/scripts/msgReply";
 import { AttachFile } from "@mui/icons-material";
-import uploadImage from "../scripts/imgUpload";
+import uploadImage from "../../scripts/imgUpload";
 
 // Function Component for Loader...
 const Loader = () => {

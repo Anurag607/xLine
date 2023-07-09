@@ -1,10 +1,10 @@
 import React from "react";
-import uploadImage from "../scripts/imgUpload";
-import styles from "../styles/settings.module.scss";
+import uploadImage from "../../scripts/imgUpload";
+import styles from "./settings.module.scss";
 import Cookie from "js-cookie";
 import { AddAPhoto, AddPhotoAlternate } from "@mui/icons-material";
-import CreateGroup from "./createGroup";
-import AddUsers from "./addUsers";
+import CreateGroup from "../CreateGroup";
+import AddUsers from "../AddUsers";
 import {
   collection,
   doc,
@@ -13,7 +13,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import { db, auth } from "../../firebase/clientApp";
+import { db, auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 // Function Component for Loader...

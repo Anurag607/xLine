@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "../../src/styles/navbar.module.scss";
+import styles from "./navbar.module.scss";
 import Link from "next/link";
 import Cookie from "js-cookie";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { db, auth, logout } from "../../firebase/clientApp";
-import Burger from "../components/burgermenu";
+import { db, auth, logout } from "../../../firebase/clientApp";
+import Burger from "../BurgerMenu";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -49,9 +49,6 @@ const NavBar = () => {
                 router.push("/login");
                 router.refresh();
                 logout();
-                // new Promise((resolve, reject) => {
-                //   resolve(logout());
-                // });
               }}
             >
               <div>
@@ -70,10 +67,9 @@ const NavBar = () => {
             </span>
           ) : (
             <Link href="/" as="/">
-              <span className={styles.login}>
-                <div />
-                {/* <span>Login</span> */}
-              </span>
+              <div className={styles.login}>
+                <span>Login</span>
+              </div>
             </Link>
           )}
         </div>

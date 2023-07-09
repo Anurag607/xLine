@@ -5,7 +5,7 @@ import { auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import NavBar from "../../components/NavBar";
 import ChatBox from "../../components/ChatBox";
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import { useRouter } from "next/navigation";
 
 function App() {
