@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/navigation";
 
 // Function Component for Loader...
 const Loader = () => {
@@ -31,6 +32,9 @@ const Loader = () => {
 const Settings = (props: { class: string }) => {
   // Getting current user session...
   const [user] = useAuthState(auth);
+
+  // Getting router object...
+  const router = useRouter();
 
   // Defining states vaiables...
   const [imageURL, setImageURL] = React.useState<string>("");

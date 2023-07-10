@@ -6,10 +6,14 @@ import { db, auth } from "../../../firebase/clientApp";
 import Cookies from "js-cookie";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { PersonAdd } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 const AddUsers: React.FC<{ class: string }> = (props) => {
   // Getting user session...
   const [user] = useAuthState(auth);
+
+  // Getting router object...
+  const router = useRouter();
 
   // Definging states for user data...
   const [addUserBtnState, setAddUserBtnState] = useState<string>(

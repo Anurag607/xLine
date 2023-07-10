@@ -1,8 +1,8 @@
 import Router from "next/router";
 import NProgress from "nprogress";
 
-let timer;
-let state;
+let timer: any = null;
+let state: any = null;
 let activeRequests = 0;
 const delay = 250;
 
@@ -33,29 +33,31 @@ Router.events.on("routeChangeStart", load);
 Router.events.on("routeChangeComplete", stop);
 Router.events.on("routeChangeError", stop);
 
-const originalFetch = window.fetch;
-window.fetch = async function (...args) {
-  if (activeRequests === 0) {
-    load();
-  }
-
-  activeRequests++;
-
-  try {
-    const response = await originalFetch(...args);
-    return response;
-  } catch (error) {
-    return Promise.reject(error);
-  } finally {
-    activeRequests -= 1;
+if (typeof window !== "undefined") {
+  const originalFetch = window.fetch;
+  window.fetch = async function (...args) {
     if (activeRequests === 0) {
-      stop();
+      load();
     }
-  }
-};
+
+    activeRequests++;
+
+    try {
+      const response = await originalFetch(...args);
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    } finally {
+      activeRequests -= 1;
+      if (activeRequests === 0) {
+        stop();
+      }
+    }
+  };
+}
 
 const TopProgressBar = () => {
   return null;
-}
+};
 
 export default TopProgressBar;

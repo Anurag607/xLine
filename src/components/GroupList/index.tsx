@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { db, auth } from "../../../firebase/clientApp";
 import styles from "./groupList.module.scss";
+import { useRouter } from "next/navigation";
 
 const GroupList = () => {
   // Defining states vaiables...
@@ -16,6 +17,9 @@ const GroupList = () => {
 
   // Getting current user session...
   const [user] = useAuthState(auth);
+
+  // Getting router object...
+  const router = useRouter();
 
   // Function for getting groups for current user...
   const getGroupsForUser = () => {

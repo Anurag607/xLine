@@ -1,8 +1,6 @@
 "use client";
 
-import TopProgressBar from "@/components/TopProgressBar";
 import "../../styles/globals.css";
-import "nprogress/nprogress.css";
 
 export default function RootLayout({
   children,
@@ -11,7 +9,6 @@ export default function RootLayout({
 }) {
   return (
     <>
-      {window && window !== undefined ? <TopProgressBar /> : <></>}
       <section>{children}</section>
     </>
   );

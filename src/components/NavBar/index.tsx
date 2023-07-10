@@ -53,7 +53,7 @@ const NavBar = () => {
               onClick={() => {
                 Cookie.set("loggedIn", false);
                 router.push("/login");
-                router.refresh();
+                window.location.reload();
                 logout();
               }}
             >

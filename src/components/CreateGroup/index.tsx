@@ -46,7 +46,7 @@ const CreateGroup = (props: { class: string }) => {
         createdAt: serverTimestamp(),
       });
       setAddUsers([user?.uid]);
-      router.refresh();
+      window.location.reload();
     } catch (err: any) {
       console.error(err);
       alert(err.message);
