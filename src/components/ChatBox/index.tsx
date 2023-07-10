@@ -5,7 +5,6 @@ import {
   orderBy,
   onSnapshot,
   where,
-  doc,
   getDocs,
 } from "firebase/firestore";
 import { db, auth } from "../../../firebase/clientApp";
@@ -15,9 +14,11 @@ import styles from "./chatBox.module.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Cookies from "js-cookie";
 import { Sidebar } from "../Sidebar";
+import { messageType } from "@/utils/types";
 
 const ChatBox = () => {
-  const [messages, setMessages] = useState<any>([]);
+  // Defining state variables here...
+  const [messages, setMessages] = useState<messageType[]>([]);
   const scroll = useRef<any>(null);
   const [currentGroup, setCurrentGroup] = useState<string>(
     Cookies.get("currentGroup") || ""
@@ -37,6 +38,7 @@ const ChatBox = () => {
     setBgImage(userData.bg);
   };
 
+  // Function for getting background images for current group...
   useEffect(() => {
     getBgImage();
   }, []);
@@ -83,11 +85,13 @@ const ChatBox = () => {
     }
   };
 
+  // Function for getting latest messages for current group...
   useEffect(() => {
     getMessageData();
     scrollToMessage();
   }, []);
 
+  // Funtion for scrolling to the most recent message...
   useEffect(() => {
     scrollToMessage();
   }, [messages]);
@@ -106,7 +110,9 @@ const ChatBox = () => {
             }')`,
           }}
         >
+          {/* Listing all messages here */}
           {messages.map((message: any, index: number) => {
+            // Getting date here...
             let dateTime =
               message.createdAt !== null
                 ? message.createdAt.toDate()
@@ -148,6 +154,8 @@ const ChatBox = () => {
             }
             let currentDate = `${day} ${months[month]} ${year}`;
             let date = Cookies.get("currentDate");
+
+            // Rendering messages here...
             if (date !== currentDate) {
               Cookies.set("currentDate", currentDate);
               return (
@@ -164,9 +172,13 @@ const ChatBox = () => {
               );
             }
           })}
+
+          {/* Scroll span for scrolling to the latest message */}
           <div className={`${styles.scrollSpan} scrollSpan`} ref={scroll} />
         </section>
       </div>
+
+      {/* Input field for sending messages */}
       <SendMessage scroll={scroll} />
     </main>
   );

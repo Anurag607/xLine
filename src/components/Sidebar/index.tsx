@@ -11,6 +11,7 @@ import GroupList from "../GroupList";
 import UserList from "../UserList";
 import Settings from "../Settings";
 
+// Icon Component...
 const Icon = ({ icon }: { icon: string }) => {
   switch (icon) {
     case "Groups":
@@ -24,13 +25,16 @@ const Icon = ({ icon }: { icon: string }) => {
   }
 };
 
+// Tabs...
 const tabs = ["Groups", "Participants", "Settings"];
 
+// Nav type...
 type NavProps = {
   activeTab: number;
   onTabClicked: (tab: number) => void;
 };
 
+// Nav Header Component...
 const Nav: FC<NavProps> = ({ activeTab, onTabClicked }) => (
   <header className={styles.tabs}>
     {tabs.map((tab: string, index) => (
@@ -52,11 +56,15 @@ const Nav: FC<NavProps> = ({ activeTab, onTabClicked }) => (
   </header>
 );
 
+// Sidebar Component...
 export const Sidebar = (props: { class: string }) => {
+  // Default active tab...
   const [activeTab, setActiveTab] = useState<number>(0);
 
+  // Handle tab clicked...
   const handleTabClicked = (index: number) => setActiveTab(index);
 
+  // Rendering the JSX...
   return (
     <aside
       className={`${
@@ -77,12 +85,15 @@ export const Sidebar = (props: { class: string }) => {
           selectedItem={activeTab}
           onChange={handleTabClicked}
         >
+          {/* Tab1: Your Groups */}
           <div style={{ overflowY: "scroll" }}>
             <GroupList />
           </div>
+          {/* Tab2: Users in current Group */}
           <div style={{ overflowY: "scroll" }}>
             <UserList />
           </div>
+          {/* Tab3: Settings and other options */}
           <div>
             <form className={`${styles.darkMode}`}>
               <div className={styles["row"]}>

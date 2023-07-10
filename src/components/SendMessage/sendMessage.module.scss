@@ -71,6 +71,23 @@
     transition: all 0.3s ease-in-out;
     box-shadow: 0.1rem solid var(--tertiary-grey);
     border-radius: 0.5rem;
+    .closeBtn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        cursor: pointer;
+        background-color: #e81f6c;
+        color: #fefefe;
+        border-radius: 50%;
+        padding: 0.25rem;
+        scale: 0;
+        svg {
+            background-color: #fefefe;
+            color: #fefefe;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
 }
 
 .uploadedImg {

@@ -10,8 +10,11 @@ import { GroupAdd } from "@mui/icons-material";
 
 // Function for Creating Groups...
 const CreateGroup = (props: { class: string }) => {
-  const [groupName, setGroupName] = useState<string>("");
+  // Getting the current user session...
   const [user] = useAuthState(auth);
+
+  // Defining states variables...
+  const [groupName, setGroupName] = useState<string>("");
   const [usersList, setUsersList] = useState<any[]>(
     typeof Cookies.get("usersList") !== "undefined"
       ? JSON.parse(Cookies.get("usersList"))
@@ -24,8 +27,10 @@ const CreateGroup = (props: { class: string }) => {
   );
   const [addUsers, setAddUsers] = useState<any[]>([user?.uid]);
 
+  // Setting the router instance...
   const router = useRouter();
 
+  // Defining the ref variables for styling...
   const styling = {
     warningGroup: React.useRef<HTMLInputElement>(null),
     warningUser: React.useRef<HTMLInputElement>(null),
@@ -86,7 +91,9 @@ const CreateGroup = (props: { class: string }) => {
     event: React.MouseEvent<HTMLDivElement>,
     i: number
   ) => {
+    // Getting the current target element...
     const target: HTMLDivElement = event.currentTarget;
+    // Checking if the user is already seelcted or not: if selected reset the selected status else add the selected status to user...
     if (
       target.dataset.status === "not-added" &&
       target.textContent !== `+ ${user?.displayName}`
@@ -150,6 +157,7 @@ const CreateGroup = (props: { class: string }) => {
   // Redering components here...
   return (
     <div className={styles.createGroup}>
+      {/* Toggle Button */}
       <button
         className={`${styles.addGroupButton} addGroupButton`}
         data-toggle={addGrpBtnState}
@@ -158,15 +166,18 @@ const CreateGroup = (props: { class: string }) => {
         Add Group
         <GroupAdd />
       </button>
+      {/* Form... */}
       <form
         className={`${styles.formCont} ${
           props.class === "burger" ? "bg-formCont" : "formCont"
         }`}
         onSubmit={submitHandler}
       >
+        {/* Warning! */}
         <span className={styles.warning} ref={styling.warningGroup}>
           Group name must be at least 4 characters long
         </span>
+        {/* Group name input field */}
         <input
           type="text"
           className={styles.grpName}
@@ -175,6 +186,7 @@ const CreateGroup = (props: { class: string }) => {
           minLength={4}
           onChange={(event) => setGroupName(event.target.value)}
         />
+        {/* Listing all available users */}
         {usersList.map((el, i) => {
           if (el.uid !== user?.uid) {
             return (
@@ -202,6 +214,7 @@ const CreateGroup = (props: { class: string }) => {
             );
           }
         })}
+        {/* Submit button */}
         <input
           type="submit"
           className={styles.createGrpBtn}

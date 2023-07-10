@@ -36,6 +36,7 @@ export default function Signup() {
   const router = useRouter();
 
   const [user, loading, error] = useAuthState(auth);
+  const [isLoading, setLoading] = React.useState<boolean>(false);
 
   const styling = {
     username: React.useRef<HTMLInputElement>(null),
@@ -129,8 +130,8 @@ export default function Signup() {
 
   // Function to handle the submit of the form...
   const HandleSubmit = (e: React.FormEvent<SignupFormEl>) => {
+    setLoading(true);
     e.preventDefault();
-    let status = 201;
     let passIsValid = checkPasswordValidity(signupdet.password);
     if (signupdet.name.length == 0) {
       styling.warning.current!.style.display = "block";
@@ -157,7 +158,7 @@ export default function Signup() {
         signupdet.name,
         signupdet.email,
         signupdet.password
-      );
+      ).then(() => setLoading(false));
   };
 
   // Checking if the user is logged in or not...
@@ -169,6 +170,7 @@ export default function Signup() {
   // Returning the JSX (SIGNUP FORM)...
   return (
     <main className={styles.signupWrapper}>
+      <section />
       <section>
         {/* Signup Form... */}
         <form onSubmit={HandleSubmit}>
@@ -246,29 +248,46 @@ export default function Signup() {
               </span>
             </label>
           </span>
-          {/* Submit Button */}
-          <input
-            type="submit"
-            placeholder="Sign Up"
-            value="Sign Up"
-            name="submit"
-            className={styles.signInSubmit}
-          />
-          {/* Sign In with Google */}
-          <section>
-            <p>Or Sign In using </p>
-            <div onClick={signInWithGoogle}>
-              <Image src="/google.png" alt="Google" width={20} height={20} />
-              <span>Sign in with Google</span>
-            </div>
-          </section>
-          {/* Login */}
-          <span className={styles.tologin}>
-            Already have an account?
-            <Link href="/" as="/">
-              <p className={styles.loginLinks}>Login Here</p>
-            </Link>
-          </span>
+          {isLoading ? (
+            <Image src="/loader.gif" width={50} height={50} alt={""} />
+          ) : (
+            <>
+              {/* Submit Button */}
+              <input
+                type="submit"
+                placeholder="Sign Up"
+                value="Sign Up"
+                name="submit"
+                className={styles.signInSubmit}
+              />
+              {/* Sign In with Google */}
+              <section>
+                <p>Or Sign In using </p>
+                <div
+                  className={styles.googleSignIn}
+                  onClick={() => {
+                    setLoading(true);
+                    signInWithGoogle().then(() => setLoading(false));
+                  }}
+                >
+                  <Image
+                    src="/google.png"
+                    alt="Google"
+                    width={20}
+                    height={20}
+                  />
+                  <span>Sign in with Google</span>
+                </div>
+              </section>
+              {/* Login */}
+              <span className={styles.tologin}>
+                Already have an account?
+                <Link href="/" as="/">
+                  <p className={styles.loginLinks}>Login Here</p>
+                </Link>
+              </span>
+            </>
+          )}
         </form>
       </section>
     </main>

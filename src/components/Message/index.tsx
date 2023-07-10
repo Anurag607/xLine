@@ -7,11 +7,15 @@ import { selectMsg, deselectMsg } from "../../scripts/msgReply";
 import { doc, getDoc } from "firebase/firestore";
 
 const Message = ({ message, index }: { message: any; index: number }) => {
+  // Getting current user session...
   const [user] = useAuthState(auth);
+
+  // Defining state variables...
   const [replyTo, setReplyTo] = React.useState<any>(null);
   const [time, setTime] = React.useState<string>("");
 
   React.useEffect(() => {
+    // Getting and setting time from message data...
     let dateTime =
       message.createdAt !== null ? message.createdAt.toDate() : new Date();
     setTime(
@@ -19,6 +23,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
         (currTime = `${dateTime.getHours()}:${dateTime.getMinutes()}`)
     );
 
+    // Getting and setting replyTo message data...
     if (
       message.replyTo !== undefined &&
       message.replyTo !== null &&
@@ -39,6 +44,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
 
   return (
     <div className={styles.messageContainer}>
+      {/* Checking to see if current message is a reply, if true then adding the following div to indicate that message */}
       {replyTo !== null ? (
         <div
           className={`${styles["replyToContainer"]} replyToContainer ${
@@ -52,6 +58,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
             if (sendMsg !== undefined && sendMsg !== null) sendMsg.focus();
           }}
         >
+          {/* For reply messages sent by the current user */}
           <div
             className={`${styles["replyTo-chat-bubble"]} replyTo-chat-bubble ${
               styles[replyTo.uid === user?.uid ? "right" : ""]
@@ -72,6 +79,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
             ) : (
               <></>
             )}
+            {/* For reply messages not sent by the current user */}
             <div className={styles["replyTo-chat-bubble__wrapper"]}>
               <Image
                 className={styles["replyTo-chat-bubble__left"]}
@@ -89,6 +97,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
             </div>
           </div>
 
+          {/* For showing the current message sent by the current user */}
           <div
             className={`${styles["reply-chat-bubble"]} reply-chat-bubble ${
               styles[message.uid === user?.uid ? "right" : ""]
@@ -112,11 +121,13 @@ const Message = ({ message, index }: { message: any; index: number }) => {
             </div>
           </div>
 
+          {/* Div showing time */}
           <div className={styles.time}>
             <span>{time}</span>
           </div>
         </div>
       ) : (
+        // For messages sent by the current user
         <div
           className={`${styles["chat-bubble"]} chat-bubble ${
             styles[message.uid === user?.uid ? "right" : ""]
@@ -140,6 +151,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
           ) : (
             <></>
           )}
+          {/* For messages not sent by the current user */}
           <div className={styles.messageTxt}>
             <Image
               className={styles["chat-bubble__left"]}
@@ -157,6 +169,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
               <p className={styles["user-message"]}>{message.text}</p>
             </div>
           </div>
+          {/* Div showing time */}
           <div className={styles.time}>
             <span>{time}</span>
           </div>

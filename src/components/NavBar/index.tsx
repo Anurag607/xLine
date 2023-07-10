@@ -10,10 +10,15 @@ import { useRouter } from "next/navigation";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 const NavBar = () => {
+  // Getting current user session...
   const [user] = useAuthState(auth);
+
+  // Getting user profile pic from firestore
   const [userImage, SetuserImage] = React.useState<string>(
     `${Cookie.get("userImage") || user?.photoURL}`
   );
+
+  // Getting router object
   const router = useRouter();
 
   // Function for getting user profile pic
@@ -41,6 +46,7 @@ const NavBar = () => {
       <Burger />
       <div className={styles["nav-right"]}>
         <div className={styles["navicons"]}>
+          {/* Checking to see if user is logged in */}
           {user ? (
             <span
               className={styles.navDash}

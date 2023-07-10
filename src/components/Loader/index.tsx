@@ -1,18 +1,12 @@
 import React from "react";
 
-const Loader = () => {
+// Function Component for Loader...
+const Loader: React.FC = () => {
   return (
     <div className="loader">
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
-      <div className="circle" />
+      {new Array(10).fill(0).map((_, i) => {
+        return <div className="circle" key={i} />;
+      })}
     </div>
   );
 };

@@ -15,7 +15,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Image from "next/image";
 
 const UserList = () => {
+  // Getting the current user session...
   const [user] = useAuthState(auth);
+
+  // Defining the state variables...
   const [usersList, setUsersList] = useState<any[]>(
     typeof Cookies.get("usersList") !== "undefined"
       ? JSON.parse(Cookies.get("usersList"))
@@ -32,6 +35,7 @@ const UserList = () => {
       : [""]
   );
 
+  // Function to get the list of users...
   const getUserList = () => {
     try {
       const qUsers = query(collection(db, "users"), orderBy("name"));
@@ -51,6 +55,7 @@ const UserList = () => {
     }
   };
 
+  // Function to remove a user from the group...
   const removeUser = async () => {
     try {
       const docRef = doc(
@@ -66,6 +71,7 @@ const UserList = () => {
       await updateDoc(docRef, {
         users: existingUsers.join(","),
       });
+      setUsersList(usersList.filter((el) => el.uid !== id));
       let delta = JSON.parse(Cookies.get("currentGroup"));
       delta.users = existingUsers.join(",");
       Cookies.set("currentGroup", JSON.stringify(delta));
@@ -78,14 +84,15 @@ const UserList = () => {
         });
         let delta = JSON.parse(Cookies.get("currentGroup"));
         delta.admin = newAdminList.join(",");
+        setAdmins(newAdminList);
         Cookies.set("currentGroup", JSON.stringify(delta));
       }
-      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
 
+  // Function to update the admin list...
   const updateAdminList = async (newadminList: string[]) => {
     try {
       const docRef = doc(
@@ -93,45 +100,27 @@ const UserList = () => {
         "chatRooms",
         JSON.parse(Cookies.get("currentGroup")).id
       );
-      const docSnap = await getDoc(docRef);
-      let data = docSnap.data();
       await updateDoc(docRef, {
-        admin: [...new Set([...data?.admin.split(","), ...newadminList])].join(
-          ","
-        ),
+        admin: [...new Set([...newadminList])].join(","),
       });
       let delta = JSON.parse(Cookies.get("currentGroup"));
-      delta.admin = [
-        ...new Set([...data?.admin.split(","), ...newadminList]),
-      ].join(",");
-      setAdmins([...new Set([...data?.admin.split(","), ...newadminList])]);
+      delta.admin = [...new Set([...newadminList])].join(",");
+      setAdmins([...new Set([...newadminList])]);
       Cookies.set("currentGroup", JSON.stringify(delta));
-      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
 
-  const func = () => {
-    const q = query(collection(db, "users"));
-    let users: any[] = [];
-    const getUsers = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        let temp = doc.data();
-        users.push(temp.uid);
-      });
-      console.log(users.join(","));
-    });
-    getUsers;
-  };
-
+  // Function for getting userlist on component mount...
   useEffect(() => {
     getUserList();
-    // func();
   }, []);
 
+  // Returning the JSX...
   return (
     <div className={`${styles.addeduserList} addeduserList`}>
+      {/* Listing the users admitted in the current group */}
       {usersList.map((el, i) => {
         if (admittedUsers.includes(el.uid)) {
           return (
@@ -144,18 +133,26 @@ const UserList = () => {
               <div
                 className={`${styles.infoContainer} adduser-infoContainer`}
                 onClick={(event) => {
+                  // Checking if the user is an admin...
                   if (!admins.includes(user?.uid)) return;
+                  // Checking if the user is the current user...
                   if (el.uid === user?.uid) return;
+
+                  // Getting the target element for opening the modal form for further actions...
                   const target: HTMLDivElement = event.currentTarget;
                   const allusers = document.querySelectorAll(".admittedUsers");
                   const modal = document.querySelectorAll(".modal");
                   let currentIndex = [
                     ...target.parentElement!.parentElement!.children,
                   ].indexOf(target.parentElement!);
+
+                  // Getting the current user element...
                   let currUser = allusers[currentIndex] as HTMLDivElement;
                   modal.forEach((el, index) => {
                     (el as HTMLFormElement).style.display = "none";
                   });
+
+                  // Resetting the state of all the unselected users...
                   allusers.forEach((user, index) => {
                     if (index !== currentIndex)
                       (user as HTMLDivElement).dataset.status = "not-selected";
@@ -164,6 +161,9 @@ const UserList = () => {
                         allusers[index].children[0] as HTMLDivElement
                       ).style.paddingBottom = "0rem";
                   });
+
+                  // Checking if the user is selected or not and opening the modal form accordingly...
+                  // Also setting the selected user in the cookies...
                   if (currUser.dataset.status === "not-selected") {
                     target.style.paddingBottom = "1rem";
                     currUser.dataset.status = "selected";
@@ -179,6 +179,7 @@ const UserList = () => {
                   }
                 }}
               >
+                {/* Checking to see if user is admin or not and indicate as such */}
                 {admins.includes(el.uid) ? (
                   <Image
                     className={styles.adminSymbol}
@@ -202,9 +203,10 @@ const UserList = () => {
                   <span className={styles.email}>{`${el.email}`}</span>
                 </div>
               </div>
+              {/* Form for removing a user or making a user an admin */}
               <form
                 className={`${styles.modal} modal`}
-                onSubmit={(event) => {
+                onSubmit={(event: React.MouseEvent<HTMLFormElement>) => {
                   event.preventDefault();
                   const remove = document.querySelector(
                     "#remove"
@@ -213,20 +215,26 @@ const UserList = () => {
                     "#admin"
                   ) as HTMLInputElement;
                   if (admin.checked) {
-                    let newList = [
-                      ...admins,
-                      JSON.parse(Cookies.get("selectedUser")).uid,
-                    ];
-                    updateAdminList(newList);
+                    let newList = [];
+                    if (admins.includes(el.uid)) {
+                      newList = admins.filter((user) => user !== el.uid);
+                      updateAdminList(newList);
+                    } else {
+                      newList = [...admins, el.uid];
+                      updateAdminList(newList);
+                    }
                   }
                   if (remove.checked) {
                     removeUser();
                   }
+                  (event.target as HTMLFormElement).reset();
                 }}
               >
                 <span>
                   <label htmlFor="admin" className={styles.adminLabel}>
-                    Assign User as Admin
+                    {admins.includes(el.uid)
+                      ? "Remove User as Admin"
+                      : "Assign User as Admin"}
                   </label>
                   <input
                     type="checkbox"

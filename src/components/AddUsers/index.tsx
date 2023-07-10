@@ -8,7 +8,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { PersonAdd } from "@mui/icons-material";
 
 const AddUsers: React.FC<{ class: string }> = (props) => {
+  // Getting user session...
   const [user] = useAuthState(auth);
+
+  // Definging states for user data...
   const [addUserBtnState, setAddUserBtnState] = useState<string>(
     Cookies.get("addUserState") !== undefined
       ? Cookies.get("addUserState")
@@ -25,6 +28,8 @@ const AddUsers: React.FC<{ class: string }> = (props) => {
       ? JSON.parse(Cookies.get("usersList"))
       : []
   );
+
+  // Defining ref objects for conditional styling...
   const styling = {
     warningGroup: React.useRef<HTMLInputElement>(null),
     warningUser: React.useRef<HTMLInputElement>(null),
@@ -157,17 +162,21 @@ const AddUsers: React.FC<{ class: string }> = (props) => {
     }
   };
 
-  // Redering components here...
+  // Rendering JSX...
   return (
     <div className={styles.addUsers}>
+      {/* Checking if the current user is admin or not */}
       {(
-        Cookies.get("currentGroup") !== undefined
-          ? JSON.parse(Cookies.get("currentGroup"))
-              .admin.split(",")
-              .includes(user?.uid)
-          : ""
+        Cookies.get("currentGroup") !== undefined ? (
+          JSON.parse(Cookies.get("currentGroup"))
+            .admin.split(",")
+            .includes(user?.uid)
+        ) : (
+          <></>
+        )
       ) ? (
         <>
+          {/* Toggle Button */}
           <button
             className={`${styles.addUserButton} addUserButton`}
             data-toggle={addUserBtnState}
@@ -176,15 +185,18 @@ const AddUsers: React.FC<{ class: string }> = (props) => {
             Add Users
             <PersonAdd />
           </button>
+          {/* Form... */}
           <form
             className={`${styles.userList} ${
               props.class === "burger" ? "bg-userList" : "userList"
             }`}
             onSubmit={handleSubmit}
           >
+            {/* Warning! */}
             <span className={styles.warning} ref={styling.warningUser}>
               Add at least one User
             </span>
+            {/* Generating list of user */}
             {usersList.map((el, i) => {
               if (el.uid !== user?.uid && !admittedUsers.includes(el.uid)) {
                 return (
@@ -224,6 +236,7 @@ const AddUsers: React.FC<{ class: string }> = (props) => {
                 );
               }
             })}
+            {/* Submit */}
             <input
               type="submit"
               className={styles.addUserBtn}

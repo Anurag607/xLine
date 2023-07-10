@@ -1,16 +1,21 @@
-"use client"
+"use client";
 
-import '../styles/globals.css'
+import TopProgressBar from "@/components/TopProgressBar";
+import "../styles/globals.css";
+import "nprogress/nprogress.css";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head />
-      <body>{children}</body>
-    </html>
-  )
+    <>
+      {window && window !== undefined && <TopProgressBar />}
+      <html lang="en">
+        <head />
+        <body>{children}</body>
+      </html>
+    </>
+  );
 }

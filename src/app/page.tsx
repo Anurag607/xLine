@@ -31,6 +31,7 @@ export default function Login() {
   const router = useRouter();
 
   const [user, loading] = useAuthState(auth);
+  const [isLoading, setLoading] = React.useState<boolean>(false);
 
   const styling = {
     email: React.useRef<HTMLInputElement>(null),
@@ -73,8 +74,11 @@ export default function Login() {
 
   // Function to handle the submit of the form...
   const HandleSubmit = (e: React.FormEvent<LoginFormEl>) => {
+    setLoading(true);
     e.preventDefault();
-    logInWithEmailAndPassword(logindet.email, logindet.password);
+    logInWithEmailAndPassword(logindet.email, logindet.password).then(() =>
+      setLoading(false)
+    );
   };
 
   // Clearing the cookies for new session...
@@ -152,34 +156,46 @@ export default function Login() {
               </span>
             </label>
           </span>
-          {/* Submit Button */}
-          <input
-            type="submit"
-            placeholder="Login"
-            value="Login"
-            name="submit"
-            className={styles.loginSubmit}
-          />
-          {/* Google Sign In */}
-          <section className={styles.options}>
-            <p>Or Sign In using </p>
-            <div
-              className={styles.googleSignIn}
-              onClick={() => {
-                signInWithGoogle();
-              }}
-            >
-              <Image src="/google.png" alt="Google" width={20} height={20} />
-              <span>Sign in with Google</span>
-            </div>
-          </section>
-          {/* Sign Up */}
-          <span className={styles.toSignup} ref={styling.toSignup}>
-            Dont have an account?
-            <Link href="/signup" as="/signup" passHref>
-              <p className={styles.loginLinks}>Sign Up</p>
-            </Link>
-          </span>
+          {isLoading ? (
+            <Image src="/loader.gif" width={50} height={50} alt={""} />
+          ) : (
+            <>
+              {/* Submit Button */}
+              <input
+                type="submit"
+                placeholder="Login"
+                value="Login"
+                name="submit"
+                className={styles.loginSubmit}
+              />
+              {/* Google Sign In */}
+              <section className={styles.options}>
+                <p>Or Sign In using </p>
+                <div
+                  className={styles.googleSignIn}
+                  onClick={() => {
+                    setLoading(true);
+                    signInWithGoogle().then(() => setLoading(false));
+                  }}
+                >
+                  <Image
+                    src="/google.png"
+                    alt="Google"
+                    width={20}
+                    height={20}
+                  />
+                  <span>Sign in with Google</span>
+                </div>
+              </section>
+              {/* Sign Up */}
+              <span className={styles.toSignup} ref={styling.toSignup}>
+                Dont have an account?
+                <Link href="/signup" as="/signup" passHref>
+                  <p className={styles.loginLinks}>Sign Up</p>
+                </Link>
+              </span>
+            </>
+          )}
         </form>
       </div>
     </main>

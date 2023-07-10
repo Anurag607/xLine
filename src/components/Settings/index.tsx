@@ -20,66 +20,86 @@ import { useAuthState } from "react-firebase-hooks/auth";
 const Loader = () => {
   return (
     <div className={`${styles["settingsLoader"]} settingsLoader`}>
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
-      <div className={styles.circle} />
+      {new Array(10).fill(0).map((_, i) => (
+        <div className={styles.circle} key={i} />
+      ))}
     </div>
   );
 };
 
 // Main Component...
 const Settings = (props: { class: string }) => {
-  const [imageURL, setImageURL] = React.useState<string>("");
-  const [bgImageURL, setBgImageURL] = React.useState<string>("");
+  // Getting current user session...
   const [user] = useAuthState(auth);
 
+  // Defining states vaiables...
+  const [imageURL, setImageURL] = React.useState<string>("");
+  const [bgImageURL, setBgImageURL] = React.useState<string>("");
+  const [bgImagefile, setBgImageFile] = React.useState<any>(null);
+  const [profileImageFile, setProfileImageFile] = React.useState<any>(null);
+
   // Function for upadting profile pic
-  const updateProfilePic = async (type: string) => {
+  const UpdateDB = async (type: string) => {
     if (type === "user") {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const querySnapshot = await getDocs(q);
-      let userId = "",
-        userData = {},
-        userImage = Cookie.get("userImageURL");
-      querySnapshot.forEach((doc) => {
-        userId = doc.id;
-        userData = doc.data();
+      await uploadImage(profileImageFile).then(async (url: string) => {
+        // Defining variables...
+        let userId = "",
+          userData = {},
+          userImage = url;
+
+        // Getting the user info...
+        const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+        const querySnapshot = await getDocs(q);
+
+        // Updating the user info...
+        querySnapshot.forEach((doc) => {
+          userId = doc.id;
+          userData = doc.data();
+        });
+
+        // Setting the user info...
+        const docRef = doc(collection(db, "users"), userId);
+        await setDoc(docRef, {
+          ...userData,
+          avatar: userImage,
+        });
+
+        // Removing the cookie and reloading the page...
+        Cookie.remove("userImageURL");
+        window.location.reload();
       });
-      const docRef = doc(collection(db, "users"), userId);
-      await setDoc(docRef, {
-        ...userData,
-        avatar: userImage,
-      });
-      Cookie.remove("userImageURL");
-      window.location.reload();
     } else if (type === "bg") {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const querySnapshot = await getDocs(q);
-      let userId = "",
-        userData = {},
-        bgImage = Cookie.get("bgImageURL");
-      querySnapshot.forEach((doc) => {
-        userId = doc.id;
-        userData = doc.data();
+      await uploadImage(bgImagefile).then(async (url: string) => {
+        // Defining variables...
+        let userId = "",
+          userData = {},
+          bgImage = url;
+
+        // Getting the user info...
+        const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+        const querySnapshot = await getDocs(q);
+
+        // Updating the user info...
+        querySnapshot.forEach((doc) => {
+          userId = doc.id;
+          userData = doc.data();
+        });
+
+        // Setting the user info...
+        const docRef = doc(collection(db, "users"), userId);
+        await setDoc(docRef, {
+          ...userData,
+          bg: url,
+        });
+
+        // Removing the cookie and reloading the page...
+        Cookie.remove("bgImageURL");
+        window.location.reload();
       });
-      const docRef = doc(collection(db, "users"), userId);
-      await setDoc(docRef, {
-        ...userData,
-        bg: bgImage,
-      });
-      Cookie.remove("bgImageURL");
-      window.location.reload();
     }
   };
 
-  // Function for updating the loader and uploaded img styling state...
+  // Function for updating the loader and uploaded profile pic styling state...
   React.useEffect(() => {
     if (imageURL !== undefined && imageURL.length !== 0) {
       const uploadedImg = document.querySelectorAll(".uploadedUserImageURL")!;
@@ -125,90 +145,77 @@ const Settings = (props: { class: string }) => {
     }
   }, [bgImageURL]);
 
-  // Function for handling changes whenenver image uploaded is changed by uploading it to cloudinary...
+  // Function for handling changes whenenver bg image or profile pic is changed...
   const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       case "userImage": {
         let file = (e.target as any).files[0];
-        let loaders = document.querySelectorAll(".settingsLoader");
-        loaders.forEach((loader, i) => {
-          if (i % 2 == 0) {
-            (loader as HTMLDivElement).style.height = "6rem";
-            (loader as HTMLDivElement).style.marginBlock = "0.5rem";
-          }
-        });
-
-        let data = new Promise(async (resolve, reject) => {
-          const response = await uploadImage(file);
-          resolve(response);
-        });
-        data.then((url: any) => {
-          Cookie.set("userImageURL", url);
-          setImageURL((currURL) => (currURL = url));
-        });
+        const src = URL.createObjectURL(file);
+        setImageURL((currURL) => (currURL = src));
+        setProfileImageFile(file);
         break;
       }
       case "backgroundImage": {
         let file = (e.target as any).files[0];
-        let loaders = document.querySelectorAll(".settingsLoader");
-        loaders.forEach((loader, i) => {
-          if (i % 2 == 1) {
-            (loader as HTMLDivElement).style.height = "6rem";
-            (loader as HTMLDivElement).style.marginBlock = "0.5rem";
-          }
-        });
-
-        let data = new Promise(async (resolve, reject) => {
-          const response = await uploadImage(file);
-          resolve(response);
-        });
-        data.then((url: any) => {
-          Cookie.set("bgImageURL", url);
-          setBgImageURL((currURL) => (currURL = url));
-        });
+        const src = URL.createObjectURL(file);
+        Cookie.set("bgImageFile", JSON.stringify(file));
+        setBgImageURL((currURL) => (currURL = src));
+        setBgImageFile(file);
         break;
       }
     }
   };
 
-  const handleChangePic = () => {
-    let type = "user";
-    updateProfilePic(type);
+  // Function for handling profile image form submit...
+  const HandleSubmitProfilePic = () => {
+    UpdateDB("user");
+
+    // Resetting the profile image form and loader styling...
+    const userImg = document.querySelector("#userImage")! as HTMLInputElement;
     const uploadedImg = document.querySelectorAll(".uploadedUserImageURL")!;
     let cnfrmBtn = document.querySelectorAll(".cnfrmBtn")!;
+
     uploadedImg.forEach((el) => {
       (el as HTMLDivElement).style.height = "0rem";
       (el as HTMLDivElement).style.marginBlock = "0rem";
-      (el as HTMLDivElement).style.backgroundImage = `url('${
-        Cookie.get("userImageURL") || ""
-      }')`;
+      (el as HTMLDivElement).style.backgroundImage = "";
     });
+
     cnfrmBtn.forEach((el, i) => {
       if (i % 2 == 0) (el as HTMLDivElement).style.display = "none";
     });
+
+    userImg.value = "";
   };
 
-  const handleChangeBg = () => {
-    let type = "bg";
-    updateProfilePic(type);
+  // Function for handling background image form submit...
+  const HandleSubmitBg = () => {
+    UpdateDB("bg");
+
+    // Resetting the bg image form and loader styling...
+    const backgroundImg = document.querySelector(
+      "#backgroundImage"
+    )! as HTMLInputElement;
     const uploadedBgImg = document.querySelectorAll(".uploadedBgImageURL")!;
     let cnfrmBtn = document.querySelectorAll(".cnfrmBtn")!;
+
     uploadedBgImg.forEach((el) => {
       (el as HTMLDivElement).style.height = "0rem";
       (el as HTMLDivElement).style.marginBlock = "0rem";
-      (el as HTMLDivElement).style.backgroundImage = `url('${
-        Cookie.get("bgImageURL") || ""
-      }')`;
+      (el as HTMLDivElement).style.backgroundImage = "";
     });
+
     cnfrmBtn.forEach((el, i) => {
       if (i % 2 == 1) (el as HTMLDivElement).style.display = "none";
     });
+    backgroundImg.value = "";
   };
 
   // Redering components here...
   return (
     <div className={styles.settings}>
       <div className={`${styles.inputField} ${styles.userImage}`}>
+        {/* User Image Input Div */}
         <div className={`${styles.inputDiv}`}>
           <div className={styles.label}>{"Change Profile Pic "}</div>
           <form>
@@ -221,10 +228,13 @@ const Settings = (props: { class: string }) => {
               name="userImage"
               accept="image/*"
               onChange={HandleChange}
+              required
             />
           </form>
         </div>
         <Loader />
+
+        {/* User Image Preview Div */}
         <div
           className={`${styles.uploadedImg} uploadedUserImageURL`}
           style={{
@@ -233,12 +243,14 @@ const Settings = (props: { class: string }) => {
         />
         <button
           className={`${styles.cnfrmBtn} cnfrmBtn`}
-          onClick={handleChangePic}
+          onClick={HandleSubmitProfilePic}
         >
           Confirm
         </button>
       </div>
+
       <div className={`${styles.inputField} ${styles.backgroundImage}`}>
+        {/* Background Image Input Div */}
         <div className={`${styles.inputDiv}`}>
           <div className={styles.label}>{"Change Background"}</div>
           <form>
@@ -256,6 +268,8 @@ const Settings = (props: { class: string }) => {
           </form>
         </div>
         <Loader />
+
+        {/* Background Image Preview Div */}
         <div
           className={`${styles.uploadedImg} uploadedBgImageURL`}
           style={{
@@ -264,11 +278,13 @@ const Settings = (props: { class: string }) => {
         />
         <button
           className={`${styles.cnfrmBtn} cnfrmBtn`}
-          onClick={handleChangeBg}
+          onClick={HandleSubmitBg}
         >
           Confirm
         </button>
       </div>
+
+      {/* Create Group and Add user Actions */}
       <CreateGroup class={props.class} />
       <AddUsers class={props.class} />
     </div>

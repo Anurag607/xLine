@@ -14,12 +14,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Sidebar } from "../Sidebar";
 
 const Burger = () => {
+  // Defining states here...
   const [burgerState, setBurgerState] = React.useState("close");
   const [messages, setMessages] = useState<any>([]);
   const [user] = useAuthState(auth);
-  const [currentGroup, setCurrentGroup] = useState<string>(
-    Cookies.get("currentGroup") || ""
-  );
 
   // Function for getting messages for current group...
   useEffect(() => {
@@ -55,7 +53,6 @@ const Burger = () => {
         className={`${styles.menu1} menu1`}
         data-toggle={burgerState}
         onClick={(event) => {
-          let state = event.currentTarget.dataset.toggle;
           if (burgerState === "open") setBurgerState("close");
           if (burgerState === "close") setBurgerState("open");
           Menu();
@@ -67,7 +64,7 @@ const Burger = () => {
           <span className={`${styles["menu_bar3"]} menu_bar3`} />
         </div>
       </div>
-      <Sidebar class="burger" />
+      {window.innerWidth < 1100 ? <Sidebar class="burger" /> : <></>}
     </div>
   );
 };
