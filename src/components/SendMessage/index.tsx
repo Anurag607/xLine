@@ -3,7 +3,7 @@ import { auth, db } from "../../../firebase/clientApp";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import styles from "./sendMessage.module.scss";
 import Cookies from "js-cookie";
-import { deselectMsgs } from "@/scripts/msgReply";
+import { deselectMsgs } from "../../scripts/msgReply";
 import { AttachFile, CloseTwoTone } from "@mui/icons-material";
 import uploadImage from "../../scripts/imgUpload";
 

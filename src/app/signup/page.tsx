@@ -11,25 +11,7 @@ import {
   signInWithGoogle,
 } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-
-// Defining the types for the form...
-interface SignupForm extends HTMLFormControlsCollection {
-  cnfrmpass: string;
-  email: string;
-  name: string;
-  password: string;
-}
-
-interface SignupFormEl extends HTMLFormElement {
-  readonly elements: SignupForm;
-}
-
-type signupTemplate = {
-  cnfrmpass: string;
-  email: string;
-  name: string;
-  password: string;
-};
+import { SignupTemplate, SignupFormEl } from "../../utils/types";
 
 export default function Signup() {
   // Defining the variables (router, ref, states)...
@@ -44,7 +26,7 @@ export default function Signup() {
     heading: React.useRef<HTMLHeadingElement>(null),
   };
 
-  const [signupdet, Setsignupdet] = React.useState<signupTemplate>({
+  const [signupdet, Setsignupdet] = React.useState<SignupTemplate>({
     cnfrmpass: "",
     name: "",
     email: "",

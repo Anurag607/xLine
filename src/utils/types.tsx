@@ -1,3 +1,5 @@
+// Type definitions for the Data...
+
 export type userDetails = {
   email: string;
   name: string;
@@ -22,4 +24,37 @@ export type messageType = {
   text: string;
   image?: string | null;
   uid: string;
+};
+
+// Type definitions for the login form...
+
+interface LoginForm extends HTMLFormControlsCollection {
+  email: HTMLInputElement;
+  password: HTMLInputElement;
+}
+
+export interface LoginFormEl extends HTMLFormElement {
+  readonly elements: LoginForm;
+}
+
+export type LoginTemplate = { email: string; password: string };
+
+// Type definitions for the signup form...
+
+interface SignupForm extends HTMLFormControlsCollection {
+  cnfrmpass: string;
+  email: string;
+  name: string;
+  password: string;
+}
+
+export interface SignupFormEl extends HTMLFormElement {
+  readonly elements: SignupForm;
+}
+
+export type SignupTemplate = {
+  cnfrmpass: string;
+  email: string;
+  name: string;
+  password: string;
 };

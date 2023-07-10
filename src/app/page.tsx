@@ -13,18 +13,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import Loader from "../components/Loader";
 import Cookies from "js-cookie";
-
-// Defining the types for the form...
-interface LoginForm extends HTMLFormControlsCollection {
-  email: HTMLInputElement;
-  password: HTMLInputElement;
-}
-
-interface LoginFormEl extends HTMLFormElement {
-  readonly elements: LoginForm;
-}
-
-type template = { email: string; password: string };
+import { LoginTemplate, LoginFormEl } from "../utils/types";
 
 export default function Login() {
   // Defining the variables (router, ref, states)...
@@ -40,7 +29,7 @@ export default function Login() {
     toSignup: React.useRef<HTMLInputElement>(null),
   };
 
-  const [logindet, Setlogindet] = React.useState<template>({
+  const [logindet, Setlogindet] = React.useState<LoginTemplate>({
     email: "",
     password: "",
   });
