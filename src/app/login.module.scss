@@ -1,0 +1,300 @@
+/* -----------------------------------LOGIN-------------------------------------*/
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Michroma&family=Pacifico&display=swap');
+
+@mixin flex($dir : row, $gap: 0rem) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: center;
+    align-items: center;
+    gap: $gap;
+}
+
+@mixin bg($url : '') {
+    background-image: url($url);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.loginWrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('../../public/loginBg1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @include flex;
+    div {
+        @include flex($dir: row, $gap: 0rem);
+        z-index: 1;
+        width: 21rem;
+        height: 30rem;
+        border-radius: 0.5rem;
+        background-color: var(--secondary-light);
+        padding-block: 1.25rem;
+        form {
+            width: 100%;
+            @include flex($dir: column, $gap: 1.25rem);
+            h2 {
+                font-family: 'Lobster', 'Poppins', sans-serif;
+                font-size: 3rem;
+                margin-bottom: 0.5rem;
+                color: rgba(0,0,0,0.75);
+                cursor: default;
+            }
+            .warning {
+                display: none;
+                border: transparent;
+                outline: none;
+                background: red;
+                color: var(--secondary-light);
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+                border-radius: 0.25rem;
+                cursor: default;
+            }
+            span {
+                @include flex($dir: row, $gap: 1rem);
+                font-size: 1.1rem;
+                font-family: 'Poppins', sans-serif;
+            }
+            span:nth-child(1) {
+                padding-bottom: 0.25rem;
+                border-top: transparent;
+                border-left: transparent;
+                border-right: transparent;
+                border-bottom: 0.05rem solid rgba(0,0,0,0.25);
+            }
+            .toSignup {
+                @include flex($gap : 0.5rem);
+                // margin-top: 2.5rem;
+                font-size: 0.75rem;
+                font-family: 'Poppins', sans-serif;
+                cursor: default;
+            }
+            label {
+                @include flex($dir : column, $gap : 0.5rem);
+                align-items: flex-start;
+                .loginemail {
+                    @include flex;
+                    width: auto;
+                    height: auto;
+                    span {
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        background-image: url('../../public/user (1).png');
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        filter: brightness(0) opacity(0.75);
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-bottom: transparent;
+                        border-right: 0.05rem solid rgba(0,0,0,0.25);
+                    }
+                    input {
+                        background-color: var(--secondary-light);
+                        outline: none;
+                        padding: 0.5rem 2rem 0.5rem 0.5rem;
+                        width: 13.5rem;
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: transparent;
+                        border-bottom: transparent;
+                        border-width: 0.05rem;
+                        border-radius: 0.5rem;
+                        margin-left: 0.25rem;
+                    }
+                }
+                .loginpass {
+                    @include flex;
+                    width: auto;
+                    height: auto;
+                    span {
+                        width: 2rem;
+                        height: 2rem;
+                        background-image: url('../../public/lock.png');
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        filter: brightness(0) opacity(0.75);
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: 0.05rem solid rgba(0,0,0,0.25);
+                        border-bottom: transparent;
+                    }
+                    input {
+                        background-color: var(--secondary-light);
+                        outline: none;
+                        padding: 0.5rem 2rem 0.5rem 0.5rem;
+                        width: 13.5rem;
+                        border-top: transparent;
+                        border-left: transparent;
+                        border-right: transparent;
+                        border-bottom: transparent;
+                        border-width: 0.05rem;
+                        border-radius: 0.5rem;
+                        margin-left: 0.25rem;
+                    }
+                }
+                .reset {
+                    @include flex($gap : 0.25rem);
+                    justify-content: flex-end;
+                    font-size: 0.75rem;
+                    width: 18.5rem;
+                }
+            }
+            .loginSubmit {
+                font-size: 1rem;
+                font-family: 'Poppins';
+                color: var(--secondary-light);
+                background: linear-gradient(106.7deg, rgb(251, 0, 145) -2.6%, rgb(251, 134, 145) 31%, rgb(251, 158, 145) 45.8%, rgb(251, 218, 145) 100.1%);
+                padding: 0.5rem 2rem;
+                outline: none;
+                border: none;
+                width: 18.5rem;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                background-size: 200% 200%;
+            }
+            .options {
+                width: auto;
+                height: auto;
+                @include flex($dir : column, $gap : 1rem);
+                p {
+                    font-size: 0.75rem;
+                    color: rgba(0,0,0,0.50);
+                    cursor: default;
+                    font-family: 'Poppins', sans-serif;
+                }
+                .googleSignIn {
+                    width: auto;
+                    height: auto;
+                    @include flex($gap : 1rem);
+                    box-shadow: 0 0 0.25rem var(--tertiary-grey);
+                    padding: 0.25rem 0.5rem;
+                    border-radius: none !important;
+                    cursor: pointer;
+                    span {
+                        font-size: 0.95rem;
+                        font-family: 'Poppins', sans-serif;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+.loginWrapper::after {
+    content: '';
+    background-color: rgba(0,0,0,0.69);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+
+@keyframes animatedGradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.loginSubmit:hover {
+    animation: animatedGradient 5s ease infinite;
+}
+
+.loginLinks {
+    color: #fa86c4;
+}
+
+@media screen and (max-width: 1240px) { 
+    .loginWrapper {
+        div {
+            width: 20rem;
+            height: 28.5rem;
+            form {
+                h2 {
+                    font-size: 2.5rem;
+                }
+                span {
+                    font-size: 0.95rem;
+                }
+                .toSignup {
+                    margin-top: 0rem;
+                }
+                .loginSubmit {
+                    padding: 0.25rem 0.5rem;
+                    width: 16.5rem;          
+                }
+                .options {
+                    .googleSignIn {
+                        span {
+                            font-size: 0.75rem;
+                        }
+                    }
+                }
+                label {
+                    .loginemail, .loginpass {
+                        span {
+                            width: 1.75rem;
+                            height: 1.75rem;
+                        }
+                        input {
+                            width: 13.5rem;
+                        }
+                    }
+                    .reset {
+                        width: 18rem;
+                    }
+                }
+                span:nth-child(2) {
+                    label {
+                        translate: 2.5rem 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) { 
+    .loginWrapper {
+        div {
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0rem;
+        }
+    }
+}
+
+@media screen and (max-width: 300px) { 
+    .loginWrapper {
+        div {
+            form {
+                label {
+                    .loginusername, .loginpass {
+                        input {
+                            width: 8.5rem;
+                        }
+                    }       
+                }
+            }
+        }
+    }
+
+    .loginSubmit {
+        width: 13.5rem;
+    }
+}

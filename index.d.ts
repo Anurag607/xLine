@@ -1,2 +1,1 @@
-declare module "react-chat-engine"
-declare module 'js-cookie'
+declare module "js-cookie";

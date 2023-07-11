@@ -1,0 +1,249 @@
+.send-message {
+    position: fixed;
+    bottom: 0;
+    width: 76.85vw;
+    height: 8vh;
+    background-color: var(--primary-light);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 3px 0 0.25rem var(--tertiary-grey);
+    padding-block: 0.5rem;
+    overflow: hidden;
+    z-index: 1500;
+}
+.send-message > input {
+    height: auto;
+    width: 75%;
+    border: none;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    color: var(--primary-dark);
+    font-size: 1rem;
+    margin-left: 2rem;  
+    font-family: 'Poppins', sans-serif;
+    text-transform: none;
+}
+.send-message > input:placeholder {
+    color: var(--secondary-grey);
+    font-family: 'Poppins', sans-serif;
+}
+.send-message > :is(input, button):focus {
+    outline: none;
+    border-bottom: 1px solid var(--primary-dark);
+}
+.send-message > button {
+    width: 10vw;
+    height: 150%;
+    color: var(--primary-light);
+    border: none;
+    background-color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.featureComponent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 15vw;
+    .imageMsgLabel {
+        cursor: pointer !important;
+        svg {
+            cursor: pointer !important;
+        }
+    }
+}
+
+.modal {
+    height: 0vh;
+    position: fixed;
+    bottom: 15%;
+    right: 10.15%;
+    background-color: var(--primary-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0.1rem solid var(--tertiary-grey);
+    border-radius: 0.5rem;
+    .closeBtn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        cursor: pointer;
+        background-color: #e81f6c;
+        color: #fefefe;
+        border-radius: 50%;
+        padding: 0.25rem;
+        scale: 0;
+        svg {
+            background-color: #fefefe;
+            color: #fefefe;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}
+
+.uploadedImg {
+    width: 0%;
+    height: 0%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all 0.3s ease-in-out;
+    background-color: transparent;
+    border-radius: 0.5rem;
+}
+
+.messageLoader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 6rem;
+    height: 0rem;
+    margin-block: 0rem;
+    position: relative;
+    .circle {
+        width: 80%;
+        height: 80%;
+        border-radius: 50%;
+        animation: colorfull-spin 2s alternate infinite;
+        position: absolute;
+    }
+  
+    .circle:nth-child(1) {
+        animation-delay: 0.1s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 80%;
+        height: 80%;
+    }
+    
+    .circle:nth-child(2) {
+        animation-delay: 0.2s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 70%;
+        height: 70%;
+    }
+    
+    .circle:nth-child(3) {
+        animation-delay: 0.3s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 60%;
+        height: 60%;
+    }
+    
+    .circle:nth-child(4) {
+        animation-delay: 0.4s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 50%;
+        height: 50%;
+    }
+    
+    .circle:nth-child(5) {
+        animation-delay: 0.5s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 40%;
+        height: 40%;
+    }
+    
+    .circle:nth-child(6) {
+        animation-delay: 0.6s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 30%;
+        height: 30%;
+    }
+    
+    .circle:nth-child(7) {
+        animation-delay: 0.7s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 20%;
+        height: 20%;
+    }
+    
+    .circle:nth-child(8) {
+        animation-delay: 0.8s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 10%;
+        height: 10%;
+    }
+}    
+
+@keyframes colorfull-spin {
+    0% {
+        border-radius: 50%;
+        transform: rotate(0);
+        background-position: 0 50%;
+    }
+    20% {
+        border-radius: 50%;
+        transform: rotate(0);
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    90% {
+        border-radius: 5%;
+        transform: rotate(90deg);
+    }
+    100% {
+        border-radius: 5%;
+        transform: rotate(90deg);
+        background-position: 0 50%;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .send-message {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .send-message > input {
+        width: 60vw;
+    }
+    .send-message > button {
+        width: 5rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .send-message > input {
+        width: 60vw;
+    }
+    .send-message > button {
+        width: 5rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .send-message > input {
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .send-message > input {
+        width: 40vw;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .send-message > input {
+        width: 35vw;
+    }
+}

@@ -1,0 +1,203 @@
+@mixin flex($dir : row, $gap: 0rem) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: center;
+    align-items: center;
+    gap: $gap;
+}
+
+@mixin bg($url : '') {
+    background-image: url($url);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.settings {
+    @include flex(column, 1rem);
+    width: 100%;
+    position: relative;
+    .userImage, .backgroundImage {
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        position: relative;
+        @include flex(column, 0rem);
+        .inputDiv {
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+            position: relative;
+            @include flex(row, 0.5rem);
+            justify-content: space-around;
+            .label {
+                font-size: 0.825rem;
+                color: rgb(0 0 0 / 60%);
+                font-family: 'Poppins', sans-serif;
+                cursor: default;
+            }
+            form {
+                @include flex(row, 0.5rem);
+                input {
+                    display: none;
+                    width: 100%;
+                    height: 100%;
+                    padding-left: 0rem;
+                    border: 0.05rem solid #c5c5c5;
+                    border-radius: 0.5rem;
+                    font-family: 'Poppins', sans-serif;
+                    text-transform: capitalize;
+                    padding-block: 0rem;
+                    cursor: pointer;
+                }
+                label {
+                    transition: all 0.3s ease;
+                    font-size: 0.825rem;
+                    color: rgb(0 0 0 / 60%);
+                    font-family: 'Poppins', sans-serif;
+                    text-transform: capitalize;
+                    cursor: pointer;
+                    padding-inline: 1rem;
+                }
+            }
+        }    
+        .uploadedImg {
+            width: 6rem;
+            height: 0rem;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 100%;
+        }
+        .cnfrmBtn {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            text-transform: capitalize;
+            margin-block: 0.5rem;
+            width: 40%;
+            height: fit-content;
+            opacity: 1;
+            padding-block: 0.5rem;
+            background-color: var(--secondary);
+            color: var(--primary-light);
+            border-radius: 0.25rem;
+            transition: all 0.3s;
+        }
+    }
+    .backgroundImage {
+        .inputDiv {
+            justify-content: space-around;
+            gap: 0rem;
+        }
+        .uploadedImg {
+            border-radius: 0%;
+        }
+    }
+}
+
+.settingsLoader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 6rem;
+    height: 0rem;
+    margin-block: 0rem;
+    position: relative;
+    .circle {
+        width: 80%;
+        height: 80%;
+        border-radius: 50%;
+        animation: colorfull-spin 2s alternate infinite;
+        position: absolute;
+    }
+  
+    .circle:nth-child(1) {
+        animation-delay: 0.1s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 80%;
+        height: 80%;
+    }
+    
+    .circle:nth-child(2) {
+        animation-delay: 0.2s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 70%;
+        height: 70%;
+    }
+    
+    .circle:nth-child(3) {
+        animation-delay: 0.3s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 60%;
+        height: 60%;
+    }
+    
+    .circle:nth-child(4) {
+        animation-delay: 0.4s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 50%;
+        height: 50%;
+    }
+    
+    .circle:nth-child(5) {
+        animation-delay: 0.5s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 40%;
+        height: 40%;
+    }
+    
+    .circle:nth-child(6) {
+        animation-delay: 0.6s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 30%;
+        height: 30%;
+    }
+    
+    .circle:nth-child(7) {
+        animation-delay: 0.7s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 20%;
+        height: 20%;
+    }
+    
+    .circle:nth-child(8) {
+        animation-delay: 0.8s;
+        background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+        background-size: 200%;
+        width: 10%;
+        height: 10%;
+    }
+}    
+
+@keyframes colorfull-spin {
+    0% {
+        border-radius: 50%;
+        transform: rotate(0);
+        background-position: 0 50%;
+    }
+    20% {
+        border-radius: 50%;
+        transform: rotate(0);
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    90% {
+        border-radius: 5%;
+        transform: rotate(90deg);
+    }
+    100% {
+        border-radius: 5%;
+        transform: rotate(90deg);
+        background-position: 0 50%;
+    }
+}

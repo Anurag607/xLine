@@ -1,0 +1,255 @@
+/* -----------------------------------NAVBAR-------------------------------------*/
+
+@mixin flex($dir : row, $gap: 0rem) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: center;
+    align-items: center;
+    gap: $gap;
+}
+
+@mixin bg($url : '') {
+    background-image: url($url);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-block: 1rem;
+    width: 100vw;
+    height: 5vh;
+    background-color: var(--primary);
+    position: relative;
+    z-index: 1500;
+    position: fixed;
+    top: 0;
+}
+
+.nav-left {
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-right {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0,0,0,0.75);
+    padding-right: 1rem;
+}
+
+.navl {
+    font-size: 1.3rem;
+    color: rgba(0,0,0,0.75);
+    text-decoration: none;
+    transition: 0.3s;
+    padding: 0.25rem 0.5rem;
+}
+
+.navl:hover {
+    color: var(--primary-light);
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.searchbox {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    // margin-top: 1rem;
+    width: auto;
+}
+
+.searchbox > input {
+    border-radius: 2rem;
+    height: 1.75rem;
+    text-align: right;
+    width: 0;
+    color: black;
+    transition: all 0.5s;
+    margin-inline: 0.5rem;
+    display: none;
+    opacity: 0;
+    border: 0.075rem solid #000000;
+    text-align: left;
+    padding-left: 0.75rem;
+}
+
+.search-img {
+    width: 2rem;
+    filter: brightness(0) invert(1) brightness(0.25);
+    transition: all 0.5s;
+    cursor: pointer !important;
+    margin-top: 0.225rem;
+    z-index: 500;
+}
+
+.navicons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    gap: 1.5rem;
+    // padding: 1rem 0 0 1.25rem;
+    transition: all 0.5s;
+}
+
+.navico {
+    span:not(.cartCount) {
+        transition: all 0.3s;
+        padding: 0.15rem 0.175rem;
+        .navimg {
+            width: 2rem;
+            filter: brightness(0) invert(1) brightness(0.25);
+            transition: all 0.3s;
+        }
+    }
+    span:not(.cartCount):hover {
+        background-color: rgba(0, 0, 0, 0.75);
+        border-radius: 0.5rem;
+        .navimg {
+            background-color: transparent;
+            border-radius: 0.5rem;
+            filter: brightness(0) invert(1);
+        }
+    }
+}
+
+.login {
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    border-radius: 50rem;
+    width: 10rem;
+    height: 2.25rem;
+    background-color: var(--primary-light);
+    color: var(--primary-light);
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.login:hover {
+    background-color: rgba(0,0,0,0.75);
+    color: var(--primary-light);
+}
+
+.navDash {
+    font-size: 1.1rem;
+    color: var(--primary-light);
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    border: 0.1rem solid var(--primary-light);
+    transition: 0.5s;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    text-transform: capitalize;
+    div {
+        width: auto;
+        height: auto;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        img {
+            border-radius: 50%;
+        }
+    }
+    div:nth-child(1) {
+        width: 1.5rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        
+    }
+    div:nth-child(2) {
+        width: auto;
+        padding: 0rem 0.5rem;
+    }
+}
+
+.navDash:hover {
+    border-color: var(--primary-light);
+    background-color: var(--primary-light);
+    color: #000000;
+}
+
+.navico {
+    @include flex($dir: row, $gap: 0rem);
+    position: relative;
+}
+
+.cartCount {
+    cursor: pointer;
+    position: absolute;
+    background-color: red;
+    border-radius: 100%;
+    padding: 0.15rem 0.4rem;
+    text-decoration: none;
+    color: white;
+    font-size: 0.575rem;
+    top: 65%;
+    left: 70%;
+}
+
+/* -----------------------------------NAVBAR MEDIA QUERIES-------------------------------------*/
+
+@media screen and (max-width: 1100px) {
+    .nav {
+        margin: 0;
+        display: flex;
+        text-align: center;
+        flex-wrap: wrap-reverse;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .navl {
+        font-size: 1rem;
+    }
+
+    .nav-right {
+        margin-right: 0.75rem;
+    }
+
+    .login {
+        margin: -0.175rem 0 0 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 6rem;
+        height: 2rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .nav {
+        .navDash {
+            div:nth-child(2) {
+                display: none   ;
+            }
+        }
+    }
+}

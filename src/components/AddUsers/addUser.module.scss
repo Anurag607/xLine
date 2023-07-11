@@ -1,0 +1,106 @@
+.addUsers {
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 7.5rem;
+    .addUserButton {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.825rem;
+        outline: none;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: transparent;
+        color: rgb(0 0 0 / 60%);
+        cursor: pointer;
+        width: 102.5%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 48.75%;
+        padding: 0rem;
+        svg {
+            translate: -0.685rem 0;
+            transform: scaleX(-1);
+        }
+    }
+    .userList {
+        display: none;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s ease-in-out;
+        height: 0rem;
+        opacity: 0;
+        width: 100%;
+        position: relative;
+        padding-top: 1rem;
+        .warning {
+            display: none;
+            border: transparent;
+            outline: none;
+            background: red;
+            color: var(--secondary-light);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 0.25rem;
+            cursor: default;
+            text-align: center;
+        }
+        .users {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary-light);
+            background-color: var(--secondary);
+            padding: 0.5rem;
+            outline: 0.175rem solid transparent;
+            border-radius: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            border: 0.1rem solid transparent;
+            cursor: pointer;
+            width: 95%;
+            .profilePic {
+                border-radius: 50%;
+                width: 1.75rem;
+                height: 1.75rem;
+            }
+            .details {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 0.25rem;
+                .name {
+                    font-size: 0.85rem;
+                }
+                .email {
+                    font-size: 0.6rem;
+                    padding-left: 0.25rem;
+                    color: var(--primary-light);
+                }
+            }
+        }
+        .addUserBtn {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            padding: 0.25rem 1rem;
+            outline: none;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: var(--primary);
+            color: var(--primary-light);
+            cursor: pointer;
+            width: 100%;
+        }
+    }
+}

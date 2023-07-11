@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import '../styles/globals.css'
+import React from "react";
+import "../styles/globals.css";
+import "nprogress/nprogress.css";
+import TopProgressBar from "@/components/TopProgressBar";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head />
-      <body>{children}</body>
-    </html>
-  )
+    <>
+      <TopProgressBar />
+      <html lang="en" suppressHydrationWarning={true}>
+        <head />
+        <body suppressHydrationWarning={true}>{children}</body>
+      </html>
+    </>
+  );
 }
