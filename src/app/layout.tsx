@@ -13,9 +13,9 @@ export default function RootLayout({
   return (
     <>
       <TopProgressBar />
-      <html>
+      <html lang="en" suppressHydrationWarning={true}>
         <head />
-        <body>{children}</body>
+        <body suppressHydrationWarning={true}>{children}</body>
       </html>
     </>
   );

@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import styles from "./addUser.module.scss";
 import Image from "next/image";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  query,
+  doc,
+  collection,
+  orderBy,
+  onSnapshot,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import { db, auth } from "../../../firebase/clientApp";
 import Cookies from "js-cookie";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -37,6 +45,25 @@ const AddUsers: React.FC<{ class: string }> = (props) => {
   const styling = {
     warningGroup: React.useRef<HTMLInputElement>(null),
     warningUser: React.useRef<HTMLInputElement>(null),
+  };
+
+  // Function to get the list of users...
+  const getUserList = () => {
+    try {
+      const qUsers = query(collection(db, "users"), orderBy("name"));
+      let users: any[] = [];
+
+      const getUsers = onSnapshot(qUsers, (QuerySnapshot) => {
+        QuerySnapshot.forEach((doc) => {
+          users.push({ ...doc.data(), id: doc.id });
+        });
+        setUsersList(users);
+      });
+
+      getUsers;
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Function for Updating user list...
@@ -166,6 +193,11 @@ const AddUsers: React.FC<{ class: string }> = (props) => {
     }
   };
 
+  // Function for getting userlist on component mount...
+  React.useEffect(() => {
+    getUserList();
+  }, []);
+
   // Rendering JSX...
   return (
     <div className={styles.addUsers}>
@@ -227,7 +259,7 @@ const AddUsers: React.FC<{ class: string }> = (props) => {
                   >
                     <Image
                       className={styles.profilePic}
-                      src={el.avatar ? el.avatar : "/user.png"}
+                      src={el.avatar ?? "/user.png"}
                       alt={"profilePic"}
                       width={28}
                       height={28}

@@ -15,7 +15,7 @@ const NavBar = () => {
 
   // Getting user profile pic from firestore
   const [userImage, SetuserImage] = React.useState<string>(
-    `${Cookie.get("userImage") || user?.photoURL}`
+    `${user?.photoURL ?? Cookie.get("userImage")}`
   );
 
   // Getting router object
@@ -36,7 +36,7 @@ const NavBar = () => {
   /* eslint-disable */
   React.useEffect(() => {
     getProfilePic();
-    if (user === null || user === undefined) router.push("/login");
+    if (user === null || user === undefined) router.push("/");
   }, []);
 
   /* eslint-enable */
@@ -52,14 +52,14 @@ const NavBar = () => {
               className={styles.navDash}
               onClick={() => {
                 Cookie.set("loggedIn", false);
-                router.push("/login");
+                router.push("/");
                 window.location.reload();
                 logout();
               }}
             >
               <div>
                 <Image
-                  src={`${userImage || "/user.png"}`}
+                  src={`${userImage ?? "/user.png"}`}
                   width={26.5}
                   height={26.5}
                   alt="profilePic"

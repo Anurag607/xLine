@@ -1,27 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
-import { auth, sendPasswordReset } from "../../../firebase/clientApp";
-import Loader from "../../components/Loader";
+import { sendPasswordReset } from "../../../firebase/clientApp";
 
 function Reset() {
   // Defining the variables (router, ref, states)...
   const [email, setEmail] = useState("");
-  const [user, loading, error] = useAuthState(auth);
-  const router = useRouter();
-
-  // Checking if the user is logged in or not...
-  useEffect(() => {
-    if (user) router.push("/chat");
-  }, []); //eslint-disable-line
 
   // Returning the JSX...
-  return loading ? (
-    <Loader />
-  ) : (
+  return (
     <div className="reset">
       <div className="reset__container">
         {/* Email: Input Field */}
@@ -29,6 +17,7 @@ function Reset() {
           type="text"
           className="reset__textBox"
           value={email}
+          name={"email"}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />

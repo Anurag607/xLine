@@ -63,8 +63,14 @@ export default function Login() {
 
   // Function to handle the submit of the form...
   const HandleSubmit = (e: React.FormEvent<LoginFormEl>) => {
-    setLoading(true);
     e.preventDefault();
+    if (logindet.email.length == 0 || logindet.password.length == 0) {
+      styling.warning.current!.style.display = "block";
+      return;
+    } else {
+      styling.warning.current!.style.display = "none";
+    }
+    setLoading(true);
     logInWithEmailAndPassword(logindet.email, logindet.password).then(() =>
       setLoading(false)
     );
@@ -99,7 +105,7 @@ export default function Login() {
           <h2>Login</h2>
           {/* Warning! */}
           <span className={styles.warning} ref={styling.warning}>
-            Invalid Username or Password
+            Invalid Email or Password
           </span>
           {/* Email: Input Field */}
           <span>

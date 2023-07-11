@@ -83,9 +83,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
             <div className={styles["replyTo-chat-bubble__wrapper"]}>
               <Image
                 className={styles["replyTo-chat-bubble__left"]}
-                src={`${
-                  replyTo.avatar === null ? "/user.png" : replyTo.avatar
-                }`}
+                src={`${replyTo.avatar ?? "/user.png"}`}
                 alt="user avatar"
                 width={50}
                 height={50}
@@ -106,11 +104,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
           >
             <Image
               className={styles["reply-chat-bubble__left"]}
-              src={`${
-                message.avatar === null || message.avatar === undefined
-                  ? "/user.png"
-                  : message.avatar
-              }`}
+              src={`${message.avatar ?? "/user.png"}`}
               alt="user avatar"
               width={50}
               height={50}
@@ -155,11 +149,7 @@ const Message = ({ message, index }: { message: any; index: number }) => {
           <div className={styles.messageTxt}>
             <Image
               className={styles["chat-bubble__left"]}
-              src={`${
-                message.avatar === null || message.avatar === undefined
-                  ? "/user.png"
-                  : message.avatar
-              }`}
+              src={`${message.avatar ?? "/user.png"}`}
               alt="user avatar"
               width={50}
               height={50}

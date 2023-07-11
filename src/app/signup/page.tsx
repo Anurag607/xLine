@@ -76,6 +76,10 @@ export default function Signup() {
 
   // Function to check the validity of the password...
   const checkPasswordValidity = (value: string) => {
+    if (value.length == 0) {
+      return "Password is required.";
+    }
+
     const isNonWhiteSpace = /^\S*$/;
     if (!isNonWhiteSpace.test(value)) {
       return "Password must not contain Whitespaces.";
@@ -120,21 +124,25 @@ export default function Signup() {
       styling.username.current!.style.border = "0.05rem solid red";
       styling.heading.current!.style.marginBottom = "0.5rem";
       styling.warning.current!.innerHTML = "Invalid Username";
+      setLoading(false);
     } else if (signupdet.email.length == 0) {
       styling.warning.current!.style.display = "block";
       styling.username.current!.style.border = "0.05rem solid red";
       styling.heading.current!.style.marginBottom = "0.5rem";
       styling.warning.current!.innerHTML = "Invalid Email Address";
+      setLoading(false);
     } else if (passIsValid && passIsValid.length > 0) {
       styling.warning.current!.style.display = "block";
       styling.username.current!.style.border = "0.05rem solid red";
       styling.heading.current!.style.marginBottom = "0.5rem";
       styling.warning.current!.innerHTML = passIsValid;
+      setLoading(false);
     } else if (signupdet.password !== signupdet.cnfrmpass) {
       styling.warning.current!.style.display = "block";
       styling.username.current!.style.border = "0.05rem solid red";
       styling.heading.current!.style.marginBottom = "0.5rem";
       styling.warning.current!.innerHTML = "Passwords do not match";
+      setLoading(false);
     } else
       registerWithEmailAndPassword(
         signupdet.name,

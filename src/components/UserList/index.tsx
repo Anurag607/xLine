@@ -39,13 +39,12 @@ const UserList = () => {
   const getUserList = () => {
     try {
       const qUsers = query(collection(db, "users"), orderBy("name"));
+      let users: any[] = [];
 
       const getUsers = onSnapshot(qUsers, (QuerySnapshot) => {
-        let users: any[] = [];
         QuerySnapshot.forEach((doc) => {
           users.push({ ...doc.data(), id: doc.id });
         });
-        Cookies.set("usersList", JSON.stringify(users));
         setUsersList(users);
       });
 
@@ -54,6 +53,11 @@ const UserList = () => {
       console.error(err);
     }
   };
+
+  React.useEffect(() => {
+    if (usersList.length > 0)
+      Cookies.set("usersList", JSON.stringify(usersList));
+  }, [usersList]);
 
   // Function to remove a user from the group...
   const removeUser = async () => {
@@ -193,7 +197,7 @@ const UserList = () => {
                 )}
                 <Image
                   className={styles.profilePic}
-                  src={el.avatar ? el.avatar : "/user.png"}
+                  src={el.avatar ?? "/user.png"}
                   alt={"profilePic"}
                   width={28}
                   height={28}

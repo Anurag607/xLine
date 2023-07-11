@@ -201,7 +201,7 @@ const CreateGroup = (props: { class: string }) => {
               >
                 <Image
                   className={styles.profilePic}
-                  src={el.avatar ? el.avatar : "/user.png"}
+                  src={el.avatar ?? "/user.png"}
                   alt={"profilePic"}
                   width={28}
                   height={28}
