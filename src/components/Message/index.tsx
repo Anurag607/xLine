@@ -6,13 +6,58 @@ import styles from "./messages.module.scss";
 import { selectMsg, deselectMsg } from "../../scripts/msgReply";
 import { doc, getDoc } from "firebase/firestore";
 
+async function isImageUrlValid(url: string) {
+  if (!url) return false;
+
+  try {
+    const response = await fetch(url, {
+      mode: "cors",
+      method: "HEAD",
+    });
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+}
+
 const Message = ({ message, index }: { message: any; index: number }) => {
   // Getting current user session...
   const [user] = useAuthState(auth);
+  const [replyAvatarUrl, setReplyAvatarUrl] = React.useState("/user.png");
+  const [msgAvatarUrl, setMsgAvatarUrl] = React.useState("/user.png");
 
   // Defining state variables...
   const [replyTo, setReplyTo] = React.useState<any>(null);
   const [time, setTime] = React.useState<string>("");
+
+  React.useEffect(() => {
+    if (!replyTo) return;
+    async function validateAvatarUrl() {
+      const url = replyTo.avatar ?? "/user.png";
+      const isValid = await isImageUrlValid(url);
+      if (isValid) {
+        setReplyAvatarUrl(url);
+      } else {
+        setReplyAvatarUrl("/user.png");
+      }
+    }
+
+    validateAvatarUrl();
+  }, [replyTo]);
+
+  React.useEffect(() => {
+    async function validateAvatarUrl() {
+      const url = message.avatar ?? "/user.png";
+      const isValid = await isImageUrlValid(url);
+      if (isValid) {
+        setMsgAvatarUrl(url);
+      } else {
+        setMsgAvatarUrl("/user.png");
+      }
+    }
+
+    validateAvatarUrl();
+  }, [message]);
 
   React.useEffect(() => {
     // Getting and setting time from message data...
@@ -83,7 +128,8 @@ const Message = ({ message, index }: { message: any; index: number }) => {
             <div className={styles["replyTo-chat-bubble__wrapper"]}>
               <Image
                 className={styles["replyTo-chat-bubble__left"]}
-                src={`${replyTo.avatar ?? "/user.png"}`}
+                // src={`${replyTo.avatar ?? "/user.png"}`}
+                src={replyAvatarUrl}
                 alt="user avatar"
                 width={50}
                 height={50}
@@ -104,7 +150,8 @@ const Message = ({ message, index }: { message: any; index: number }) => {
           >
             <Image
               className={styles["reply-chat-bubble__left"]}
-              src={`${message.avatar ?? "/user.png"}`}
+              // src={`${message.avatar ?? "/user.png"}`}
+              src={msgAvatarUrl}
               alt="user avatar"
               width={50}
               height={50}
@@ -149,7 +196,8 @@ const Message = ({ message, index }: { message: any; index: number }) => {
           <div className={styles.messageTxt}>
             <Image
               className={styles["chat-bubble__left"]}
-              src={`${message.avatar ?? "/user.png"}`}
+              // src={`${message.avatar ?? "/user.png"}`}
+              src={msgAvatarUrl}
               alt="user avatar"
               width={50}
               height={50}

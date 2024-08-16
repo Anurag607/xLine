@@ -110,6 +110,12 @@ const ChatBox = () => {
             }')`,
           }}
         >
+          <div
+            style={{
+              height: "4rem",
+              width: "100%",
+            }}
+          />
           {/* Listing all messages here */}
           {messages.map((message: any, index: number) => {
             // Getting date here...

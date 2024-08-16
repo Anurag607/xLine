@@ -95,7 +95,7 @@ export const Sidebar = (props: { class: string }) => {
           </div>
           {/* Tab3: Settings and other options */}
           <div>
-            <form className={`${styles.darkMode}`}>
+            {/* <form className={`${styles.darkMode}`}>
               <div className={styles["row"]}>
                 <div className={styles["switch-label"]}>Dark Mode</div>
                 <span className={styles["switch"]}>
@@ -116,7 +116,7 @@ export const Sidebar = (props: { class: string }) => {
                   ></label>
                 </span>
               </div>
-            </form>
+            </form> */}
             <Settings class={props.class} />
           </div>
         </ReactCarousel>
