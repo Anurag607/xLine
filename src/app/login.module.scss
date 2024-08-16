@@ -21,7 +21,7 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-image: url('../../public/loginBg1.jpg');
+    background-image: url('../../public/678.webp');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -150,7 +150,8 @@
                 font-size: 1rem;
                 font-family: 'Poppins';
                 color: var(--secondary-light);
-                background: linear-gradient(106.7deg, rgb(251, 0, 145) -2.6%, rgb(251, 134, 145) 31%, rgb(251, 158, 145) 45.8%, rgb(251, 218, 145) 100.1%);
+                // background: linear-gradient(106.7deg, rgb(251, 0, 145) -2.6%, rgb(251, 134, 145) 31%, rgb(251, 158, 145) 45.8%, rgb(251, 218, 145) 100.1%);
+                background: linear-gradient(90deg, #f7c469 30%, #ec9e69 70%);
                 padding: 0.5rem 2rem;
                 outline: none;
                 border: none;
@@ -216,7 +217,8 @@
 }
 
 .loginLinks {
-    color: #fa86c4;
+    // color: #fa86c4;
+    color: #ec9e69;
 }
 
 @media screen and (max-width: 1240px) { 

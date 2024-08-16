@@ -23,7 +23,7 @@
     section:nth-child(1) {
         width: 60vw;
         height: 150%;
-        @include bg($url : '../../../public/casual1.jpg');
+        @include bg($url : '../../../public/bg-register.jpg');
     }
     section:nth-child(2) {
         z-index: 1;
@@ -73,7 +73,9 @@
                 font-size: 0.75rem;
                 font-family: 'Poppins', sans-serif;
                 cursor: default;
-                color: #fa86c4;
+                .loginLinks {
+                    color: #fa86c4;
+                }
             }
             label {
                 @include flex($dir : column, $gap : 0.5rem);
